@@ -4,43 +4,50 @@ import Tile from "../components/Tile.js";
 
 import hex from "../helpers/hex.js";
 
-const hexesPerCell = 10;
-
 export default class Cell extends Component {
   render() {
-    const { style, index } = { ...this.props };
+    const { style, cellCoordinates } = { ...this.props };
 
     return (
       <div
         className="cell"
         style={{
-          color: `hsl(${index}, 50%, 50%)`,
+          color: `hsl(${cellCoordinates[0] * cellCoordinates[1] % 360}, 50%, 50%)`,
           ...style,
         }}
       >
         <style jsx global>{`
           .cell {
             pointer-events: none;
-            outline: 1px solid;
+            border: 5px solid;
           }
         `}</style>
 
-        {[...Array(hexesPerCell * hexesPerCell).keys()].map(index => {
-          const y = Math.floor(index / hexesPerCell);
-          const x = index % hexesPerCell;
+        {[...Array(hex.hexesPerRow * hex.hexesPerColumn).keys()].map(index => {
+          const xOffset = cellCoordinates[1] % 2 === 0
+            ? 0
+            : hex.hexesPerRow * 0.5;
+          const xPixelOffset = hex.hexesPerRow * -0.25;
 
-          const coordinates = hex.pixelCoordinates([x, y]);
+          const y = Math.floor(index / hex.hexesPerColumn);
+          const x = index % hex.hexesPerRow + xOffset;
+
+          const coordinates = [
+            x + cellCoordinates[0] * hex.hexesPerRow,
+            y + cellCoordinates[1] * hex.hexesPerColumn,
+          ];
+          const pixelCoordinates = hex.pixelCoordinates([x + xPixelOffset, y]);
 
           return (
             <Tile
               key={index}
-              x={x}
-              y={y}
+              x={coordinates[0]}
+              y={coordinates[1]}
               style={{
                 height: hex.height,
                 width: hex.width,
-                x: coordinates[0],
-                y: coordinates[1],
+                x: pixelCoordinates[0],
+                y: pixelCoordinates[1],
               }}
             />
           );

@@ -3,7 +3,7 @@ import React from "react";
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-export default ({ style }) => {
+export default ({ style, x, y }) => {
   return (
     <div
       className="tile"
@@ -25,6 +25,13 @@ export default ({ style }) => {
           width: 100%;
           height: 100%;
         }
+
+        .tileCoordinates {
+          text-align: center;
+          font-size: ${hex.height * 0.2}px;
+          line-height: ${hex.height}px;
+          position: relative;
+        }
       `}</style>
 
       <svg
@@ -34,6 +41,7 @@ export default ({ style }) => {
       >
         <polygon
           stroke="currentcolor"
+          fill="none"
           points={`
             ${hex.width / 2}, 0
             ${hex.width},     ${hex.height / 4}
@@ -44,6 +52,8 @@ export default ({ style }) => {
           `}
         />
       </svg>
+
+      <div className="tileCoordinates">{x},{y}</div>
     </div>
   );
 };

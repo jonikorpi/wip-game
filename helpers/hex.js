@@ -1,6 +1,9 @@
-const size = 10;
+const size = 48;
 const height = size * Math.sqrt(2);
 const width = Math.sqrt(3) / 2 * size * 2;
+
+const hexesPerRow = 10;
+const hexesPerColumn = 10;
 
 const axialDirections = [
   [+1, 0],
@@ -88,6 +91,8 @@ export default {
   size: size,
   height: height,
   width: width,
+  hexesPerRow: hexesPerRow,
+  hexesPerColumn: hexesPerColumn,
 
   direction: direction,
   toHex: toHex,

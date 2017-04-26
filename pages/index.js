@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { Collection, AutoSizer } from "react-virtualized";
-import NoSSR from "react-no-ssr";
+import {
+  Grid,
+  AutoSizer,
+  accessibilityOverscanIndicesGetter,
+} from "react-virtualized";
 
 import Layout from "../components/Layout.js";
 import Cell from "../components/Cell.js";
@@ -11,28 +14,17 @@ import hex from "../helpers/hex.js";
 const env = (process && process.env && process.env.NODE_ENV) || "development";
 const dev = env === "development";
 
-const cellsPerRow = 100;
-const cellsPerColumn = 100;
-const totalHexes = cellsPerRow * cellsPerColumn;
+const cellsPerRow = 200;
+const cellsPerColumn = 150;
 
-const cellRenderer = ({ index, key, style }) => {
-  return <Cell key={key} index={index} style={style} />;
-};
-
-const cellSizeAndPositionGetter = ({ index }) => {
-  const hexesPerRow = 10;
-  const hexesPerColumn = 10;
-  const x = index % cellsPerRow;
-  const y = Math.floor(index / cellsPerRow);
-
-  const coordinates = hex.pixelCoordinates([x, y]);
-
-  return {
-    width: hexesPerRow * hex.width,
-    height: hexesPerColumn * hex.height * 0.75 + hex.size * 0.5,
-    x: hexesPerRow * coordinates[0],
-    y: hexesPerColumn * coordinates[1],
-  };
+const cellRenderer = ({ columnIndex, rowIndex, key, style }) => {
+  return (
+    <Cell
+      key={key}
+      style={style}
+      cellCoordinates={[columnIndex - rowIndex * 0.5, rowIndex]}
+    />
+  );
 };
 
 export default class Home extends Component {
@@ -56,24 +48,28 @@ export default class Home extends Component {
             }
           `}</style>
 
-          <NoSSR>
-            <AutoSizer>
-              {({ height, width }) => (
-                <Collection
-                  cellRenderer={cellRenderer}
-                  cellSizeAndPositionGetter={cellSizeAndPositionGetter}
-                  height={height}
-                  width={width}
-                  className="scroller"
-                  cellCount={totalHexes}
-                  scrollToCell={totalHexes / 2}
-                  scrollToAlignment="center"
-                  horizontalOverscanSize={1}
-                  verticalOverscanSize={1}
-                />
-              )}
-            </AutoSizer>
-          </NoSSR>
+          <AutoSizer>
+            {({ height, width }) => (
+              <Grid
+                cellRenderer={cellRenderer}
+                columnWidth={hex.hexesPerRow * hex.width}
+                rowHeight={hex.hexesPerColumn * hex.height * 0.75}
+                height={height}
+                width={width}
+                className="scroller"
+                rowCount={cellsPerColumn}
+                columnCount={cellsPerRow}
+                scrollToColumn={cellsPerRow / 2}
+                scrollToRow={cellsPerColumn / 2}
+                //scrollLeft={}
+                //scrollTop={}
+                scrollToAlignment="center"
+                overscanRowCount={0}
+                overscanColumnCount={0}
+                overscanIndicesGetter={accessibilityOverscanIndicesGetter}
+              />
+            )}
+          </AutoSizer>
         </div>
       </Layout>
     );
