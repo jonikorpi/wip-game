@@ -2,7 +2,7 @@ import React from "react";
 
 import Head from "../components/Head.js";
 
-import variables from "../helpers/variables.js";
+import styles from "../helpers/styles.js";
 
 export default ({ children, title }) => (
   <div id="layout">
@@ -150,11 +150,10 @@ export default ({ children, title }) => (
           "Segoe UI", Roboto, Helvetica, sans-serif,
           "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
         ;
-      }
-
-      html {
         font-size: 133%; /* Fallback: used if browser doesn't support calc() */
         font-size: calc(1em + 0.5vw + 0.5vh + 0.25vmin);
+        background-color: ${styles.black};
+        color: ${styles.white};
       }
 
       body {

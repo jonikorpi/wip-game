@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 
+import Tile from "../components/Tile.js";
+
 export default class FirebaseContainer extends Component {
   render() {
-    return <div style={this.props.style}>Firebase</div>;
+    const { style, index } = { ...this.props };
+
+    return (
+      <div className="firebaseContainer" style={style}>
+        <Tile index={index} />
+      </div>
+    );
   }
 }
