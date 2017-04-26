@@ -3,44 +3,47 @@ import React from "react";
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-export default ({ index }) => {
+export default ({ style }) => {
   return (
-    <div className="tile">
+    <div
+      className="tile"
+      style={{
+        height: style.height,
+        width: style.width,
+        left: style.x,
+        top: style.y,
+      }}
+    >
       <style jsx global>{`
         .tile {
-
+          position: absolute;
         }
 
         .tileOutline {
-          background: ${styles.white};
-          color: ${styles.black};
-
-        }
-
-        .tileTop,
-        .tileBottom {
-          border-left: ${hex.width / 2}px solid transparent;
-          border-right: ${hex.width / 2}px solid transparent;
-        }
-
-        .tileTop {
-          border-bottom: ${hex.size / 2}px solid;
-        }
-
-        .tileMiddle {
-          height: ${hex.size}px;
-          text-align: center;
-          line-height: ${hex.size}px;
-        }
-
-        .tileBottom {
-          border-top: ${hex.size / 2}px solid;
+          position: absolute;
+          left: 0; top: 0;
+          width: 100%;
+          height: 100%;
         }
       `}</style>
 
-      <div className="tileOutline tileTop" />
-      <div className="tileOutline tileMiddle">{index}</div>
-      <div className="tileOutline tileBottom" />
+      <svg
+        className="tileOutline"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+      >
+        <polygon
+          stroke="currentcolor"
+          points={`
+            ${hex.width / 2}, 0
+            ${hex.width},     ${hex.height / 4}
+            ${hex.width},     ${hex.height * 0.75}
+            ${hex.width / 2}, ${hex.height}
+            0,                ${hex.height * 0.75}
+            0,                ${hex.height / 4}
+          `}
+        />
+      </svg>
     </div>
   );
 };

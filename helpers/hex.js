@@ -1,6 +1,6 @@
-const size = 100;
-const height = size * 2;
-const width = Math.sqrt(3) / 2 * height;
+const size = 10;
+const height = size * Math.sqrt(2);
+const width = Math.sqrt(3) / 2 * size * 2;
 
 const axialDirections = [
   [+1, 0],
@@ -80,7 +80,7 @@ const ringFrom = (hex, N) => {
 
 const pixelCoordinates = hex => {
   const x = size * Math.sqrt(3) * (hex[0] + hex[1] / 2);
-  const y = size * 3 / 2 * hex[1];
+  const y = height / 2 * 3 / 2 * hex[1];
   return [x, y];
 };
 
