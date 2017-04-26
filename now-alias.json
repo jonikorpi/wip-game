@@ -1,0 +1,11 @@
+{
+  "rules": [
+    {
+      "pathname": "/static/**",
+      "dest": "cdn.wip-game-vuoro.now.sh"
+    },
+    {
+      "dest": "app.wip-game-vuoro.now.sh"
+    }
+  ]
+}

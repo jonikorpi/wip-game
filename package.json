@@ -1,0 +1,49 @@
+{
+  "name": "jonikorpi.com",
+  "now": {
+    "alias": "app.wip-game-vuoro.now.sh",
+    "files": [
+      "components/*",
+      "helpers/*",
+      "pages/*",
+      "server.js"
+    ]
+  },
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "express": "^4.15.2",
+    "lru-cache": "^4.0.2",
+    "next": "^2.2.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-virtualized": "^9.7.3",
+    "rollbar": "^0.6.5",
+    "universal-analytics": "^0.4.13"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "next build",
+    "deploy": "now",
+    "deploy-assets": "cd static && yarn run deploy && cd ..",
+    "alias": "now alias && now alias -r now-alias.json wip-game-vuoro.now.sh",
+    "now-start": "NODE_ENV=production node server.js",
+    "now-build": "NODE_ENV=production next build"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.19.0",
+    "eslint-config-react-app": "^0.6.2",
+    "eslint-plugin-flowtype": "^2.32.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "prettier": "^1.2.2"
+  }
+}
