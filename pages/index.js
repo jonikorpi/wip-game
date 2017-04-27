@@ -76,6 +76,7 @@ export default class Home extends Component {
                   overscanRowCount={0}
                   overscanColumnCount={0}
                   overscanIndicesGetter={accessibilityOverscanIndicesGetter}
+                  scrollingResetTimeInterval={50}
                 />
               );
             }}
