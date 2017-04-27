@@ -31,6 +31,7 @@ export default ({ style, x, y }) => {
           font-size: ${hex.height * 0.2}px;
           line-height: ${hex.height}px;
           position: relative;
+          display: none;
         }
       `}</style>
 

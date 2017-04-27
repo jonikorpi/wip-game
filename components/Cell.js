@@ -20,6 +20,7 @@ export default class Cell extends Component {
           .cell {
             pointer-events: none;
             border: 5px solid;
+            outline: 2px solid black;
           }
         `}</style>
 
@@ -27,7 +28,7 @@ export default class Cell extends Component {
           const xOffset = cellCoordinates[1] % 2 === 0
             ? 0
             : hex.hexesPerRow * 0.5;
-          const xPixelOffset = hex.hexesPerRow * -0.25;
+          const xPixelOffset = hex.hexesPerRow * -0.5;
 
           const y = Math.floor(index / hex.hexesPerColumn);
           const x = index % hex.hexesPerRow + xOffset;
