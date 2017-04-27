@@ -19,8 +19,7 @@ export default class Cell extends Component {
         <style jsx global>{`
           .cell {
             pointer-events: none;
-            border: 5px solid;
-            outline: 2px solid black;
+            outline: 1px solid;
           }
         `}</style>
 

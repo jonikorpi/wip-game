@@ -8,10 +8,10 @@ export default ({ style, x, y }) => {
     <div
       className="tile"
       style={{
-        height: style.height,
-        width: style.width,
-        left: style.x,
-        top: style.y,
+        height: style.height + hex.unit,
+        width: style.width + hex.unit,
+        left: style.x + hex.unit,
+        top: style.y + hex.unit,
       }}
     >
       <style jsx global>{`
@@ -26,12 +26,29 @@ export default ({ style, x, y }) => {
           height: 100%;
         }
 
+        .tileTarget {
+          top: ${hex.height * 0.125}${hex.unit};
+          position: relative;
+          pointer-events: all;
+          border: 1px solid transparent;
+        }
+
+        .tileTarget:hover,
+        .tileTarget:focus {
+          border-color: currentcolor;
+          cursor: pointer;
+        }
+
         .tileCoordinates {
           text-align: center;
-          font-size: ${hex.height * 0.2}px;
-          line-height: ${hex.height}px;
-          position: relative;
-          display: none;
+          display: block;
+          font-size: ${hex.height * 0.2}${hex.unit};
+          line-height: ${hex.height * 0.75}${hex.unit};
+          opacity: 0;
+        }
+
+        .tileTarget:hover .tileCoordinates {
+          opacity: 1;
         }
       `}</style>
 
@@ -39,9 +56,11 @@ export default ({ style, x, y }) => {
         className="tileOutline"
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
+        viewBox={`0 0 ${hex.width} ${hex.height}`}
       >
         <polygon
           stroke="currentcolor"
+          strokeWidth={hex.width / 100}
           fill="none"
           points={`
             ${hex.width / 2}, 0
@@ -54,7 +73,9 @@ export default ({ style, x, y }) => {
         />
       </svg>
 
-      <div className="tileCoordinates">{x},{y}</div>
+      <div className="tileTarget">
+        <code className="tileCoordinates">{x},{y}</code>
+      </div>
     </div>
   );
 };

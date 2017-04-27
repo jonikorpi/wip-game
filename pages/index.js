@@ -49,26 +49,36 @@ export default class Home extends Component {
           `}</style>
 
           <AutoSizer>
-            {({ height, width }) => (
-              <Grid
-                cellRenderer={cellRenderer}
-                columnWidth={hex.hexesPerRow * hex.width}
-                rowHeight={hex.hexesPerColumn * hex.height * 0.75}
-                height={height}
-                width={width}
-                className="scroller"
-                rowCount={cellsPerColumn}
-                columnCount={cellsPerRow}
-                scrollToColumn={cellsPerRow / 2}
-                scrollToRow={cellsPerColumn / 2}
-                //scrollLeft={}
-                //scrollTop={}
-                scrollToAlignment="center"
-                overscanRowCount={0}
-                overscanColumnCount={0}
-                overscanIndicesGetter={accessibilityOverscanIndicesGetter}
-              />
-            )}
+            {({ height, width }) => {
+              const units = {
+                vmax: (height >= width ? height : width) / 100,
+                vmin: (height <= width ? height : width) / 100,
+                px: 1,
+              };
+
+              return (
+                <Grid
+                  cellRenderer={cellRenderer}
+                  columnWidth={hex.hexesPerRow * hex.width * units[hex.unit]}
+                  rowHeight={
+                    hex.hexesPerColumn * hex.height * 0.75 * units[hex.unit]
+                  }
+                  height={height}
+                  width={width}
+                  className="scroller"
+                  rowCount={cellsPerColumn}
+                  columnCount={cellsPerRow}
+                  scrollToColumn={cellsPerRow / 2}
+                  scrollToRow={cellsPerColumn / 2}
+                  //scrollLeft={}
+                  //scrollTop={}
+                  scrollToAlignment="center"
+                  overscanRowCount={0}
+                  overscanColumnCount={0}
+                  overscanIndicesGetter={accessibilityOverscanIndicesGetter}
+                />
+              );
+            }}
           </AutoSizer>
         </div>
       </Layout>

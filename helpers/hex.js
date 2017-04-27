@@ -1,4 +1,5 @@
-const size = 96;
+const size = 10;
+const unit = "vmin";
 const height = size * Math.sqrt(2);
 const width = Math.sqrt(3) / 2 * size * 2;
 
@@ -89,6 +90,7 @@ const pixelCoordinates = hex => {
 
 export default {
   size: size,
+  unit: unit,
   height: height,
   width: width,
   hexesPerRow: hexesPerRow,
