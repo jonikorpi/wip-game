@@ -12,6 +12,7 @@ export default ({ style, x, y }) => {
         width: style.width + hex.unit,
         left: style.x + hex.unit,
         top: style.y + hex.unit,
+        zIndex: y,
       }}
     >
       <style jsx global>{`
@@ -28,15 +29,17 @@ export default ({ style, x, y }) => {
 
         .tileTarget {
           top: ${hex.height * 0.125}${hex.unit};
+          height: ${hex.height * 0.75}${hex.unit};
           position: relative;
           pointer-events: all;
-          border: 1px solid transparent;
+          cursor: pointer;
+          opacity: 0;
+          outline: 1px solid;
         }
 
         .tileTarget:hover,
         .tileTarget:focus {
-          border-color: currentcolor;
-          cursor: pointer;
+          opacity: 1;
         }
 
         .tileCoordinates {
@@ -44,11 +47,6 @@ export default ({ style, x, y }) => {
           display: block;
           font-size: ${hex.height * 0.2}${hex.unit};
           line-height: ${hex.height * 0.75}${hex.unit};
-          opacity: 0;
-        }
-
-        .tileTarget:hover .tileCoordinates {
-          opacity: 1;
         }
       `}</style>
 
