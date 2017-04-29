@@ -1,6 +1,7 @@
 export default {
   water: {
     name: "Water",
+    rarity: 1,
     impassable: undefined,
     sailable: true,
     difficult: undefined,
@@ -25,6 +26,7 @@ export default {
 
   shoal: {
     name: "Shoal",
+    rarity: 1,
     impassable: undefined,
     sailable: true,
     difficult: true,

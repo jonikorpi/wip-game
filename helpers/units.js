@@ -3,6 +3,7 @@ export default {
 
   monument: {
     name: "Monument",
+    rarity: 3,
     owner: undefined,
     canMove: undefined,
     axes: {
