@@ -49,6 +49,7 @@ export default class Cell extends Component {
                 x: pixelCoordinates[0],
                 y: pixelCoordinates[1],
               }}
+              zIndex={cellCoordinates + coordinates[1]}
             />
           );
         })}

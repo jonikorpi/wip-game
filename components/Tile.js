@@ -3,7 +3,7 @@ import React from "react";
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-export default ({ style, x, y }) => {
+export default ({ style, x, y, zIndex }) => {
   return (
     <div
       className="tile"
@@ -12,7 +12,6 @@ export default ({ style, x, y }) => {
         width: style.width + hex.unit,
         left: style.x + hex.unit,
         top: style.y + hex.unit,
-        zIndex: y,
       }}
     >
       <style jsx global>{`
@@ -71,7 +70,7 @@ export default ({ style, x, y }) => {
         />
       </svg>
 
-      <div className="tileTarget">
+      <div className="tileTarget" style={{ zIndex: zIndex }}>
         <code className="tileCoordinates">{x},{y}</code>
       </div>
     </div>
