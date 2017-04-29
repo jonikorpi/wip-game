@@ -1,6 +1,6 @@
-const size = 10;
+const size = 9;
 const unit = "vmin";
-const height = size * Math.sqrt(2);
+const height = size * 2;
 const width = Math.sqrt(3) / 2 * size * 2;
 
 const hexesPerRow = 10;

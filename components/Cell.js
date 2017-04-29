@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import Tile from "../components/Tile.js";
 
 import hex from "../helpers/hex.js";
 
-export default class Cell extends Component {
+export default class Cell extends PureComponent {
   render() {
     const { style, cellCoordinates } = { ...this.props };
 
@@ -19,7 +19,7 @@ export default class Cell extends Component {
         <style jsx global>{`
           .cell {
             pointer-events: none;
-            outline: 1px solid;
+            {/*outline: 1px solid;*/}
           }
         `}</style>
 
