@@ -29,8 +29,8 @@ export default class Tile extends PureComponent {
     return tileKeys[Math.floor(Math.random() * tileKeys.length)];
   };
 
-  randomizer = (number = 1) => {
-    var rand = Math.sin(this.seed++) * 10000;
+  randomizer = (number = 1, seed = 1) => {
+    const rand = Math.sin(this.seed) * 10000;
     return (rand - Math.floor(rand)) * number;
   };
 
@@ -39,9 +39,6 @@ export default class Tile extends PureComponent {
       ...this.props,
     };
     const { targeted, tile } = { ...this.state };
-
-    const outlineOffset = hex.size;
-    const color = tiles[tile];
 
     return (
       <div
@@ -81,19 +78,16 @@ export default class Tile extends PureComponent {
             cursor: pointer;
             opacity: 0;
             outline: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             {/*outline: 1px solid;*/}
           }
 
           .tileTarget:hover,
           .tileTarget:focus {
             opacity: 1;
-          }
-
-          .tileCoordinates {
-            text-align: center;
-            display: block;
-            font-size: ${hex.height * 0.2}${hex.unit};
-            line-height: ${hex.height * 0.75}${hex.unit};
           }
         `}</style>
 
@@ -106,17 +100,9 @@ export default class Tile extends PureComponent {
             viewBox={`0 0 ${hex.width} ${hex.height}`}
           >
             <polygon
-              stroke={targeted && "currentcolor"}
-              fill={color}
+              stroke={!targeted && "currentcolor"}
+              fill="none"
               strokeWidth={hex.width / 100}
-              //points={`
-              //  ${hex.width / 2},                                   ${-this.randomizer(outlineOffset) + 0}
-              //  ${+this.randomizer(outlineOffset) + hex.width},     ${-this.randomizer(outlineOffset) + hex.height / 4}
-              //  ${+this.randomizer(outlineOffset) + hex.width},     ${+this.randomizer(outlineOffset) + hex.height * 0.75}
-              //  ${hex.width / 2},                                   ${+this.randomizer(outlineOffset) + hex.height}
-              //  ${-this.randomizer(outlineOffset) + 0},             ${+this.randomizer(outlineOffset) + hex.height * 0.75}
-              //  ${-this.randomizer(outlineOffset) + 0},             ${-this.randomizer(outlineOffset) + hex.height / 4}
-              //`}
               points={`
                 ${hex.width / 2}, ${0}
                 ${hex.width},     ${hex.height / 4}
@@ -124,6 +110,7 @@ export default class Tile extends PureComponent {
                 ${hex.width / 2}, ${hex.height}
                 ${0},             ${hex.height * 0.75}
                 ${0},             ${hex.height / 4}
+                ${hex.width / 2}, ${0}
               `}
             />
           </svg>
@@ -141,6 +128,7 @@ export default class Tile extends PureComponent {
           // onTouchCancel={this.handleTouchCancel}
           // onTouchMove={this.handleTouchMove}
         >
+          {tile}<br />
           <code className="tileCoordinates">{x},{y}</code>
         </button>
       </div>
