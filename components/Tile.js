@@ -12,10 +12,6 @@ export default class Tile extends PureComponent {
     this.state = { targeted: false, tile: this.getRandomTile() };
   }
 
-  componentDidUpdate() {
-    console.log("tile updated");
-  }
-
   target = () => {
     this.setState({ targeted: true });
   };
@@ -39,20 +35,22 @@ export default class Tile extends PureComponent {
   };
 
   render() {
-    const { style, x, y, zIndex } = { ...this.props };
+    const { x, y, zIndex, top, left } = {
+      ...this.props,
+    };
     const { targeted, tile } = { ...this.state };
 
-    const outlineOffset = hex.size / 4;
+    const outlineOffset = hex.size;
     const color = tiles[tile];
 
     return (
       <div
         className="tile"
         style={{
-          height: style.height + hex.unit,
-          width: style.width + hex.unit,
-          left: style.x + hex.unit,
-          top: style.y + hex.unit,
+          height: hex.height + hex.unit,
+          width: hex.width + hex.unit,
+          left: left + hex.unit,
+          top: top + hex.unit,
         }}
       >
         <style jsx global>{`
@@ -111,13 +109,21 @@ export default class Tile extends PureComponent {
               stroke={targeted && "currentcolor"}
               fill={color}
               strokeWidth={hex.width / 100}
+              //points={`
+              //  ${hex.width / 2},                                   ${-this.randomizer(outlineOffset) + 0}
+              //  ${+this.randomizer(outlineOffset) + hex.width},     ${-this.randomizer(outlineOffset) + hex.height / 4}
+              //  ${+this.randomizer(outlineOffset) + hex.width},     ${+this.randomizer(outlineOffset) + hex.height * 0.75}
+              //  ${hex.width / 2},                                   ${+this.randomizer(outlineOffset) + hex.height}
+              //  ${-this.randomizer(outlineOffset) + 0},             ${+this.randomizer(outlineOffset) + hex.height * 0.75}
+              //  ${-this.randomizer(outlineOffset) + 0},             ${-this.randomizer(outlineOffset) + hex.height / 4}
+              //`}
               points={`
-                ${hex.width / 2},                                   ${-this.randomizer(outlineOffset) + 0}
-                ${+this.randomizer(outlineOffset) + hex.width},     ${-this.randomizer(outlineOffset) + hex.height / 4}
-                ${+this.randomizer(outlineOffset) + hex.width},     ${+this.randomizer(outlineOffset) + hex.height * 0.75}
-                ${hex.width / 2},                                   ${+this.randomizer(outlineOffset) + hex.height}
-                ${-this.randomizer(outlineOffset) + 0},             ${+this.randomizer(outlineOffset) + hex.height * 0.75}
-                ${-this.randomizer(outlineOffset) + 0},             ${-this.randomizer(outlineOffset) + hex.height / 4}
+                ${hex.width / 2}, ${0}
+                ${hex.width},     ${hex.height / 4}
+                ${hex.width},     ${hex.height * 0.75}
+                ${hex.width / 2}, ${hex.height}
+                ${0},             ${hex.height * 0.75}
+                ${0},             ${hex.height / 4}
               `}
             />
           </svg>
@@ -126,9 +132,9 @@ export default class Tile extends PureComponent {
         <button
           className="tileTarget"
           style={{ zIndex: zIndex }}
-          // onMouseEnter={this.target}
-          // onMouseLeave={this.untarget}
-          // onClick={this.randomizeTile}
+          onMouseEnter={this.target}
+          onMouseLeave={this.untarget}
+          onClick={this.randomizeTile}
           // TODO: handle tapping vs. colliding with scroll
           // onTouchStart={this.handleTouchStart}
           // onTouchEnd={this.handleTouchEnd}

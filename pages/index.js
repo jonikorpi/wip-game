@@ -21,8 +21,9 @@ const cellRenderer = ({ columnIndex, rowIndex, key, style }) => {
   return (
     <Cell
       key={key}
+      cellX={columnIndex - rowIndex * 0.5}
+      cellY={rowIndex}
       style={style}
-      cellCoordinates={[columnIndex - rowIndex * 0.5, rowIndex]}
     />
   );
 };
@@ -59,9 +60,9 @@ export default class Home extends Component {
               return (
                 <Grid
                   cellRenderer={cellRenderer}
-                  columnWidth={hex.hexesPerRow * hex.width * units[hex.unit]}
+                  columnWidth={hex.perRow * hex.width * units[hex.unit]}
                   rowHeight={
-                    hex.hexesPerColumn * hex.height * 0.75 * units[hex.unit]
+                    hex.perColumn * hex.height * 0.75 * units[hex.unit]
                   }
                   height={height}
                   width={width}

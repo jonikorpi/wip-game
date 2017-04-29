@@ -3,8 +3,8 @@ const unit = "vmin";
 const height = size * 2;
 const width = Math.sqrt(3) / 2 * size * 2;
 
-const hexesPerRow = 10;
-const hexesPerColumn = 10;
+const perRow = 10;
+const perColumn = 10;
 
 const axialDirections = [
   [+1, 0],
@@ -93,8 +93,9 @@ export default {
   unit: unit,
   height: height,
   width: width,
-  hexesPerRow: hexesPerRow,
-  hexesPerColumn: hexesPerColumn,
+  perRow: perRow,
+  perColumn: perColumn,
+  perCell: perRow * perColumn,
 
   direction: direction,
   toHex: toHex,
