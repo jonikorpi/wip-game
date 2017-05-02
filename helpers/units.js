@@ -5,7 +5,8 @@ export default {
     name: "Monument",
     rarity: 3,
     owner: undefined,
-    canMove: undefined,
+    movementRange: undefined,
+    range: undefined,
     axes: {
       durability: {
         max: 100,
