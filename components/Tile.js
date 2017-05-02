@@ -60,13 +60,8 @@ export default class Tile extends PureComponent {
             left: 0; top: 0;
             width: 100%;
             height: 100%;
-          }
-
-          .tileOutline {
-            position: absolute;
-            left: 0; top: 0;
-            width: 100%;
-            height: 100%;
+            background: url("/static/hex.png") center center no-repeat;
+            background-size: cover;
           }
 
           .tileTarget {
@@ -92,29 +87,7 @@ export default class Tile extends PureComponent {
         `}</style>
 
         {/*{targeted &&*/}
-        <div className="tileOutlines">
-          <svg
-            className="tileOutline"
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            viewBox={`0 0 ${hex.width} ${hex.height}`}
-          >
-            <polygon
-              stroke={!targeted && "currentcolor"}
-              fill="none"
-              strokeWidth={hex.width / 100}
-              points={`
-                ${hex.width / 2}, ${0}
-                ${hex.width},     ${hex.height / 4}
-                ${hex.width},     ${hex.height * 0.75}
-                ${hex.width / 2}, ${hex.height}
-                ${0},             ${hex.height * 0.75}
-                ${0},             ${hex.height / 4}
-                ${hex.width / 2}, ${0}
-              `}
-            />
-          </svg>
-        </div>{/*}*/}
+        <div className="tileOutlines" />{/*}*/}
 
         <button
           className="tileTarget"
