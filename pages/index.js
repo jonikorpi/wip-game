@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  AutoSizer,
-  accessibilityOverscanIndicesGetter,
-} from "react-virtualized";
+import Grid from "react-virtualized/dist/commonjs/Grid";
+import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
+import accessibilityOverscanIndicesGetter
+  from "react-virtualized/dist/commonjs/Grid/accessibilityOverscanIndicesGetter";
 
 import Layout from "../components/Layout.js";
 import Cell from "../components/Cell.js";
