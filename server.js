@@ -10,7 +10,7 @@ const handle = app.getRequestHandler();
 
 // This is where we cache our rendered HTML pages
 const ssrCache = new LRUCache({
-  max: 100,
+  max: 1000,
   maxAge: dev ? 0 : 1000 * 60 * 60 * 24, // 24h
 });
 
@@ -19,6 +19,10 @@ app.prepare().then(() => {
 
   // TODO
   // server.use(analytics.middleware("UA-3628636-3", { https: true }));
+
+  // Serve static assets
+  const assetMaxAge = dev ? 0 : "1y";
+  server.use("/static", express.static("./static", { maxAge: assetMaxAge }));
 
   server.get("/", (req, res) => {
     const query = req.query && Object.keys(req.query);

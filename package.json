@@ -1,11 +1,11 @@
 {
-  "name": "jonikorpi.com",
+  "name": "wip-game",
   "now": {
-    "alias": "app.wip-game-vuoro.now.sh",
     "files": [
       "components/*",
       "helpers/*",
       "pages/*",
+      "static/*",
       "server.js"
     ]
   },
@@ -32,8 +32,7 @@
     "start": "node server.js",
     "build": "next build",
     "deploy": "now",
-    "deploy-assets": "cd static && yarn run deploy && cd ..",
-    "alias": "now alias && now alias -r now-alias.json wip-game-vuoro.now.sh",
+    "alias": "now alias wip-game-vuoro.now.sh",
     "now-start": "NODE_ENV=production node server.js",
     "now-build": "NODE_ENV=production next build"
   },
