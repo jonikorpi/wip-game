@@ -20,11 +20,11 @@ app.prepare().then(() => {
   // TODO
   // server.use(analytics.middleware("UA-3628636-3", { https: true }));
 
-  // TODO
-  // server.get("/:id", (req, res) => {
-  //   const queryParams = { id: req.params.id };
-  //   renderAndCache(req, res, "/", queryParams);
-  // });
+  server.get("/", (req, res) => {
+    const query = req.query && Object.keys(req.query);
+
+    renderAndCache(req, res, "/", query[0] ? { [query[0]]: true } : undefined);
+  });
 
   server.get("*", (req, res) => {
     return handle(req, res);
