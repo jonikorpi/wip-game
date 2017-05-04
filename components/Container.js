@@ -5,10 +5,6 @@ import Tile from "../components/Tile.js";
 import hex from "../helpers/hex.js";
 
 export default class Container extends PureComponent {
-  componentDidUpdate() {
-    console.log("container updated", this.props, this.state);
-  }
-
   render() {
     const { cellX, cellY } = { ...this.props };
 
@@ -24,7 +20,7 @@ export default class Container extends PureComponent {
             width: 100%;
             height: 100%;
             pointer-events: none;
-            {/*outline: 1px solid;*/}
+            border: 2px solid;
           }
         `}</style>
 

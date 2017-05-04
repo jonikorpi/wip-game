@@ -1,6 +1,6 @@
-const size = 12;
+const size = 13;
 const unit = "vmin";
-const height = size * 2;
+const height = size;
 const width = Math.sqrt(3) / 2 * size * 2;
 
 const perRow = 10;
@@ -85,6 +85,7 @@ const ringFrom = (hex, N) => {
 const pixelCoordinates = hex => {
   const x = size * Math.sqrt(3) * (hex[0] + hex[1] / 2);
   const y = height / 2 * 3 / 2 * hex[1];
+
   return [x, y];
 };
 

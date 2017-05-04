@@ -1,6 +1,11 @@
 export default {
-  destroyPlayer: "Turns all units into ruins. Game over.",
-  respawnPlayer: "Use with a Settler to turn back into a City Center. Keep all the culture it has gained. Heal all units.",
-  monumentRevenge: "-10 health/durability to all units within 2 tiles.",
+  destroyUnit: "Destroys this unit.",
+  destroyHero: "Destroys all units.",
+
+  spawnMonument: "Creates a Monument for this hero.",
+  destroyMonument: "Destroys this Monument. -5/-10 to all units within 2 tiles.",
+  upgradeMonument: "Sets strength to 10. +10 maximum health.",
+  reclaimMonument: "Commune with a new hero to gain something something.",
+
   forestFire: "-5 water, +5 heat to adjascent tiles.",
 };

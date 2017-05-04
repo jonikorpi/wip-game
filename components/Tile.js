@@ -4,6 +4,36 @@ import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
 import styles from "../helpers/styles.js";
 
+const hexPointCoordinates = [
+  [hex.width / 2, 0],
+  [hex.width, hex.height / 4],
+  [hex.width, hex.height * 0.75],
+  [hex.width / 2, hex.height],
+  [0, hex.height * 0.75],
+  [0, hex.height / 4],
+  [hex.width / 2, 0],
+];
+
+const viewboxX1 = hexPointCoordinates.reduce((result, point) => {
+  return Math.min(result, point[0]);
+}, hex.size);
+
+const viewboxY1 = hexPointCoordinates.reduce((result, point) => {
+  return Math.min(result, point[1]);
+}, hex.size);
+
+const viewboxX2 = hexPointCoordinates.reduce((result, point) => {
+  return Math.max(result, point[0] + Math.abs(viewboxX1));
+}, 0);
+
+const viewboxY2 = hexPointCoordinates.reduce((result, point) => {
+  return Math.max(result, point[1] - Math.abs(viewboxY1));
+}, 0);
+
+const hexagonPoints = hexPointCoordinates.reduce((result, point) => {
+  return result + ` ${point[0]},${point[1]}`;
+}, "");
+
 export default class Tile extends PureComponent {
   constructor(props) {
     super(props);
@@ -29,11 +59,6 @@ export default class Tile extends PureComponent {
     return tileKeys[Math.floor(Math.random() * tileKeys.length)];
   };
 
-  randomizer = (number = 1, seed = 1) => {
-    const rand = Math.sin(this.seed) * 10000;
-    return (rand - Math.floor(rand)) * number;
-  };
-
   render() {
     const { x, y, zIndex, top, left } = {
       ...this.props,
@@ -53,25 +78,24 @@ export default class Tile extends PureComponent {
         <style jsx global>{`
           .tile {
             position: absolute;
-          }
-
-          .tileOutlines {
-            position: absolute;
-            left: 0; top: 0;
-            width: 100%;
-            height: 100%;
-            background: url("/static/hex.png") center center no-repeat;
+            background: url("/static/hex.svg") center center no-repeat;
             background-size: cover;
           }
 
+          .tileOutline {
+            width: 100%;
+          }
+
           .tileTarget {
+            position: absolute;
+            left: 0;
             top: ${hex.height * 0.125}${hex.unit};
             height: ${hex.height * 0.75}${hex.unit};
             width: 100%;
-            position: relative;
             pointer-events: all;
+            overflow: hidden;
             cursor: pointer;
-            opacity: 0;
+            {/*opacity: 0;*/}
             outline: none;
             display: flex;
             flex-direction: column;
@@ -86,8 +110,19 @@ export default class Tile extends PureComponent {
           }
         `}</style>
 
-        {/*{targeted &&*/}
-        <div className="tileOutlines" />{/*}*/}
+        <svg
+          className="tileOutline"
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          viewBox={`${viewboxX1} ${viewboxY1} ${viewboxX2} ${viewboxY2}`}
+        >
+          <polygon
+            stroke={targeted ? styles.white : "none"}
+            fill={tile === "water" ? "none" : styles.black}
+            strokeWidth={hex.width / 62}
+            points={hexagonPoints}
+          />
+        </svg>
 
         <button
           className="tileTarget"
