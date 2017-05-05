@@ -129,15 +129,14 @@ export default class Tile extends PureComponent {
             opacity: 1;
           }
 
-          .waterLine {
-            {/*animation: waterLine 1s linear infinite alternate;*/}
-
+          {/*.waterLine {
+            animation: waterLine 1s linear infinite alternate;
           }
 
           @keyframes waterLine {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-          }
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 13; }
+          }*/}
         `}</style>
 
         <svg
@@ -153,7 +152,8 @@ export default class Tile extends PureComponent {
             strokeWidth={waterLineTotalWidth}
             transform={`translate(0, ${waterLineWidth})`}
             strokeLinejoin="round"
-            strokeDasharray="5, 0.5, 3, 0.5"
+            strokeDasharray="5, 0.25, 3, 0.5, 5, 0.333"
+            strokeDashoffset={seed % 100}
             fill="none"
             points={hexagonPoints}
           />
