@@ -2,14 +2,14 @@ export default {
   water: {
     name: "Water",
     rarity: 1,
-    impassable: undefined,
+    impassable: null,
     sailable: true,
-    difficult: undefined,
+    difficult: null,
     axes: {
       water: {
         max: 10,
         min: 10,
-        upgrade: undefined,
+        upgrade: null,
         downgrade: "shoal",
       },
       heat: {
@@ -19,15 +19,15 @@ export default {
         downgrade: "ice",
       },
     },
-    onChange: undefined,
-    onSpawn: undefined,
-    onDeath: undefined,
+    onChange: null,
+    onSpawn: null,
+    onDeath: null,
   },
 
   shoal: {
     name: "Shoal",
     rarity: 1,
-    impassable: undefined,
+    impassable: null,
     sailable: true,
     difficult: true,
     axes: {
@@ -35,17 +35,42 @@ export default {
         max: 10,
         min: 10,
         upgrade: "water",
-        downgrade: "ground",
+        downgrade: "plains",
       },
       heat: {
         max: 10,
         min: 10,
-        upgrade: "ground",
+        upgrade: "plains",
         downgrade: "ice",
       },
     },
-    onChange: undefined,
-    onSpawn: undefined,
-    onDeath: undefined,
+    onChange: null,
+    onSpawn: null,
+    onDeath: null,
+  },
+
+  plains: {
+    name: "Plains",
+    rarity: 1,
+    impassable: null,
+    sailable: null,
+    difficult: null,
+    axes: {
+      water: {
+        max: 10,
+        min: 10,
+        upgrade: "wetland",
+        downgrade: "shoal",
+      },
+      heat: {
+        max: 10,
+        min: 10,
+        upgrade: "plains",
+        downgrade: "tundra",
+      },
+    },
+    onChange: null,
+    onSpawn: null,
+    onDeath: null,
   },
 };
