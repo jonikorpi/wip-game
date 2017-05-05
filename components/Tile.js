@@ -25,7 +25,13 @@ export default class Tile extends PureComponent {
   };
 
   randomizeTile = () => {
-    this.setState({ tile: this.getRandomTile() });
+    let tile = this.getRandomTile();
+
+    while (tile === this.state.tile) {
+      tile = this.getRandomTile();
+    }
+
+    this.setState({ tile: tile });
   };
 
   getRandomTile = () => {
