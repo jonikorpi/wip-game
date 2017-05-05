@@ -58,7 +58,8 @@ function getCacheKey(req) {
 }
 
 function renderAndCache(req, res, pagePath, queryParams) {
-  trackVisit(req, res, pagePath);
+  // TODO:
+  // trackVisit(req, res, pagePath);
 
   // If we have a page in the cache, let's serve it
   const key = getCacheKey(req);
