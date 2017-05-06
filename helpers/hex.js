@@ -1,4 +1,4 @@
-const size = 13;
+const size = 11;
 const unit = "vmin";
 const height = size;
 const width = Math.sqrt(3) / 2 * size * 2;
