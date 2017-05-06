@@ -16,10 +16,10 @@ export default ({ x, y, zIndex }) => {
     [0, hex.height / 4],
   ];
 
-  const randomRange = hex.size / 9;
+  const randomRange = hex.size / 3;
   const horizontalPadding = hex.width / 4;
   const verticalPadding = hex.height / 4;
-  const roundingWidth = hex.size / 10;
+  const roundingWidth = hex.size / 5;
   const waterLineWidth = hex.size / 50;
   const waterLineTotalWidth = roundingWidth + waterLineWidth;
 
