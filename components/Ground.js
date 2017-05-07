@@ -95,6 +95,12 @@ export default ({ x, y, zIndex }) => {
           fill={styles.black}
           points={hexagonPoints}
         />
+
+        <Entity
+          x={horizontalPadding + hex.width / 2}
+          y={verticalPadding + hex.height / 2}
+          type="human"
+        />
       </svg>
     </div>
   );
