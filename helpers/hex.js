@@ -99,6 +99,8 @@ export default {
   perRow: perRow,
   perColumn: perColumn,
   perCell: perRow * perColumn,
+  horizontalPadding: width,
+  verticalPadding: height,
 
   direction: direction,
   toHex: toHex,

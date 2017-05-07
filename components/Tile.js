@@ -87,9 +87,9 @@ export default class Tile extends PureComponent {
         `}</style>
 
         {!tile.sailable && <Ground x={x} y={y} zIndex={zIndex} />}
-        {tile.sailable &&
+        {/*{tile.sailable &&
           tile.difficult &&
-          <Rocks x={x} y={y} zIndex={zIndex} />}
+          <Rocks x={x} y={y} zIndex={zIndex} />}*/}
 
         <button
           className="tileTarget"
