@@ -3,4 +3,12 @@ export default {
     const rand = Math.sin(seed) * 10000;
     return Math.abs((rand - Math.floor(rand)) * number);
   },
+
+  toIsometric: (x, y) => {
+    return [x + y, y - x / 2];
+  },
+
+  fromIsometric: (isoX, isoY) => {
+    return [(isoX - isoY) / 1.5, isoX / 3.0 + isoY / 1.5];
+  },
 };
