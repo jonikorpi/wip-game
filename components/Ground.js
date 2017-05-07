@@ -4,6 +4,8 @@ import hex from "../helpers/hex.js";
 import maths from "../helpers/maths.js";
 import styles from "../helpers/styles.js";
 
+import Entity from "../components/Entity.js";
+
 const hexPointCoordinates = [
   [hex.width / 3, hex.height / 13],
   [hex.width / 2, 0],
@@ -52,8 +54,8 @@ export default ({ x, y, zIndex }) => {
       <style jsx>{`
         .tileOutline {
           position: absolute;
-          left: -${horizontalPadding}${hex.unit};
-          top: -${verticalPadding}${hex.unit};
+          left: -${horizontalPadding * hex.renderingSize}${hex.unit};
+          top: -${verticalPadding * hex.renderingSize}${hex.unit};
           width: ${(horizontalPadding + hex.width * 2) / horizontalPadding * 100}%;
           height: ${(verticalPadding + hex.height * 2) / verticalPadding * 100}%;
         }
@@ -72,7 +74,7 @@ export default ({ x, y, zIndex }) => {
           strokeWidth={waterLineTotalWidth}
           transform={`translate(0, ${waterLineWidth})`}
           strokeLinejoin="round"
-          strokeDasharray="5, 0.25, 3, 0.5, 5, 0.333"
+          strokeDasharray={`${hex.size / 20}, ${hex.size / 30}, ${hex.size / 3}, ${hex.size / 30}, ${hex.size / 2}, ${hex.size / 25}`}
           strokeDashoffset={seed % 100}
           fill="none"
           points={hexagonPoints}

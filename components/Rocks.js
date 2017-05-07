@@ -38,8 +38,8 @@ export default ({ x, y, zIndex }) => {
       <style jsx>{`
         .tileOutline {
           position: absolute;
-          left: -${hex.width / 4}${hex.unit};
-          top: -${hex.height / 4}${hex.unit};
+          left: -${hex.width / 4 * hex.renderingSize}${hex.unit};
+          top: -${hex.height / 4 * hex.renderingSize}${hex.unit};
           width: 150%;
           height: 150%;
         }

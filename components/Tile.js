@@ -49,10 +49,10 @@ export default class Tile extends PureComponent {
       <div
         className="tile"
         style={{
-          height: hex.height + hex.unit,
-          width: hex.width + hex.unit,
-          left: left + hex.unit,
-          top: top + hex.unit,
+          height: hex.height * hex.renderingSize + hex.unit,
+          width: hex.width * hex.renderingSize + hex.unit,
+          left: left * hex.renderingSize + hex.unit,
+          top: top * hex.renderingSize + hex.unit,
         }}
       >
         <style jsx>{`
@@ -65,8 +65,8 @@ export default class Tile extends PureComponent {
           .tileTarget {
             position: absolute;
             left: 0;
-            top: ${hex.height * 0.125}${hex.unit};
-            height: ${hex.height * 0.75}${hex.unit};
+            top: ${hex.height * hex.renderingSize * 0.125}${hex.unit};
+            height: ${hex.height * hex.renderingSize * 0.75}${hex.unit};
             width: 100%;
             pointer-events: all;
             overflow: hidden;

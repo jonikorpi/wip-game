@@ -1,4 +1,5 @@
-const size = 11;
+const size = 64;
+const renderingSize = 0.18;
 const unit = "vmin";
 const height = size;
 const width = Math.sqrt(3) / 2 * size * 2;
@@ -91,6 +92,7 @@ const pixelCoordinates = hex => {
 
 export default {
   size: size,
+  renderingSize: renderingSize,
   unit: unit,
   height: height,
   width: width,
