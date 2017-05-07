@@ -35,8 +35,9 @@ const hexPointCoordinates = [
 
 const randomRange = hex.size / 10;
 const roundingWidth = hex.size / 9;
-const waterLineWidth = hex.size / 50;
-const waterLineTotalWidth = roundingWidth + waterLineWidth;
+const waterLineWidth = hex.size / 62;
+const waveLength = hex.size / 3;
+const waveGap = hex.size / 11;
 
 export default ({ x, y, zIndex }) => {
   let seed = (x || 1) * (y || 2);
@@ -51,13 +52,12 @@ export default ({ x, y, zIndex }) => {
   return (
     <div className="ground">
       <style jsx global>{`
-        {/*.waterLine {
-          transform: translateZ(0);
-          backface-visibility: hidden;
-          animation: waterLine 6s linear infinite alternate;
+        .waterLine {
+          {/*backface-visibility: hidden;
+          animation: waterLine 6s linear infinite alternate;*/}
         }
 
-        @keyframes waterLine {
+        {/*@keyframes waterLine {
           0%, 62% { transform: scale(0.944); }
           100%    { transform: scale(1); }
         }*/}
@@ -67,15 +67,15 @@ export default ({ x, y, zIndex }) => {
         className="waterLine"
         style={{
           zIndex: zIndex - 20,
-          animationDelay: maths.random(6, seed++) + "s",
         }}
       >
         <polygon
           stroke={styles.white}
-          strokeWidth={waterLineTotalWidth}
+          strokeWidth={waterLineWidth + roundingWidth}
           transform={`translate(0, ${waterLineWidth})`}
+          strokeLinecap="round"
           strokeLinejoin="round"
-          strokeDasharray={`${hex.size / 20}, ${hex.size / 30}, ${hex.size / 3}, ${hex.size / 30}, ${hex.size / 2}, ${hex.size / 25}`}
+          strokeDasharray={`${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}`}
           strokeDashoffset={seed % 100}
           fill="none"
           points={hexagonPoints}
