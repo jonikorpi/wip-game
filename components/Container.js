@@ -13,7 +13,7 @@ import tiles from "../helpers/tiles.js";
 import maths from "../helpers/maths.js";
 
 const xPixelOffset = hex.perRow * 0.5;
-const cellPaddingX = hex.width * (hex.perRow / 2);
+const cellPaddingX = hex.width * (hex.perRow / 2) + hex.width;
 const cellPaddingY = hex.height * 2;
 
 export default class Container extends PureComponent {
