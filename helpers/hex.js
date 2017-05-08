@@ -115,8 +115,8 @@ export default {
   ringFrom: ringFrom,
   pixelCoordinates: pixelCoordinates,
 
-  roundingWidth: size / 6,
-  randomRange: size / 16,
+  roundingWidth: size / 7,
+  randomRange: size / 14,
   ridgeHeight: size / 6.5,
   waterLineWidth: size / 40,
   waveLength: size / 6,
