@@ -39,7 +39,7 @@ export default class Container extends PureComponent {
       const pixelCoordinates = hex.pixelCoordinates([x - xPixelOffset, y]);
 
       return {
-        key: index,
+        key: `${coordinates[0]},${coordinates[1]}`,
         index: index,
         x: coordinates[0],
         y: coordinates[1],
