@@ -1,8 +1,10 @@
+const waterHue = 200;
+
 export default {
   black: "black",
   white: "white",
-  water: "hsl(200, 76.4%, 38.2%)",
+  water: `hsl(${waterHue}, 76.4%, 41.4%)`,
   ground: "black",
-  rock: "#333",
-  wave: "rgba(255, 255, 255, 0.5)",
+  rock: "#444",
+  wave: `hsl(${waterHue}, 76.4%, 61.8%)`,
 };

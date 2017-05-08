@@ -33,15 +33,17 @@ const hexCoordinates = [
   [hex.width / 9 * 2, hex.height / 13 * 2],
 ];
 
-const randomRange = hex.size / 10;
-const roundingWidth = hex.size / 9;
-const waterLineWidth = hex.size / 58.6;
-const waveLength = hex.size / 5;
-const waveGap = hex.size / 8;
+const randomRange = hex.size / 12;
+const roundingWidth = hex.size / 8;
+const waterLineWidth = hex.size / 75;
+const waveLength = hex.size / 6;
+const waveGap = hex.size / 18;
 
-const outerWaterLineOffset = roundingWidth * 1.236;
-const outerWaveLength = waveLength / 1.618;
-const outerWaveGap = waveGap;
+const outerWaterLineOffset = roundingWidth * 1.146;
+const outerWaveLength = waveLength;
+const outerWaveGap = waveGap * 2;
+
+const ridgeHeight = hex.size / 7;
 
 export default ({ x, y, zIndex }) => {
   let seed = (x || 1) * (y || 2);
@@ -59,7 +61,7 @@ export default ({ x, y, zIndex }) => {
   });
 
   const waterLinePoints = hexPoints.reduce((result, point) => {
-    return `${result} ${point[0]},${point[1]}`;
+    return `${result} ${point[0]},${point[1] + ridgeHeight}`;
   }, "");
 
   const outerWaterLinePoints = hexPoints.reduce((result, point) => {
@@ -69,9 +71,14 @@ export default ({ x, y, zIndex }) => {
         (point[0] < hex.horizontalPadding + hex.width / 2 ? -1 : 1);
     const yPoint =
       point[1] +
+      ridgeHeight +
       outerWaterLineOffset *
         (point[1] < hex.verticalPadding + hex.height / 2 ? -1 : 1);
     return `${result} ${xPoint},${yPoint}`;
+  }, "");
+
+  const ridgePoints = hexPoints.reduce((result, point) => {
+    return `${result} ${point[0]},${point[1] + ridgeHeight}`;
   }, "");
 
   const groundPoints = hexPoints.reduce((result, point) => {
@@ -95,14 +102,13 @@ export default ({ x, y, zIndex }) => {
       <SVG
         className="waterLine"
         style={{
-          zIndex: zIndex - 20,
+          zIndex: zIndex - 70,
         }}
       >
         <polygon
           stroke={styles.white}
           strokeWidth={waterLineWidth + roundingWidth}
           transform={`translate(0, ${waterLineWidth})`}
-          strokeLinecap="round"
           strokeLinejoin="round"
           strokeDasharray={`${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}`}
           strokeDashoffset={seed % 100}
@@ -114,19 +120,28 @@ export default ({ x, y, zIndex }) => {
       <SVG
         className="outerWaterLine"
         style={{
-          zIndex: zIndex - 20,
+          zIndex: zIndex - 50,
         }}
       >
         <polygon
           stroke={styles.wave}
           strokeWidth={waterLineWidth}
           transform={`translate(0, ${waterLineWidth})`}
-          strokeLinecap="round"
           strokeLinejoin="round"
           strokeDasharray={`${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(waveGap, seed++)}`}
           strokeDashoffset={seed % 100}
           fill="none"
           points={outerWaterLinePoints}
+        />
+      </SVG>
+
+      <SVG style={{ zIndex: zIndex - 30 }}>
+        <polygon
+          stroke={styles.rock}
+          strokeWidth={roundingWidth}
+          strokeLinejoin="round"
+          fill={styles.rock}
+          points={ridgePoints}
         />
       </SVG>
 
@@ -137,12 +152,6 @@ export default ({ x, y, zIndex }) => {
           strokeLinejoin="round"
           fill={styles.black}
           points={groundPoints}
-        />
-
-        <Entity
-          x={hex.horizontalPadding + hex.width / 2}
-          y={hex.verticalPadding + hex.height / 2}
-          type="human"
         />
       </SVG>
     </div>
