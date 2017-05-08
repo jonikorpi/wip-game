@@ -1,4 +1,4 @@
-export default {
+const tiles = {
   water: {
     name: "Water",
     rarity: 1,
@@ -24,30 +24,30 @@ export default {
     onDeath: null,
   },
 
-  shoal: {
-    name: "Shoal",
-    rarity: 1,
-    impassable: null,
-    sailable: true,
-    difficult: true,
-    axes: {
-      water: {
-        max: 10,
-        min: 10,
-        upgrade: "water",
-        downgrade: "plains",
-      },
-      heat: {
-        max: 10,
-        min: 10,
-        upgrade: "plains",
-        downgrade: "ice",
-      },
-    },
-    onChange: null,
-    onSpawn: null,
-    onDeath: null,
-  },
+  // shoal: {
+  //   name: "Shoal",
+  //   rarity: 1,
+  //   impassable: null,
+  //   sailable: true,
+  //   difficult: true,
+  //   axes: {
+  //     water: {
+  //       max: 10,
+  //       min: 10,
+  //       upgrade: "water",
+  //       downgrade: "plains",
+  //     },
+  //     heat: {
+  //       max: 10,
+  //       min: 10,
+  //       upgrade: "plains",
+  //       downgrade: "ice",
+  //     },
+  //   },
+  //   onChange: null,
+  //   onSpawn: null,
+  //   onDeath: null,
+  // },
 
   plains: {
     name: "Plains",
@@ -72,5 +72,17 @@ export default {
     onChange: null,
     onSpawn: null,
     onDeath: null,
+  },
+};
+
+export default {
+  tiles: tiles,
+
+  getRandomTile: () => {
+    const tileKeys = Object.keys(tiles);
+    const tileKey = tileKeys[Math.floor(Math.random() * tileKeys.length)];
+    let tile = tiles[tileKey];
+    tile.type = tileKey;
+    return tile;
   },
 };

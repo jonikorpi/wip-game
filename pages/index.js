@@ -59,16 +59,8 @@ export default class Home extends Component {
               return (
                 <Grid
                   cellRenderer={cellRenderer}
-                  columnWidth={
-                    hex.perRow * hex.width * units[hex.unit] * hex.renderingSize
-                  }
-                  rowHeight={
-                    hex.perColumn *
-                      hex.height *
-                      0.75 *
-                      units[hex.unit] *
-                      hex.renderingSize
-                  }
+                  columnWidth={hex.cellWidth * units[hex.unit]}
+                  rowHeight={hex.cellHeight * units[hex.unit]}
                   height={height}
                   width={width}
                   className="scroller"

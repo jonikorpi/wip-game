@@ -1,12 +1,75 @@
 import React, { PureComponent } from "react";
 
 import Tile from "../components/Tile.js";
+import SVG from "../components/SVG.js";
+import Ground from "../components/Ground.js";
+import Ridge from "../components/Ridge.js";
+import WaterLine from "../components/WaterLine.js";
+import OuterWaterLine from "../components/OuterWaterLine.js";
+import Reflection from "../components/Reflection.js";
 
 import hex from "../helpers/hex.js";
+import tiles from "../helpers/tiles.js";
+import maths from "../helpers/maths.js";
+
+const xPixelOffset = hex.perRow * 0.5;
+const cellPaddingX = hex.width * (hex.perRow / 2);
+const cellPaddingY = hex.height * 2;
 
 export default class Container extends PureComponent {
   render() {
     const { cellX, cellY } = { ...this.props };
+    const xOffset = cellY % 2 === 0 ? 0 : hex.perRow * 0.5;
+    let zIndex = 1;
+
+    const svgStyle = {
+      left: -cellPaddingX * hex.renderingSize + hex.unit,
+      right: -cellPaddingX * hex.renderingSize + hex.unit,
+      top: -cellPaddingY * hex.renderingSize + hex.unit,
+      bottom: -cellPaddingY * hex.renderingSize + hex.unit,
+    };
+
+    const svgViewBox = `${-cellPaddingX} ${-cellPaddingY} ${hex.cellWidth / hex.renderingSize + cellPaddingX * 2} ${hex.cellHeight / hex.renderingSize + cellPaddingY * 2}`;
+
+    const tileList = [...Array(hex.perCell).keys()].map(index => {
+      const y = Math.floor(index / hex.perColumn);
+      const x = index % hex.perRow + xOffset;
+
+      const coordinates = [x + cellX * hex.perRow, y + cellY * hex.perColumn];
+      const pixelCoordinates = hex.pixelCoordinates([x - xPixelOffset, y]);
+
+      return {
+        key: index,
+        index: index,
+        x: coordinates[0],
+        y: coordinates[1],
+        left: pixelCoordinates[0],
+        top: pixelCoordinates[1],
+        zIndex: cellY + coordinates[1],
+        tile: tiles.getRandomTile(),
+      };
+    });
+
+    const groundTileList = tileList.filter(tile => {
+      return !tile.tile.sailable;
+    });
+
+    const groundTileListWithCoordinates = groundTileList.map(tile => {
+      let seed = (tile.x || 1) * (tile.y || 2);
+
+      tile.hexPoints = hex.baseHexCoordinates.map(point => {
+        return [
+          point[0] +
+            maths.random(hex.randomRange, seed++) *
+              (point[0] < hex.width / 2 ? -1 : 1),
+          point[1] +
+            maths.random(hex.randomRange, seed++) *
+              (point[1] < hex.height / 2 ? -0.5 : 0.5),
+        ];
+      });
+
+      return tile;
+    });
 
     return (
       <div
@@ -24,30 +87,38 @@ export default class Container extends PureComponent {
           }
         `}</style>
 
-        {[...Array(hex.perCell).keys()].map(index => {
-          const xOffset = cellY % 2 === 0 ? 0 : hex.perRow * 0.5;
-          const xPixelOffset = hex.perRow * -0.5;
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+          {groundTileListWithCoordinates.map(tile => {
+            return <Reflection {...tile} />;
+          })}
+        </SVG>
 
-          const y = Math.floor(index / hex.perColumn);
-          const x = index % hex.perRow + xOffset;
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+          {groundTileListWithCoordinates.map(tile => {
+            return <OuterWaterLine {...tile} />;
+          })}
+        </SVG>
 
-          const coordinates = [
-            x + cellX * hex.perRow,
-            y + cellY * hex.perColumn,
-          ];
-          const pixelCoordinates = hex.pixelCoordinates([x + xPixelOffset, y]);
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+          {groundTileListWithCoordinates.map(tile => {
+            return <WaterLine {...tile} />;
+          })}
+        </SVG>
 
-          return (
-            <Tile
-              key={index}
-              index={index}
-              x={coordinates[0]}
-              y={coordinates[1]}
-              left={pixelCoordinates[0]}
-              top={pixelCoordinates[1]}
-              zIndex={cellY + coordinates[1]}
-            />
-          );
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+          {groundTileListWithCoordinates.map(tile => {
+            return <Ridge {...tile} />;
+          })}
+        </SVG>
+
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+          {groundTileListWithCoordinates.map(tile => {
+            return <Ground {...tile} />;
+          })}
+        </SVG>
+
+        {tileList.map(tile => {
+          return <Tile {...tile} />;
         })}
       </div>
     );

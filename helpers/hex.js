@@ -102,6 +102,9 @@ export default {
   horizontalPadding: width,
   verticalPadding: height,
 
+  cellWidth: perRow * width * renderingSize,
+  cellHeight: perColumn * height * 0.75 * renderingSize,
+
   direction: direction,
   toHex: toHex,
   toCube: toCube,
@@ -111,4 +114,39 @@ export default {
   hexesWithin: hexesWithin,
   ringFrom: ringFrom,
   pixelCoordinates: pixelCoordinates,
+
+  roundingWidth: size / 6,
+  randomRange: size / 16,
+  ridgeHeight: size / 6.5,
+  waterLineWidth: size / 40,
+  waveLength: size / 6,
+  waveGap: size / 18 * 0,
+  outerWaterLineOffset: size / 6,
+  outerWaveLength: size / 6 * 3,
+  outerWaveGap: size / 1.5,
+  baseHexCoordinates: [
+    [0, height / 8 * 3],
+    [0, height / 4],
+    [width / 9 * 2, height / 13 * 2],
+
+    [width / 3, height / 13],
+    [width / 2, 0],
+    [width / 3 * 2, height / 13],
+
+    [width / 9 * 7, height / 13 * 2],
+    [width, height / 4],
+    [width, height / 8 * 3],
+
+    [width, height / 8 * 5],
+    [width, height * 0.75],
+    [width / 8 * 7, height / 5 * 4],
+
+    [width / 8 * 5, height / 13 * 12],
+    [width / 2, height],
+    [width / 8 * 3, height / 13 * 12],
+
+    [width / 9 * 2, height / 6 * 5],
+    [0, height * 0.75],
+    [0, height / 8 * 5],
+  ],
 };

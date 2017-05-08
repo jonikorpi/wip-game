@@ -12,7 +12,7 @@ export default class Tile extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { targeted: false, tile: this.getRandomTile() };
+    this.state = { targeted: false };
   }
 
   target = () => {
@@ -23,27 +23,11 @@ export default class Tile extends PureComponent {
     this.setState({ targeted: false });
   };
 
-  randomizeTile = () => {
-    let tile = this.getRandomTile();
-
-    while (tile === this.state.tile) {
-      tile = this.getRandomTile();
-    }
-
-    this.setState({ tile: tile });
-  };
-
-  getRandomTile = () => {
-    const tileKeys = Object.keys(tiles);
-    const tile = tileKeys[Math.floor(Math.random() * tileKeys.length)];
-    return tiles[tile];
-  };
-
   render() {
-    const { x, y, zIndex, top, left } = {
+    const { x, y, zIndex, top, left, tile } = {
       ...this.props,
     };
-    const { targeted, tile } = { ...this.state };
+    const { targeted } = { ...this.state };
 
     return (
       <div
@@ -86,7 +70,7 @@ export default class Tile extends PureComponent {
           }
         `}</style>
 
-        {!tile.sailable && <Ground x={x} y={y} zIndex={zIndex} />}
+        {/*{!tile.sailable && <Ground x={x} y={y} zIndex={zIndex} />}*/}
         {/*{tile.sailable &&
           tile.difficult &&
           <Rocks x={x} y={y} zIndex={zIndex} />}*/}
@@ -96,7 +80,7 @@ export default class Tile extends PureComponent {
           style={{ zIndex: zIndex }}
           onMouseEnter={this.target}
           onMouseLeave={this.untarget}
-          onClick={this.randomizeTile}
+          //onClick={this.randomizeTile}
           // TODO: handle tapping vs. colliding with scroll
           // onTouchStart={this.handleTouchStart}
           // onTouchEnd={this.handleTouchEnd}

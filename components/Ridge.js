@@ -4,17 +4,17 @@ import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
 export default ({ x, y, left, top, hexPoints }) => {
-  const groundPoints = hexPoints.reduce((result, point) => {
-    return `${result} ${point[0]},${point[1]}`;
+  const ridgePoints = hexPoints.reduce((result, point) => {
+    return `${result} ${point[0]},${point[1] + hex.ridgeHeight}`;
   }, "");
 
   return (
     <polygon
-      stroke={styles.black}
+      stroke={styles.rock}
       strokeWidth={hex.roundingWidth}
       strokeLinejoin="round"
-      fill={styles.black}
-      points={groundPoints}
+      fill={styles.rock}
+      points={ridgePoints}
       transform={`translate(${left}, ${top})`}
     />
   );

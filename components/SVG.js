@@ -2,16 +2,19 @@ import React from "react";
 
 import hex from "../helpers/hex.js";
 
-export default ({ children, style, className }) => {
+export default ({ children, style, className, viewBox }) => {
   return (
     <div className={`svgContainer ${className ? className : ""}`} style={style}>
       <style jsx>{`
         .svgContainer {
           position: absolute;
-          left: -${hex.horizontalPadding * hex.renderingSize}${hex.unit};
-          top: -${hex.verticalPadding * hex.renderingSize}${hex.unit};
-          width: ${(hex.horizontalPadding + hex.width * 2) / hex.horizontalPadding * 100}%;
-          height: ${(hex.verticalPadding + hex.height * 2) / hex.verticalPadding * 100}%;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          {/*outline: 1px solid currentcolor;*/}
+          {/*width: ${(hex.horizontalPadding + hex.width * 2) / hex.horizontalPadding * 100}%;
+          height: ${(hex.verticalPadding + hex.height * 2) / hex.verticalPadding * 100}%;*/}
         }
 
         .svg {
@@ -24,7 +27,10 @@ export default ({ children, style, className }) => {
         className="svg"
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
-        viewBox={`0 0 ${hex.width + hex.horizontalPadding * 2} ${hex.height + hex.verticalPadding * 2}`}
+        viewBox={
+          viewBox ||
+            `0 0 ${hex.width + hex.horizontalPadding * 2} ${hex.height + hex.verticalPadding * 2}`
+        }
       >
         {children}
       </svg>

@@ -7,5 +7,5 @@ export default {
   ground: "black",
   rock: "#444",
   wave: `hsl(${waterHue}, 76.4%, 61.8%)`,
-  sunken: `hsl(${waterHue}, 76.4%, 30%)`,
+  reflection: `hsl(${waterHue}, 76.4%, 30%)`,
 };
