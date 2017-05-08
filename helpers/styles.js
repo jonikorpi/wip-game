@@ -2,7 +2,7 @@ const waterHue = 200;
 
 export default {
   black: "black",
-  white: "white",
+  white: `white`,
   water: `hsl(${waterHue}, 76.4%, 41.4%)`,
   ground: "black",
   rock: "#444",

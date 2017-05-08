@@ -122,8 +122,8 @@ export default {
   waveLength: size / 6,
   waveGap: size / 18 * 0,
   outerWaterLineOffset: size / 6,
-  outerWaveLength: size / 6 * 3,
-  outerWaveGap: size / 1.5,
+  outerWaveLength: size / 6,
+  outerWaveGap: size / 6 * 0,
   baseHexCoordinates: [
     [0, height / 8 * 3],
     [0, height / 4],

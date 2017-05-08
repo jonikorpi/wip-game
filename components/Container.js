@@ -87,6 +87,15 @@ export default class Container extends PureComponent {
             pointer-events: none;
             {/*border: 2px solid;*/}
           }
+
+          .waterLine {
+            animation: waterLine 1s steps(2, start) infinite;
+          }
+
+          @keyframes waterLine {
+            from { opacity: 1  }
+            to { opacity: 0  }
+          }
         `}</style>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
@@ -102,16 +111,41 @@ export default class Container extends PureComponent {
           </g>
         </SVG>
 
-        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+        <SVG
+          style={{ ...svgStyle, zIndex: zIndex++ }}
+          viewBox={svgViewBox}
+          className="waterLine"
+        >
           <g
-            stroke={styles.white}
+            stroke={styles.wave}
             strokeWidth={hex.waterLineWidth}
             strokeLinejoin="round"
             strokeDasharray={`${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}`}
             fill="none"
           >
             {groundTileListWithCoordinates.map(tile => {
-              return <OuterWaterLine {...tile} />;
+              return (
+                <OuterWaterLine
+                  {...tile}
+                  offset={hex.outerWaterLineOffset + hex.waterLineWidth}
+                />
+              );
+            })}
+          </g>
+        </SVG>
+
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+          <g
+            stroke={styles.wave}
+            strokeWidth={hex.waterLineWidth}
+            strokeLinejoin="round"
+            strokeDasharray={`${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}`}
+            fill="none"
+          >
+            {groundTileListWithCoordinates.map(tile => {
+              return (
+                <OuterWaterLine {...tile} offset={hex.outerWaterLineOffset} />
+              );
             })}
           </g>
         </SVG>

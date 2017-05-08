@@ -13,8 +13,6 @@ export default ({ children, style, className, viewBox }) => {
           right: 0;
           bottom: 0;
           {/*outline: 1px solid currentcolor;*/}
-          {/*width: ${(hex.horizontalPadding + hex.width * 2) / hex.horizontalPadding * 100}%;
-          height: ${(hex.verticalPadding + hex.height * 2) / hex.verticalPadding * 100}%;*/}
         }
 
         .svg {
