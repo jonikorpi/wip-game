@@ -88,14 +88,21 @@ export default class Container extends PureComponent {
             {/*border: 2px solid;*/}
           }
 
-          {/*.waterLine {
-            animation: waterLine 1s steps(2, start) infinite;
+          .waterLine {
+            animation: swell 13s infinite;
           }
 
-          @keyframes waterLine {
-            from { opacity: 1  }
-            to { opacity: 0  }
-          }*/}
+          @keyframes swell {
+            0% { opacity:1; }
+          	15% { opacity:0; }
+          	35% { opacity:1; }
+            55% { opacity:0; }
+            75% { opacity:1; }
+            95% { opacity:0; }
+            100% { opacity:1; }
+        }
+
+
         `}</style>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
@@ -134,7 +141,7 @@ export default class Container extends PureComponent {
           </g>
         </SVG>
 
-        {/*<SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+        {<SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
           <g
             stroke={styles.wave}
             strokeWidth={hex.waterLineWidth}
@@ -148,7 +155,7 @@ export default class Container extends PureComponent {
               );
             })}
           </g>
-        </SVG>*/}
+        </SVG>}
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
           <g
