@@ -7,7 +7,7 @@ import styles from "../helpers/styles.js";
 import SVG from "../components/SVG.js";
 import Entity from "../components/Entity.js";
 
-const hexPointCoordinates = [
+const hexCoordinates = [
   [hex.width / 3, hex.height / 13],
   [hex.width / 2, 0],
   [hex.width / 3 * 2, hex.height / 13],
@@ -35,18 +35,47 @@ const hexPointCoordinates = [
 
 const randomRange = hex.size / 10;
 const roundingWidth = hex.size / 9;
-const waterLineWidth = hex.size / 62;
-const waveLength = hex.size / 3;
-const waveGap = hex.size / 11;
+const waterLineWidth = hex.size / 58.6;
+const waveLength = hex.size / 5;
+const waveGap = hex.size / 8;
+
+const outerWaterLineOffset = roundingWidth * 1.236;
+const outerWaveLength = waveLength / 1.618;
+const outerWaveGap = waveGap;
 
 export default ({ x, y, zIndex }) => {
   let seed = (x || 1) * (y || 2);
 
-  const hexagonPoints = hexPointCoordinates.reduce((result, point) => {
-    return (
-      result +
-      ` ${hex.horizontalPadding + point[0] + maths.random(randomRange, seed++) * (point[0] < hex.width / 2 ? -1 : 1)},${hex.verticalPadding + point[1] + maths.random(randomRange, seed++) * (point[1] < hex.height / 2 ? -0.5 : 0.5)}`
-    );
+  const hexPoints = hexCoordinates.map(point => {
+    return [
+      point[0] +
+        hex.horizontalPadding +
+        maths.random(randomRange, seed++) * (point[0] < hex.width / 2 ? -1 : 1),
+      point[1] +
+        hex.verticalPadding +
+        maths.random(randomRange, seed++) *
+          (point[1] < hex.height / 2 ? -0.5 : 0.5),
+    ];
+  });
+
+  const waterLinePoints = hexPoints.reduce((result, point) => {
+    return `${result} ${point[0]},${point[1]}`;
+  }, "");
+
+  const outerWaterLinePoints = hexPoints.reduce((result, point) => {
+    const xPoint =
+      point[0] +
+      outerWaterLineOffset *
+        (point[0] < hex.horizontalPadding + hex.width / 2 ? -1 : 1);
+    const yPoint =
+      point[1] +
+      outerWaterLineOffset *
+        (point[1] < hex.verticalPadding + hex.height / 2 ? -1 : 1);
+    return `${result} ${xPoint},${yPoint}`;
+  }, "");
+
+  const groundPoints = hexPoints.reduce((result, point) => {
+    return `${result} ${point[0]},${point[1]}`;
   }, "");
 
   return (
@@ -78,7 +107,26 @@ export default ({ x, y, zIndex }) => {
           strokeDasharray={`${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}, ${waveLength + maths.random(waveLength, seed++)}, ${waveGap + maths.random(waveGap, seed++)}`}
           strokeDashoffset={seed % 100}
           fill="none"
-          points={hexagonPoints}
+          points={waterLinePoints}
+        />
+      </SVG>
+
+      <SVG
+        className="outerWaterLine"
+        style={{
+          zIndex: zIndex - 20,
+        }}
+      >
+        <polygon
+          stroke={styles.wave}
+          strokeWidth={waterLineWidth}
+          transform={`translate(0, ${waterLineWidth})`}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray={`${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(waveGap, seed++)}`}
+          strokeDashoffset={seed % 100}
+          fill="none"
+          points={outerWaterLinePoints}
         />
       </SVG>
 
@@ -88,7 +136,7 @@ export default ({ x, y, zIndex }) => {
           strokeWidth={roundingWidth}
           strokeLinejoin="round"
           fill={styles.black}
-          points={hexagonPoints}
+          points={groundPoints}
         />
 
         <Entity
