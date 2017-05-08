@@ -1,7 +1,6 @@
 import React from "react";
 
 import hex from "../helpers/hex.js";
-import styles from "../helpers/styles.js";
 
 export default ({ x, y, left, top, hexPoints }) => {
   const reflectionPoints = hexPoints.reduce((result, point, index) => {
@@ -10,10 +9,6 @@ export default ({ x, y, left, top, hexPoints }) => {
 
   return (
     <polygon
-      stroke={styles.reflection}
-      strokeWidth={hex.roundingWidth}
-      strokeLinejoin="round"
-      fill={styles.reflection}
       points={reflectionPoints}
       transform={`translate(${left}, ${top})`}
     />

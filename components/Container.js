@@ -11,6 +11,7 @@ import Reflection from "../components/Reflection.js";
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
 import maths from "../helpers/maths.js";
+import styles from "../helpers/styles.js";
 
 const xPixelOffset = hex.perRow * 0.5;
 const cellPaddingX = hex.width * (hex.perRow / 2) + hex.width;
@@ -20,6 +21,7 @@ export default class Container extends PureComponent {
   render() {
     const { cellX, cellY } = { ...this.props };
     const xOffset = cellY % 2 === 0 ? 0 : hex.perRow * 0.5;
+    let seed = (cellX || 123) * (cellY || 456);
     let zIndex = 1;
 
     const svgStyle = {
@@ -55,15 +57,15 @@ export default class Container extends PureComponent {
     });
 
     const groundTileListWithCoordinates = groundTileList.map(tile => {
-      let seed = (tile.x || 1) * (tile.y || 2);
+      let tileSeed = (tile.x || 123) * (tile.y || 456);
 
       tile.hexPoints = hex.baseHexCoordinates.map(point => {
         return [
           point[0] +
-            maths.random(hex.randomRange, seed++) *
+            maths.random(hex.randomRange, tileSeed++) *
               (point[0] < hex.width / 2 ? -1 : 1),
           point[1] +
-            maths.random(hex.randomRange, seed++) *
+            maths.random(hex.randomRange, tileSeed++) *
               (point[1] < hex.height / 2 ? -0.5 : 0.5),
         ];
       });
@@ -88,33 +90,70 @@ export default class Container extends PureComponent {
         `}</style>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          {groundTileListWithCoordinates.map(tile => {
-            return <Reflection {...tile} />;
-          })}
+          <g
+            stroke={styles.reflection}
+            strokeWidth={hex.roundingWidth}
+            strokeLinejoin="round"
+            fill={styles.reflection}
+          >
+            {groundTileListWithCoordinates.map(tile => {
+              return <Reflection {...tile} />;
+            })}
+          </g>
         </SVG>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          {groundTileListWithCoordinates.map(tile => {
-            return <OuterWaterLine {...tile} />;
-          })}
+          <g
+            stroke={styles.white}
+            strokeWidth={hex.waterLineWidth}
+            strokeLinejoin="round"
+            strokeDasharray={`${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}`}
+            fill="none"
+          >
+            {groundTileListWithCoordinates.map(tile => {
+              return <OuterWaterLine {...tile} />;
+            })}
+          </g>
         </SVG>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          {groundTileListWithCoordinates.map(tile => {
-            return <WaterLine {...tile} />;
-          })}
+          <g
+            stroke={styles.white}
+            strokeWidth={hex.waterLineWidth + hex.roundingWidth}
+            fill="none"
+            strokeLinejoin="round"
+            strokeDasharray={`${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}, ${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}, ${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}, ${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}`}
+          >
+            {groundTileListWithCoordinates.map(tile => {
+              return <WaterLine {...tile} />;
+            })}
+          </g>
         </SVG>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          {groundTileListWithCoordinates.map(tile => {
-            return <Ridge {...tile} />;
-          })}
+          <g
+            stroke={styles.rock}
+            strokeWidth={hex.roundingWidth}
+            strokeLinejoin="round"
+            fill={styles.rock}
+          >
+            {groundTileListWithCoordinates.map(tile => {
+              return <Ridge {...tile} />;
+            })}
+          </g>
         </SVG>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          {groundTileListWithCoordinates.map(tile => {
-            return <Ground {...tile} />;
-          })}
+          <g
+            stroke={styles.black}
+            strokeWidth={hex.roundingWidth}
+            strokeLinejoin="round"
+            fill={styles.black}
+          >
+            {groundTileListWithCoordinates.map(tile => {
+              return <Ground {...tile} />;
+            })}
+          </g>
         </SVG>
 
         {tileList.map(tile => {

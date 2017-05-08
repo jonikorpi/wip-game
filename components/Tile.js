@@ -1,12 +1,8 @@
 import React, { PureComponent } from "react";
 
-import Ground from "../components/Ground";
-import Rocks from "../components/Rocks";
-
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
 import styles from "../helpers/styles.js";
-import maths from "../helpers/maths.js";
 
 export default class Tile extends PureComponent {
   constructor(props) {
@@ -69,11 +65,6 @@ export default class Tile extends PureComponent {
             opacity: 1;
           }
         `}</style>
-
-        {/*{!tile.sailable && <Ground x={x} y={y} zIndex={zIndex} />}*/}
-        {/*{tile.sailable &&
-          tile.difficult &&
-          <Rocks x={x} y={y} zIndex={zIndex} />}*/}
 
         <button
           className="tileTarget"
