@@ -33,17 +33,17 @@ const hexCoordinates = [
   [hex.width / 9 * 2, hex.height / 13 * 2],
 ];
 
-const randomRange = hex.size / 12;
-const roundingWidth = hex.size / 8;
-const waterLineWidth = hex.size / 75;
+const randomRange = hex.size / 16;
+const roundingWidth = hex.size / 6;
+const waterLineWidth = hex.size / 40;
 const waveLength = hex.size / 6;
-const waveGap = hex.size / 18;
+const waveGap = hex.size / 18 * 0;
 
-const outerWaterLineOffset = roundingWidth * 1.146;
-const outerWaveLength = waveLength;
-const outerWaveGap = waveGap * 2;
+const outerWaterLineOffset = roundingWidth;
+const outerWaveLength = waveLength * 3;
+const outerWaveGap = hex.size / 1.5;
 
-const ridgeHeight = hex.size / 7;
+const ridgeHeight = hex.size / 6.5;
 
 export default ({ x, y, zIndex }) => {
   let seed = (x || 1) * (y || 2);
@@ -77,6 +77,10 @@ export default ({ x, y, zIndex }) => {
     return `${result} ${xPoint},${yPoint}`;
   }, "");
 
+  const sunkenPoints = hexPoints.reduce((result, point) => {
+    return `${result} ${point[0]},${point[1] * (point[1] < hex.verticalPadding + hex.height / 2 ? 1 : 1.2)}`;
+  }, "");
+
   const ridgePoints = hexPoints.reduce((result, point) => {
     return `${result} ${point[0]},${point[1] + ridgeHeight}`;
   }, "");
@@ -99,10 +103,38 @@ export default ({ x, y, zIndex }) => {
         }*/}
       `}</style>
 
+      <SVG style={{ zIndex: zIndex - 80 }}>
+        <polygon
+          stroke={styles.sunken}
+          strokeWidth={roundingWidth}
+          strokeLinejoin="round"
+          fill={styles.sunken}
+          points={sunkenPoints}
+        />
+      </SVG>
+
+      <SVG
+        className="outerWaterLine"
+        style={{
+          zIndex: zIndex - 70,
+        }}
+      >
+        <polygon
+          stroke={styles.white}
+          strokeWidth={waterLineWidth}
+          transform={`translate(0, ${waterLineWidth})`}
+          strokeLinejoin="round"
+          strokeDasharray={`${0.5 * outerWaveLength + maths.random(outerWaveLength, seed++)}, ${0.5 * outerWaveGap + maths.random(outerWaveGap, seed++)}, ${0.5 * outerWaveLength + maths.random(outerWaveLength, seed++)}, ${0.5 * outerWaveGap + maths.random(outerWaveGap, seed++)}, ${0.5 * outerWaveLength + maths.random(outerWaveLength, seed++)}, ${0.5 * outerWaveGap + maths.random(outerWaveGap, seed++)}, ${0.5 * outerWaveLength + maths.random(outerWaveLength, seed++)}, ${0.5 * outerWaveGap + maths.random(waveGap, seed++)}`}
+          strokeDashoffset={seed % 100}
+          fill="none"
+          points={outerWaterLinePoints}
+        />
+      </SVG>
+
       <SVG
         className="waterLine"
         style={{
-          zIndex: zIndex - 70,
+          zIndex: zIndex - 50,
         }}
       >
         <polygon
@@ -114,24 +146,6 @@ export default ({ x, y, zIndex }) => {
           strokeDashoffset={seed % 100}
           fill="none"
           points={waterLinePoints}
-        />
-      </SVG>
-
-      <SVG
-        className="outerWaterLine"
-        style={{
-          zIndex: zIndex - 50,
-        }}
-      >
-        <polygon
-          stroke={styles.wave}
-          strokeWidth={waterLineWidth}
-          transform={`translate(0, ${waterLineWidth})`}
-          strokeLinejoin="round"
-          strokeDasharray={`${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(outerWaveGap, seed++)}, ${outerWaveLength + maths.random(outerWaveLength, seed++)}, ${outerWaveGap + maths.random(waveGap, seed++)}`}
-          strokeDashoffset={seed % 100}
-          fill="none"
-          points={outerWaterLinePoints}
         />
       </SVG>
 
