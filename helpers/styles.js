@@ -5,7 +5,7 @@ export default {
   white: `white`,
   water: `hsl(${waterHue}, 76.4%, 41.4%)`,
   ground: "black",
-  rock: "#444",
+  rock: "#555",
   wave: `hsl(${waterHue}, 76.4%, 61.8%)`,
-  reflection: `hsl(${waterHue}, 76.4%, 30%)`,
+  reflection: `hsl(${waterHue}, 76.4%, 33%)`,
 };

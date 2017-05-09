@@ -111,35 +111,12 @@ export default class Container extends PureComponent {
           </g>
         </SVG>
 
-        <SVG
-          style={{ ...svgStyle, zIndex: zIndex++ }}
-          viewBox={svgViewBox}
-          className="waterLine"
-        >
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
           <g
-            stroke={styles.wave}
+            stroke={styles.white}
             strokeWidth={hex.waterLineWidth}
             strokeLinejoin="round"
-            strokeDasharray={`${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}`}
-            fill="none"
-          >
-            {groundTileListWithCoordinates.map(tile => {
-              return (
-                <OuterWaterLine
-                  {...tile}
-                  offset={hex.outerWaterLineOffset + hex.waterLineWidth}
-                />
-              );
-            })}
-          </g>
-        </SVG>
-
-        {/*<SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          <g
-            stroke={styles.wave}
-            strokeWidth={hex.waterLineWidth}
-            strokeLinejoin="round"
-            strokeDasharray={`${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}, ${0.5 * hex.outerWaveLength + maths.random(hex.outerWaveLength, seed++)}, ${0.5 * hex.outerWaveGap + maths.random(hex.outerWaveGap, seed++)}`}
+            strokeLinecap="round"
             fill="none"
           >
             {groundTileListWithCoordinates.map(tile => {
@@ -147,22 +124,33 @@ export default class Container extends PureComponent {
                 <OuterWaterLine {...tile} offset={hex.outerWaterLineOffset} />
               );
             })}
-          </g>
-        </SVG>*/}
 
-        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+            <g strokeDasharray={`${hex.outerWaveLength}, ${hex.outerWaveGap} `}>
+              {groundTileListWithCoordinates.map(tile => {
+                return (
+                  <OuterWaterLine
+                    {...tile}
+                    offset={hex.outerWaterLineOffset * 2.5}
+                  />
+                );
+              })}
+            </g>
+          </g>
+        </SVG>
+
+        {/*<SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
           <g
             stroke={styles.white}
             strokeWidth={hex.waterLineWidth + hex.roundingWidth}
             fill="none"
             strokeLinejoin="round"
-            strokeDasharray={`${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}, ${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}, ${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}, ${hex.waveLength + maths.random(hex.waveLength, seed++)}, ${hex.waveGap + maths.random(hex.waveGap, seed++)}`}
+            strokeDasharray={`${hex.waveLength}, ${hex.waveGap} `}
           >
             {groundTileListWithCoordinates.map(tile => {
               return <WaterLine {...tile} />;
             })}
           </g>
-        </SVG>
+        </SVG>*/}
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
           <g

@@ -9,13 +9,13 @@ export default ({ x, y, left, top, hexPoints, offset }) => {
 
   const outerWaterLinePoints = hexPoints.reduce((result, point, index) => {
     const xPoint = point[0] + offset * xModifiers[index];
-    const yPoint = point[1] + hex.ridgeHeight + offset * (index < 9 ? -1 : 1);
+    const yPoint = point[1] + hex.ridgeHeight + offset * (index < 9 ? -0.5 : 1);
     return `${result} ${xPoint},${yPoint}`;
   }, "");
 
   return (
     <polygon
-      strokeDashoffset={seed % 100}
+      strokeDashoffset={seed * seed % 200}
       transform={`translate(${left}, ${top + hex.waterLineWidth})`}
       points={outerWaterLinePoints}
     />
