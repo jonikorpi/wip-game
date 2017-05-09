@@ -119,11 +119,9 @@ export default {
   randomRange: size / 16,
   ridgeHeight: size / 10,
   waterLineWidth: size / 50,
+  waterLineOffset: size / 15,
   waveLength: size / 2,
-  waveGap: size / 5,
-  outerWaterLineOffset: size / 15,
-  outerWaveLength: size / 2,
-  outerWaveGap: size,
+  waveGap: size,
   baseHexCoordinates: [
     [0, height / 8 * 3],
     [0, height / 4],

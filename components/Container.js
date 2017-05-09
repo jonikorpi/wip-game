@@ -3,7 +3,7 @@ import React, { PureComponent } from "react";
 import Layer from "../components/Layer.js";
 import Grounds from "../components/Grounds.js";
 import Ridges from "../components/Ridges.js";
-import OuterWaterLines from "../components/OuterWaterLines.js";
+import WaterLines from "../components/WaterLines.js";
 import Reflections from "../components/Reflections.js";
 import Tile from "../components/Tile.js";
 import Entity from "../components/Entity.js";
@@ -81,8 +81,8 @@ export default class Container extends PureComponent {
           <Reflections tiles={groundTileList} />
         </Layer>
 
-        <Layer zIndex={zIndex++} className="outerWaterLines">
-          <OuterWaterLines tiles={groundTileList} />
+        <Layer zIndex={zIndex++} className="waterLines">
+          <WaterLines tiles={groundTileList} />
         </Layer>
 
         <Layer zIndex={zIndex++} className="ridges">
