@@ -180,10 +180,15 @@ export default class Container extends PureComponent {
         </SVG>
 
         <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          {groundTileList.map(tile => {
-            return tile.sailable
-              ? null
-              : <Entity type="human" x={tile.left} y={tile.top} />;
+          {groundTileList.map((tile, index) => {
+            return !tile.sailable && Math.random() > 0.5
+              ? <Entity
+                  key={index}
+                  type="human"
+                  x={tile.left + hex.width * hex.renderingSize}
+                  y={tile.top + hex.height * hex.renderingSize}
+                />
+              : null;
           })}
         </SVG>
 
