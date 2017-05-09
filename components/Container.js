@@ -1,22 +1,18 @@
 import React, { PureComponent } from "react";
 
+import Layer from "../components/Layer.js";
+import Grounds from "../components/Grounds.js";
+import Ridges from "../components/Ridges.js";
+import OuterWaterLines from "../components/OuterWaterLines.js";
+import Reflections from "../components/Reflections.js";
 import Tile from "../components/Tile.js";
-import SVG from "../components/SVG.js";
-import Ground from "../components/Ground.js";
-import Ridge from "../components/Ridge.js";
-// import WaterLine from "../components/WaterLine.js";
-import OuterWaterLine from "../components/OuterWaterLine.js";
-import Reflection from "../components/Reflection.js";
 import Entity from "../components/Entity.js";
 
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
 import maths from "../helpers/maths.js";
-import styles from "../helpers/styles.js";
 
 const xPixelOffset = hex.perRow * 0.5;
-const cellPaddingX = hex.width * (hex.perRow / 2) + hex.width;
-const cellPaddingY = hex.height * 2;
 
 export default class Container extends PureComponent {
   render() {
@@ -24,15 +20,6 @@ export default class Container extends PureComponent {
     const xOffset = cellY % 2 === 0 ? 0 : hex.perRow * 0.5;
     let seed = (cellX || 123) * (cellY || 456);
     let zIndex = 1;
-
-    const svgStyle = {
-      left: -cellPaddingX * hex.renderingSize + hex.unit,
-      right: -cellPaddingX * hex.renderingSize + hex.unit,
-      top: -cellPaddingY * hex.renderingSize + hex.unit,
-      bottom: -cellPaddingY * hex.renderingSize + hex.unit,
-    };
-
-    const svgViewBox = `${-cellPaddingX} ${-cellPaddingY} ${hex.cellWidth / hex.renderingSize + cellPaddingX * 2} ${hex.cellHeight / hex.renderingSize + cellPaddingY * 2}`;
 
     const tileList = [...Array(hex.perCell).keys()].map(index => {
       const y = Math.floor(index / hex.perColumn);
@@ -48,37 +35,37 @@ export default class Container extends PureComponent {
         y: coordinates[1],
         left: pixelCoordinates[0],
         top: pixelCoordinates[1],
-        zIndex: cellY + coordinates[1],
+        zIndex: cellY + coordinates[1] + 100000,
         tile: tiles.getRandomTile(),
       };
     });
 
-    const groundTileList = tileList.filter(tile => {
-      return !tile.tile.sailable;
-    });
+    const groundTileList = tileList
+      .filter(tile => {
+        return !tile.tile.sailable;
+      })
+      .map(tile => {
+        let tileSeed = (tile.x || 123) * (tile.y || 456);
 
-    const groundTileListWithCoordinates = groundTileList.map(tile => {
-      let tileSeed = (tile.x || 123) * (tile.y || 456);
+        tile.hexPoints = hex.baseHexCoordinates.map(point => {
+          return [
+            point[0] +
+              maths.random(hex.randomRange, tileSeed++) *
+                (point[0] < hex.width / 2 ? -1 : 1),
+            point[1] +
+              maths.random(hex.randomRange, tileSeed++) *
+                (point[1] < hex.height / 2 ? -0.5 : 0.5),
+          ];
+        });
 
-      tile.hexPoints = hex.baseHexCoordinates.map(point => {
-        return [
-          point[0] +
-            maths.random(hex.randomRange, tileSeed++) *
-              (point[0] < hex.width / 2 ? -1 : 1),
-          point[1] +
-            maths.random(hex.randomRange, tileSeed++) *
-              (point[1] < hex.height / 2 ? -0.5 : 0.5),
-        ];
+        return tile;
       });
-
-      return tile;
-    });
 
     return (
       <div
         className="container"
         style={{
-          color: `hsl(${cellX * cellY % 360}, 50%, 50%)`,
+          color: `hsl(${seed % 360}, 50%, 50%)`,
         }}
       >
         <style jsx global>{`
@@ -88,98 +75,25 @@ export default class Container extends PureComponent {
             pointer-events: none;
             {/*border: 2px solid;*/}
           }
-
-          {/*.waterLine {
-            animation: waterLine 1s steps(2, start) infinite;
-          }
-
-          @keyframes waterLine {
-            from { opacity: 1  }
-            to { opacity: 0  }
-          }*/}
         `}</style>
 
-        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          <g
-            stroke={styles.reflection}
-            strokeWidth={hex.roundingWidth}
-            strokeLinejoin="round"
-            fill={styles.reflection}
-          >
-            {groundTileListWithCoordinates.map(tile => {
-              return <Reflection {...tile} />;
-            })}
-          </g>
-        </SVG>
+        <Layer zIndex={zIndex++} className="reflections">
+          <Reflections tiles={groundTileList} />
+        </Layer>
 
-        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          <g
-            stroke={styles.white}
-            strokeWidth={hex.waterLineWidth}
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            fill="none"
-          >
-            {groundTileListWithCoordinates.map(tile => {
-              return (
-                <OuterWaterLine {...tile} offset={hex.outerWaterLineOffset} />
-              );
-            })}
+        <Layer zIndex={zIndex++} className="outerWaterLines">
+          <OuterWaterLines tiles={groundTileList} />
+        </Layer>
 
-            <g strokeDasharray={`${hex.outerWaveLength}, ${hex.outerWaveGap} `}>
-              {groundTileListWithCoordinates.map(tile => {
-                return (
-                  <OuterWaterLine
-                    {...tile}
-                    offset={hex.outerWaterLineOffset * 2.5}
-                  />
-                );
-              })}
-            </g>
-          </g>
-        </SVG>
+        <Layer zIndex={zIndex++} className="ridges">
+          <Ridges tiles={groundTileList} />
+        </Layer>
 
-        {/*<SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          <g
-            stroke={styles.white}
-            strokeWidth={hex.waterLineWidth + hex.roundingWidth}
-            fill="none"
-            strokeLinejoin="round"
-            strokeDasharray={`${hex.waveLength}, ${hex.waveGap} `}
-          >
-            {groundTileListWithCoordinates.map(tile => {
-              return <WaterLine {...tile} />;
-            })}
-          </g>
-        </SVG>*/}
+        <Layer zIndex={zIndex++} className="grounds">
+          <Grounds tiles={groundTileList} />
+        </Layer>
 
-        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          <g
-            stroke={styles.rock}
-            strokeWidth={hex.roundingWidth}
-            strokeLinejoin="round"
-            fill={styles.rock}
-          >
-            {groundTileListWithCoordinates.map(tile => {
-              return <Ridge {...tile} />;
-            })}
-          </g>
-        </SVG>
-
-        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
-          <g
-            stroke={styles.black}
-            strokeWidth={hex.roundingWidth}
-            strokeLinejoin="round"
-            fill={styles.black}
-          >
-            {groundTileListWithCoordinates.map(tile => {
-              return <Ground {...tile} />;
-            })}
-          </g>
-        </SVG>
-
-        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+        <Layer zIndex={zIndex++} className="units">
           {groundTileList.map((tile, index) => {
             return !tile.sailable && Math.random() > 0.5
               ? <Entity
@@ -190,11 +104,13 @@ export default class Container extends PureComponent {
                 />
               : null;
           })}
-        </SVG>
+        </Layer>
 
-        {tileList.map(tile => {
-          return <Tile {...tile} />;
-        })}
+        <div className="tiles">
+          {tileList.map(tile => {
+            return <Tile {...tile} />;
+          })}
+        </div>
       </div>
     );
   }
