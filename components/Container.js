@@ -4,9 +4,10 @@ import Tile from "../components/Tile.js";
 import SVG from "../components/SVG.js";
 import Ground from "../components/Ground.js";
 import Ridge from "../components/Ridge.js";
-import WaterLine from "../components/WaterLine.js";
+// import WaterLine from "../components/WaterLine.js";
 import OuterWaterLine from "../components/OuterWaterLine.js";
 import Reflection from "../components/Reflection.js";
+import Entity from "../components/Entity.js";
 
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
@@ -176,6 +177,14 @@ export default class Container extends PureComponent {
               return <Ground {...tile} />;
             })}
           </g>
+        </SVG>
+
+        <SVG style={{ ...svgStyle, zIndex: zIndex++ }} viewBox={svgViewBox}>
+          {groundTileList.map(tile => {
+            return tile.sailable
+              ? null
+              : <Entity type="human" x={tile.left} y={tile.top} />;
+          })}
         </SVG>
 
         {tileList.map(tile => {
