@@ -70,10 +70,15 @@ export default class Container extends PureComponent {
       >
         <style jsx global>{`
           .container {
+            position: absolute;
             width: 100%;
             height: 100%;
             pointer-events: none;
             {/*border: 2px solid;*/}
+          }
+
+          .tiles {
+            position: absolute;
           }
         `}</style>
 
