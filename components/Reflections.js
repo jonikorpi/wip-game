@@ -9,6 +9,26 @@ export default class Reflections extends PureComponent {
   render() {
     const { tiles } = { ...this.props };
 
+    const reflectionPath = tiles.reduce(
+      (result, { left, top, hexPoints }, index) => {
+        return (
+          result +
+          hexPoints.reduce((result, point, index) => {
+            const command = index === 0 ? "M" : "L";
+            const xPoint = point[0] + left;
+            const yPoint =
+              point[1] +
+              top +
+              hex.ridgeHeight +
+              hex.ridgeHeight * multipliers[index];
+            return `${result}${command}${xPoint},${yPoint}`;
+          }, "") +
+          "Z"
+        );
+      },
+      ""
+    );
+
     return (
       <g
         stroke={styles.reflection}
@@ -16,19 +36,7 @@ export default class Reflections extends PureComponent {
         strokeLinejoin="round"
         fill={styles.reflection}
       >
-        {tiles.map(({ left, top, hexPoints }, index) => {
-          const reflectionPoints = hexPoints.reduce((result, point, index) => {
-            return `${result} ${point[0]},${point[1] + hex.ridgeHeight + hex.ridgeHeight * multipliers[index]}`;
-          }, "");
-
-          return (
-            <polygon
-              key={index}
-              points={reflectionPoints}
-              transform={`translate(${left}, ${top})`}
-            />
-          );
-        })}
+        <path d={reflectionPath} />
       </g>
     );
   }

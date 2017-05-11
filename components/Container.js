@@ -46,8 +46,7 @@ export default class Container extends PureComponent {
       })
       .map(tile => {
         let tileSeed = (tile.x || 123) * (tile.y || 456);
-
-        tile.hexPoints = hex.baseHexCoordinates.map(point => {
+        const hexPoints = hex.baseHexCoordinates.map(point => {
           return [
             point[0] +
               maths.random(hex.randomRange, tileSeed++) *
@@ -58,7 +57,11 @@ export default class Container extends PureComponent {
           ];
         });
 
-        return tile;
+        return {
+          hexPoints: hexPoints,
+          left: tile.left,
+          top: tile.top,
+        };
       });
 
     return (

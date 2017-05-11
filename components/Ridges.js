@@ -7,6 +7,22 @@ export default class Ridges extends PureComponent {
   render() {
     const { tiles } = { ...this.props };
 
+    const ridgePath = tiles.reduce(
+      (result, { left, top, hexPoints }, index) => {
+        return (
+          result +
+          hexPoints.reduce((result, point, index) => {
+            const command = index === 0 ? "M" : "L";
+            const xPoint = point[0] + left;
+            const yPoint = point[1] + top + hex.ridgeHeight;
+            return `${result}${command}${xPoint},${yPoint}`;
+          }, "") +
+          "Z"
+        );
+      },
+      ""
+    );
+
     return (
       <g
         stroke={styles.rock}
@@ -14,20 +30,7 @@ export default class Ridges extends PureComponent {
         strokeLinejoin="round"
         fill={styles.rock}
       >
-
-        {tiles.map(({ left, top, hexPoints }, index) => {
-          const ridgePoints = hexPoints.reduce((result, point) => {
-            return `${result} ${point[0]},${point[1] + hex.ridgeHeight}`;
-          }, "");
-
-          return (
-            <polygon
-              key={index}
-              points={ridgePoints}
-              transform={`translate(${left}, ${top})`}
-            />
-          );
-        })}
+        <path d={ridgePath} />
       </g>
     );
   }

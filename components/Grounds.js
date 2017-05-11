@@ -7,6 +7,22 @@ export default class Grounds extends PureComponent {
   render() {
     const { tiles } = { ...this.props };
 
+    const groundsPath = tiles.reduce(
+      (result, { left, top, hexPoints }, index) => {
+        return (
+          result +
+          hexPoints.reduce((result, point, index) => {
+            const command = index === 0 ? "M" : "L";
+            const xPoint = point[0] + left;
+            const yPoint = point[1] + top;
+            return `${result}${command}${xPoint},${yPoint}`;
+          }, "") +
+          "Z"
+        );
+      },
+      ""
+    );
+
     return (
       <g
         stroke={styles.black}
@@ -14,20 +30,7 @@ export default class Grounds extends PureComponent {
         strokeLinejoin="round"
         fill={styles.black}
       >
-
-        {tiles.map(({ left, top, hexPoints }, index) => {
-          const groundPoints = hexPoints.reduce((result, point) => {
-            return `${result} ${point[0]},${point[1]}`;
-          }, "");
-
-          return (
-            <polygon
-              key={index}
-              points={groundPoints}
-              transform={`translate(${left}, ${top})`}
-            />
-          );
-        })}
+        <path d={groundsPath} />
       </g>
     );
   }
