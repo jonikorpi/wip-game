@@ -71,20 +71,6 @@ export default class Container extends PureComponent {
           color: `hsl(${seed % 360}, 50%, 50%)`,
         }}
       >
-        <style jsx global>{`
-          .container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            {/*border: 2px solid;*/}
-          }
-
-          .tiles {
-            position: absolute;
-          }
-        `}</style>
-
         <Layer zIndex={zIndex++} className="reflections">
           <Reflections tiles={groundTileList} />
         </Layer>
