@@ -894,7 +894,7 @@ babel-runtime@6.22.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.20.0, babel-runtime@^6.22.0:
+babel-runtime@^6.18.0, babel-runtime@^6.20.0, babel-runtime@^6.22.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
   dependencies:
@@ -1201,7 +1201,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@^2.2.3, classnames@^2.2.5:
+classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -1750,10 +1750,6 @@ dom-converter@~0.1:
   resolved "https://registry.yarnpkg.com/dom-converter/-/dom-converter-0.1.4.tgz#a45ef5727b890c9bffe6d7c876e7b19cb0e17f3b"
   dependencies:
     utila "~0.3"
-
-"dom-helpers@^2.4.0 || ^3.0.0":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
 
 dom-serializer@0:
   version "0.1.0"
@@ -2733,13 +2729,9 @@ iconv-lite@0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
-iconv-lite@0.4.15:
+iconv-lite@0.4.15, iconv-lite@~0.4.13:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
-
-iconv-lite@~0.4.13:
-  version "0.4.17"
-  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.17.tgz#4fdaa3b38acbc2c031b045d0edcdfe1ecab18c8d"
 
 icss-replace-symbols@^1.0.2:
   version "1.0.2"
@@ -3569,7 +3561,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
@@ -4519,7 +4511,7 @@ promise@7.1.1, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.4, prop-types@^15.5.7, prop-types@~15.5.7:
+prop-types@15, prop-types@^15.5.7, prop-types@~15.5.7:
   version "15.5.7"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.7.tgz#231c4f29cdd82e355011d4889386ca9059544dd1"
   dependencies:
@@ -4631,6 +4623,12 @@ react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "~15.5.7"
 
+react-list@^0.8.6:
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/react-list/-/react-list-0.8.6.tgz#21c88eb332829a0b448c2502eb43064f11af38fe"
+  dependencies:
+    prop-types "15"
+
 react-scripts@0.9.5:
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-0.9.5.tgz#e9f05c8427e27131662a9b9d7a9786d1ff16bb3f"
@@ -4675,16 +4673,6 @@ react-scripts@0.9.5:
     whatwg-fetch "2.0.2"
   optionalDependencies:
     fsevents "1.0.17"
-
-react-virtualized@^9.7.3:
-  version "9.7.4"
-  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.7.4.tgz#1b5b25c1397282c6ffc651b416befc69e282df12"
-  dependencies:
-    babel-runtime "^6.11.6"
-    classnames "^2.2.3"
-    dom-helpers "^2.4.0 || ^3.0.0"
-    loose-envify "^1.3.0"
-    prop-types "^15.5.4"
 
 react@^15.5.4:
   version "15.5.4"
@@ -5825,13 +5813,9 @@ whatwg-encoding@^1.0.1:
   dependencies:
     iconv-lite "0.4.13"
 
-whatwg-fetch@2.0.2:
+whatwg-fetch@2.0.2, whatwg-fetch@>=0.10.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.2.tgz#fe294d1d89e36c5be8b3195057f2e4bc74fc980e"
-
-whatwg-fetch@>=0.10.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
 
 whatwg-url@^4.3.0:
   version "4.8.0"
