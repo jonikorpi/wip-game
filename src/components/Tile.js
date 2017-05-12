@@ -20,7 +20,7 @@ import styles from "../helpers/styles.js";
 //   };
 
 //   render() {
-export default ({ key, x, y, zIndex, top, left, tile }) => {
+export default ({ key, x, y, zIndex, top, left, tile, unit }) => {
   // const { x, y, zIndex, top, left, tile } = {
   //   ...this.props,
   // };
@@ -56,7 +56,7 @@ export default ({ key, x, y, zIndex, top, left, tile }) => {
         // onTouchCancel={this.handleTouchCancel}
         // onTouchMove={this.handleTouchMove}
       >
-        {tile.name}<br />
+        {tile.name} {unit && unit.name}<br />
         <code className="tileCoordinates">{x},{y}</code>
       </button>
     </div>

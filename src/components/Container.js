@@ -13,12 +13,10 @@ import tiles from "../helpers/tiles.js";
 import units from "../helpers/units.js";
 import maths from "../helpers/maths.js";
 
-const xPixelOffset = hex.perRow * 0.5;
-
 export default class Container extends Component {
   render() {
     const { cellX, cellY } = { ...this.props };
-    const xOffset = cellY % 2 === 0 ? 0 : hex.perRow * 0.5;
+    const xPixelOffset = cellY % 2 === 0 ? 0 : hex.perRow / 2;
     let seed = (cellX || 123) * (cellY || 456);
     let zIndex = 1;
 
@@ -26,7 +24,7 @@ export default class Container extends Component {
     // but maybe only in the tooltip/targeting component.
     const tileList = [...Array(hex.perCell).keys()].map(index => {
       const y = Math.floor(index / hex.perColumn);
-      const x = index % hex.perRow + xOffset;
+      const x = index % hex.perRow;
 
       const coordinates = [x + cellX * hex.perRow, y + cellY * hex.perColumn];
       const pixelCoordinates = hex.pixelCoordinates([x - xPixelOffset, y]);

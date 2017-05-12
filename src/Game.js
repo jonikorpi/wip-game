@@ -19,7 +19,7 @@ const cellRenderer = ({ columnIndex, rowIndex, key, style }) => {
   return (
     <Cell
       key={key}
-      cellX={columnIndex - rowIndex * 0.5}
+      cellX={columnIndex - Math.ceil(rowIndex / 2)}
       cellY={rowIndex}
       style={style}
     />
