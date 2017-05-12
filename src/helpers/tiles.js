@@ -3,6 +3,7 @@ const tiles = {
     name: "Water",
     rarity: 1,
     impassable: null,
+    walkable: null,
     sailable: true,
     difficult: null,
     axes: {
@@ -28,6 +29,7 @@ const tiles = {
     name: "Shoal",
     rarity: 1,
     impassable: null,
+    walkable: null,
     sailable: true,
     difficult: true,
     axes: {
@@ -53,6 +55,7 @@ const tiles = {
     name: "Plains",
     rarity: 1,
     impassable: null,
+    walkable: true,
     sailable: null,
     difficult: null,
     axes: {
