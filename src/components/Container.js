@@ -39,7 +39,7 @@ export default class Container extends Component {
         left: pixelCoordinates[0],
         top: pixelCoordinates[1],
         zIndex: cellY + coordinates[1] + 100000,
-        tile: tiles.getRandomTile(),
+        tile: tiles.getRandomTile(seed++),
         unit: Math.random() > 0.9 ? units["default"] : null,
       };
     });
