@@ -1,3 +1,5 @@
+import maths from "../helpers/maths.js";
+
 const tiles = {
   water: {
     name: "Water",
@@ -81,9 +83,10 @@ const tiles = {
 export default {
   tiles: tiles,
 
-  getRandomTile: () => {
+  getRandomTile: (seed = 1) => {
     const tileKeys = Object.keys(tiles);
-    const tileKey = tileKeys[Math.floor(Math.random() * tileKeys.length)];
+    const tileKey =
+      tileKeys[Math.floor(maths.random(1, seed) * tileKeys.length)];
     let tile = tiles[tileKey];
     tile.type = tileKey;
     return tile;
