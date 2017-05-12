@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import Layer from "../components/Layer.js";
 import Grounds from "../components/Grounds.js";
@@ -10,17 +10,20 @@ import Entity from "../components/Entity.js";
 
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
+import units from "../helpers/units.js";
 import maths from "../helpers/maths.js";
 
 const xPixelOffset = hex.perRow * 0.5;
 
-export default class Container extends PureComponent {
+export default class Container extends Component {
   render() {
     const { cellX, cellY } = { ...this.props };
     const xOffset = cellY % 2 === 0 ? 0 : hex.perRow * 0.5;
     let seed = (cellX || 123) * (cellY || 456);
     let zIndex = 1;
 
+    // TODO: check tile type, fetch it from tiles.js, overwrite with DB values
+    // but maybe only in the tooltip/targeting component.
     const tileList = [...Array(hex.perCell).keys()].map(index => {
       const y = Math.floor(index / hex.perColumn);
       const x = index % hex.perRow + xOffset;
@@ -37,12 +40,25 @@ export default class Container extends PureComponent {
         top: pixelCoordinates[1],
         zIndex: cellY + coordinates[1] + 100000,
         tile: tiles.getRandomTile(),
+        unit: Math.random() > 0.9 ? units["default"] : null,
       };
     });
 
-    const groundTileList = tileList
+    const unitList = tileList.map(tile => {
+      return tile.unit ? tile : null;
+    });
+
+    const drawableTiles = tileList.filter(tile => {
+      return tile.tile.type !== "water";
+    });
+
+    const waterTiles = drawableTiles.filter(tile => {
+      return tile.tile.sailable;
+    });
+
+    const groundTiles = drawableTiles
       .filter(tile => {
-        return !tile.tile.sailable;
+        return tile.tile.walkable;
       })
       .map(tile => {
         let tileSeed = (tile.x || 123) * (tile.y || 456);
@@ -72,37 +88,37 @@ export default class Container extends PureComponent {
         }}
       >
         <Layer zIndex={zIndex++} className="reflections">
-          <Reflections tiles={groundTileList} />
+          <Reflections tiles={groundTiles} />
         </Layer>
 
         <Layer zIndex={zIndex++} className="waterLines">
-          <WaterLines tiles={groundTileList} />
+          <WaterLines tiles={groundTiles} />
         </Layer>
 
         <Layer zIndex={zIndex++} className="ridges">
-          <Ridges tiles={groundTileList} />
+          <Ridges tiles={groundTiles} />
         </Layer>
 
         <Layer zIndex={zIndex++} className="grounds">
-          <Grounds tiles={groundTileList} />
+          <Grounds tiles={groundTiles} />
         </Layer>
 
         <Layer zIndex={zIndex++} className="units">
-          {groundTileList.map((tile, index) => {
-            return !tile.sailable && Math.random() > 0.5
-              ? <Entity
-                  key={index}
-                  type="human"
-                  x={tile.left + hex.width * hex.renderingSize}
-                  y={tile.top + hex.height * hex.renderingSize}
-                />
+          {unitList.map((tile, index) => {
+            return tile
+              ? Entity({
+                  key: tile.key,
+                  ...tile.unit,
+                  x: tile.left + hex.width * hex.renderingSize,
+                  y: tile.top + hex.height * hex.renderingSize,
+                })
               : null;
           })}
         </Layer>
 
         <div className="tiles">
           {tileList.map(tile => {
-            return <Tile {...tile} />;
+            return Tile({ ...tile });
           })}
         </div>
       </div>
