@@ -64,6 +64,9 @@ body {
 }
 
 .tileTarget {
+  position: absolute;
+  left: 0;
+  width: 100%;
   pointer-events: all;
   overflow: hidden;
   cursor: pointer;

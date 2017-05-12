@@ -41,11 +41,8 @@ export default ({ key, x, y, zIndex, top, left, tile, unit }) => {
         className="tileTarget"
         style={{
           zIndex: zIndex,
-          position: "absolute",
-          left: 0,
           top: `${hex.height * hex.renderingSize * 0.125}${hex.unit}`,
           height: `${hex.height * hex.renderingSize * 0.75}${hex.unit}`,
-          width: "100%",
         }}
         //onMouseEnter={this.target}
         //onMouseLeave={this.untarget}
