@@ -6,6 +6,6 @@ export default {
   water: `hsl(${waterHue}, 76.4%, 41.4%)`,
   ground: "black",
   rock: "#555",
-  wave: `hsl(${waterHue}, 76.4%, 61.8%)`,
+  wave: `hsl(${waterHue}, 100%, 85.4%)`,
   reflection: `hsl(${waterHue}, 76.4%, 33%)`,
 };

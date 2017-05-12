@@ -4,6 +4,7 @@ import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
 const xModifiers = [-1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1];
+const dashArray = `${hex.waveLength}, ${hex.waveGap}`;
 
 export default class WaterLines extends PureComponent {
   render() {
@@ -52,17 +53,14 @@ export default class WaterLines extends PureComponent {
 
     return (
       <g
-        stroke={styles.white}
+        stroke={styles.wave}
         strokeWidth={hex.waterLineWidth}
         strokeLinejoin="round"
         strokeLinecap="round"
         fill="none"
       >
         <path d={waterLinePath} />
-        <path
-          d={wavePath}
-          strokeDasharray={`${hex.waveLength}, ${hex.waveGap} `}
-        />
+        <path stroke={styles.wave} d={wavePath} strokeDasharray={dashArray} />
       </g>
     );
   }
