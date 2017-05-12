@@ -18,6 +18,7 @@ export default ({ children, className, zIndex, tiles }) => (
   >
     <svg
       className="layer"
+      shapeRendering="optimizeSpeed"
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox={`${-cellPaddingX} ${-cellPaddingY} ${hex.cellWidth / hex.renderingSize + cellPaddingX * 2} ${hex.cellHeight / hex.renderingSize + cellPaddingY * 2}`}
