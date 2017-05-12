@@ -2,6 +2,11 @@
   "name": "wip-game",
   "version": "0.0.1",
   "private": true,
+  "now": {
+    "alias": [
+      "wip-game-vuoro.now.sh"
+    ]
+  },
   "dependencies": {
     "classnames": "^2.2.5",
     "react": "^15.5.4",
@@ -15,7 +20,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "deploy": "now",
-    "alias": "now alias wip-game-vuoro.now.sh",
+    "alias": "now alias",
     "now-start": "NODE_ENV=production serve ./build --single --cache 31536000000",
     "now-build": "NODE_ENV=production react-scripts build"
   },
