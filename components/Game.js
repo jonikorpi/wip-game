@@ -1,32 +1,16 @@
 import React, { Component } from "react";
-import Grid from "react-virtualized/dist/commonjs/Grid";
-import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
-import accessibilityOverscanIndicesGetter
-  from "react-virtualized/dist/commonjs/Grid/accessibilityOverscanIndicesGetter";
 
-import Cell from "../components/Cell.js";
+import Tile from "../components/Tile.js";
 
-import styles from "../helpers/styles.js";
 import hex from "../helpers/hex.js";
+import tiles from "../helpers/tiles.js";
+import units from "../helpers/units.js";
+import maths from "../helpers/maths.js";
 
 const env = (process && process.env && process.env.NODE_ENV) || "development";
 const dev = env === "development";
 
-const cellsPerRow = 200;
-const cellsPerColumn = 150;
-
-const cellRenderer = ({ columnIndex, rowIndex, key, style }) => {
-  return (
-    <Cell
-      key={key}
-      cellX={columnIndex - Math.ceil(rowIndex / 2)}
-      cellY={rowIndex}
-      style={style}
-    />
-  );
-};
-
-export default class Home extends Component {
+export default class Game extends Component {
   constructor(props) {
     super(props);
 
@@ -38,6 +22,26 @@ export default class Home extends Component {
   }
 
   render() {
+    let seed = 123 * 456;
+    const tileList = [...Array(hex.perCell).keys()].map(index => {
+      const y = Math.floor(index / hex.perColumn);
+      const x = index % hex.perRow;
+
+      const pixelCoordinates = hex.pixelCoordinates([x, y]);
+
+      return {
+        key: `${x},${y}`,
+        index: index,
+        x: x,
+        y: y,
+        left: pixelCoordinates[0],
+        top: pixelCoordinates[1],
+        zIndex: y + 100000,
+        tile: tiles.getRandomTile(seed++),
+        unit: Math.random() > 0.9 ? units["default"] : null,
+      };
+    });
+
     return (
       <div id="game">
         <style jsx>{`
@@ -46,37 +50,9 @@ export default class Home extends Component {
           }
         `}</style>
 
-        <AutoSizer>
-          {({ height, width }) => {
-            const units = {
-              vmax: (height >= width ? height : width) / 100,
-              vmin: (height <= width ? height : width) / 100,
-              px: 1,
-            };
-
-            return (
-              <Grid
-                cellRenderer={cellRenderer}
-                columnWidth={hex.cellWidth * units[hex.unit]}
-                rowHeight={hex.cellHeight * units[hex.unit]}
-                height={height}
-                width={width}
-                className="scroller"
-                rowCount={cellsPerColumn}
-                columnCount={cellsPerRow}
-                scrollToColumn={cellsPerRow / 2}
-                scrollToRow={cellsPerColumn / 2}
-                //scrollLeft={}
-                //scrollTop={}
-                scrollToAlignment="center"
-                overscanRowCount={0}
-                overscanColumnCount={0}
-                //overscanIndicesGetter={accessibilityOverscanIndicesGetter}
-                scrollingResetTimeInterval={50}
-              />
-            );
-          }}
-        </AutoSizer>
+        {tileList.map(tile => {
+          return <Tile {...tile} />;
+        })}
       </div>
     );
   }
