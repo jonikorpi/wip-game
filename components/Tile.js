@@ -37,6 +37,33 @@ export default ({ key, x, y, zIndex, top, left, tile, unit }) => {
         top: top * hex.renderingSize + hex.unit,
       }}
     >
+      <style jsx>{`
+        .tile {
+          position: absolute;
+        }
+
+        .tileTarget {
+          position: absolute;
+          left: 0;
+          width: 100%;
+          pointer-events: all;
+          overflow: hidden;
+          cursor: pointer;
+          opacity: 0;
+          outline: none;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          outline: 1px solid;
+        }
+
+        .tileTarget:hover,
+        .tileTarget:focus {
+          opacity: 1;
+        }
+      `}</style>
+
       <button
         className="tileTarget"
         style={{

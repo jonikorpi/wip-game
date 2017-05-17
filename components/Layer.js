@@ -16,6 +16,21 @@ export default ({ children, className, zIndex, tiles }) => (
       zIndex: zIndex,
     }}
   >
+    <style jsx>{`
+      .layerContainer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .layer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    `}</style>
     <svg
       className="layer"
       shapeRendering="optimizeSpeed"

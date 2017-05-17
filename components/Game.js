@@ -4,10 +4,10 @@ import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import accessibilityOverscanIndicesGetter
   from "react-virtualized/dist/commonjs/Grid/accessibilityOverscanIndicesGetter";
 
-import Cell from "./components/Cell.js";
+import Cell from "../components/Cell.js";
 
-import styles from "./helpers/styles.js";
-import hex from "./helpers/hex.js";
+import styles from "../helpers/styles.js";
+import hex from "../helpers/hex.js";
 
 const env = (process && process.env && process.env.NODE_ENV) || "development";
 const dev = env === "development";
@@ -39,7 +39,12 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="home">
+      <div id="game">
+        <style jsx>{`
+          #game {
+            height: 100vh;
+          }
+        `}</style>
 
         <AutoSizer>
           {({ height, width }) => {
