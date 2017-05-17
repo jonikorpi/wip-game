@@ -3,7 +3,9 @@ import React from "react";
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-const Ground = ({ points }) => {
+const Ground = ({ points, visible }) => {
+  const colors = visible ? styles : styles.map;
+
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
@@ -15,10 +17,10 @@ const Ground = ({ points }) => {
   return (
     <path
       d={path}
-      stroke={styles.black}
+      fill={colors.black}
+      stroke={colors.black}
       strokeWidth={hex.roundingWidth}
       strokeLinejoin="round"
-      fill={styles.black}
     />
   );
 };

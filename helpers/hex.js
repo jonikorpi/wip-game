@@ -55,32 +55,21 @@ const distanceBetween = (a, b) => {
 const hexesWithin = (hex, N) => {
   const cube = toCube(hex);
   let results = [];
-  let dx = 0;
-  let dy = 0;
 
-  while (-N <= dx <= N) {
-    while (Math.max(-N, -dx - N) <= dy <= Math.min(N, -dx + N)) {
-      const dz = -dx - dy;
-      results.push(toHex([cube[0] + dx, cube[1] + dy, cube[2] + dz]));
+  let dx = -N;
+  while (dx <= N) {
+    let dy = -N;
+    while (dy <= N) {
+      if (dy >= Math.max(-N, -dx - N) && dy <= Math.min(N, -dx + N)) {
+        const dz = -dx - dy;
+        results.push(toHex([cube[0] + dx, cube[1] + dy, cube[2] + dz]));
+      }
       dy++;
     }
     dx++;
   }
 
   return results;
-};
-
-const ringFrom = (hex, N) => {
-  // function cube_ring(center, radius):
-  //   var results = []
-  //   # this code doesn't work for radius == 0; can you see why?
-  //   var cube = cube_add(center,
-  //                       cube_scale(cube_direction(4), radius))
-  //   for each 0 ≤ i < 6:
-  //       for each 0 ≤ j < radius:
-  //           results.append(cube)
-  //           cube = cube_neighbor(cube, i)
-  //   return results
 };
 
 const pixelCoordinates = hex => {
@@ -110,14 +99,15 @@ export default {
   distanceBetweenCubes: distanceBetweenCubes,
   distanceBetween: distanceBetween,
   hexesWithin: hexesWithin,
-  ringFrom: ringFrom,
   pixelCoordinates: pixelCoordinates,
 
   roundingWidth: size / 7,
   randomRange: size / 13,
-  ridgeHeight: size / 10,
+  ridgeHeight: size / 11,
+
   waterLineWidth: size / 50,
   waterLineOffset: size / 18,
+  waveOffset: size / 7,
   waveLength: size / 1.5,
   waveGap: size / 0.5,
 

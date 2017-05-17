@@ -5,6 +5,7 @@ import Ground from "../components/Ground.js";
 import Ridge from "../components/Ridge.js";
 import WaterLine from "../components/WaterLine.js";
 import Reflection from "../components/Reflection.js";
+import Water from "../components/Water.js";
 import Entity from "../components/Entity.js";
 
 import hex from "../helpers/hex.js";
@@ -28,11 +29,11 @@ export default class Tile extends PureComponent {
   };
 
   render() {
-    const { x, y, zIndex, top, left, tile, unit } = {
+    const { x, y, zIndex, top, left, tile, unit, visible } = {
       ...this.props,
     };
     const { targeted } = { ...this.state };
-    let seed = (x || 123) * (y || 456);
+    let seed = (x || 123) * (y || 456) * (x || 123);
 
     const points = hex.baseHexCoordinates.map(point => {
       return [
@@ -83,27 +84,33 @@ export default class Tile extends PureComponent {
           }
         `}</style>
 
+        {visible &&
+          <Layer style={{ zIndex: 1 }} className="water">
+            <Water visible={visible} seed={seed++} points={points} />
+          </Layer>}
+
         {tile.walkable &&
           <div>
-            <Layer style={{ zIndex: 1 }} className="reflection">
-              <Reflection seed={seed++} points={points} />
+            <Layer style={{ zIndex: 2 }} className="reflection">
+              <Reflection visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer style={{ zIndex: 2 }} className="waterLine">
-              <WaterLine seed={seed++} points={points} />
+            <Layer style={{ zIndex: 3 }} className="waterLine">
+              <WaterLine visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer style={{ zIndex: 3 }} className="ridge">
-              <Ridge seed={seed++} points={points} />
+            <Layer style={{ zIndex: 4 }} className="ridge">
+              <Ridge visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer style={{ zIndex: 4 }} className="ground">
-              <Ground seed={seed++} points={points} />
+            <Layer style={{ zIndex: 5 }} className="ground">
+              <Ground visible={visible} seed={seed++} points={points} />
             </Layer>
           </div>}
 
         {unit &&
-          <Layer zIndex={5} className="unit">
+          visible &&
+          <Layer zIndex={6} className="unit">
             <Entity {...unit} x={hex.width / 2} y={hex.height / 2} />
           </Layer>}
 

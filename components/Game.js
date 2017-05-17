@@ -4,6 +4,7 @@ import Tile from "../components/Tile.js";
 
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
+import styles from "../helpers/styles.js";
 import units from "../helpers/units.js";
 import maths from "../helpers/maths.js";
 
@@ -22,23 +23,26 @@ export default class Game extends Component {
   }
 
   render() {
-    let seed = 123 * 456;
-    const tileList = [...Array(hex.perCell).keys()].map(index => {
-      const y = Math.floor(index / hex.perColumn);
-      const x = index % hex.perRow;
+    const playerPosition = [0, 0];
+    const visionRange = 3;
+    const renderRange = 5;
+
+    const tileList = hex.hexesWithin(playerPosition, renderRange).map(tile => {
+      const x = tile[0];
+      const y = tile[1];
 
       const pixelCoordinates = hex.pixelCoordinates([x, y]);
 
       return {
         key: `${x},${y}`,
-        index: index,
         x: x,
         y: y,
         left: pixelCoordinates[0],
         top: pixelCoordinates[1],
         zIndex: y + 100000,
-        tile: tiles.getRandomTile(seed++),
-        unit: Math.random() > 0.9 ? units["default"] : null,
+        visible: hex.distanceBetween(playerPosition, tile) <= visionRange,
+        tile: tiles.getRandomTile(x * y),
+        unit: maths.random(1, x * y) > 0.75 ? units["default"] : null,
       };
     });
 
@@ -46,13 +50,27 @@ export default class Game extends Component {
       <div id="game">
         <style jsx>{`
           #game {
+            position: relative;
+            width: 100vw;
             height: 100vh;
+            overflow: hidden;
+          }
+
+          #origo {
+            position: absolute;
+            left: 50%; top: 50%;
+            width: 0;
+            height: 0;
+            margin-left: -${hex.width / 2 * hex.renderingSize + hex.unit};
+            margin-top: -${hex.height / 2 * hex.renderingSize + hex.unit};
           }
         `}</style>
 
-        {tileList.map(tile => {
-          return <Tile {...tile} />;
-        })}
+        <div id="origo">
+          {tileList.map(tile => {
+            return <Tile {...tile} />;
+          })}
+        </div>
       </div>
     );
   }

@@ -5,7 +5,8 @@ import styles from "../helpers/styles.js";
 
 const multipliers = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0];
 
-const Reflection = ({ points }) => {
+const Reflection = ({ points, visible }) => {
+  const colors = visible ? styles : styles.map;
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
@@ -18,10 +19,10 @@ const Reflection = ({ points }) => {
   return (
     <path
       d={path}
-      stroke={styles.reflection}
+      fill={colors.reflection}
+      stroke={colors.reflection}
       strokeWidth={hex.roundingWidth}
       strokeLinejoin="round"
-      fill={styles.reflection}
     />
   );
 };
