@@ -5,7 +5,7 @@ import styles from "../helpers/styles.js";
 
 const multipliers = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0];
 
-export default ({ points }) => {
+const Reflection = ({ points }) => {
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
@@ -25,3 +25,5 @@ export default ({ points }) => {
     />
   );
 };
+
+export default Reflection;

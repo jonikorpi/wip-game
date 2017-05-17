@@ -26,7 +26,7 @@ const yModifiers = [
 ];
 const dashArray = `${hex.waveLength}, ${hex.waveGap}`;
 
-export default ({ points, seed }) => {
+const WaterLine = ({ points, seed }) => {
   const waterLinePath =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
@@ -69,3 +69,5 @@ export default ({ points, seed }) => {
     </g>
   );
 };
+
+export default WaterLine;

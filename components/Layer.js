@@ -2,7 +2,7 @@ import React from "react";
 
 import hex from "../helpers/hex.js";
 
-export default ({ children, className, style }) => (
+const Layer = ({ children, className, style }) => (
   <svg
     className={`layer ${className ? className : ""}`}
     shapeRendering="optimizeSpeed"
@@ -23,3 +23,5 @@ export default ({ children, className, style }) => (
     {children}
   </svg>
 );
+
+export default Layer;

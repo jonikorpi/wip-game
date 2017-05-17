@@ -13,8 +13,10 @@ const entities = {
   ),
 };
 
-export default ({ key, x = 0, y = 0, type = "human" }) => {
+const Entity = ({ key, x = 0, y = 0, type = "human" }) => {
   return (
     <g key={key} transform={`translate(${x},${y})`}> {entities["human"]} </g>
   );
 };
+
+export default Entity;

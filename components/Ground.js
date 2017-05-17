@@ -3,7 +3,7 @@ import React from "react";
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-export default ({ points }) => {
+const Ground = ({ points }) => {
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
@@ -22,3 +22,5 @@ export default ({ points }) => {
     />
   );
 };
+
+export default Ground;
