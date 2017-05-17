@@ -71,7 +71,7 @@ export default class Home extends Component {
                 scrollToAlignment="center"
                 overscanRowCount={0}
                 overscanColumnCount={0}
-                overscanIndicesGetter={accessibilityOverscanIndicesGetter}
+                //overscanIndicesGetter={accessibilityOverscanIndicesGetter}
                 scrollingResetTimeInterval={50}
               />
             );

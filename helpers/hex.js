@@ -99,8 +99,6 @@ export default {
   perRow: perRow,
   perColumn: perColumn,
   perCell: perRow * perColumn,
-  horizontalPadding: width,
-  verticalPadding: height,
 
   cellWidth: perRow * width * renderingSize,
   cellHeight: perColumn * height * 0.75 * renderingSize,
@@ -119,14 +117,11 @@ export default {
   randomRange: size / 13,
   ridgeHeight: size / 10,
   waterLineWidth: size / 50,
-  waterLineOffset: size / 13,
-  waveLength: size / 3,
-  waveGap: size / 8,
-  baseHexCoordinates: [
-    [0, height / 8 * 3],
-    [0, height / 4],
-    [width / 9 * 2, height / 13 * 2],
+  waterLineOffset: size / 18,
+  waveLength: size / 1.5,
+  waveGap: size / 0.5,
 
+  baseHexCoordinates: [
     [width / 3, height / 13],
     [width / 2, 0],
     [width / 3 * 2, height / 13],
@@ -146,5 +141,9 @@ export default {
     [width / 9 * 2, height / 6 * 5],
     [0, height * 0.75],
     [0, height / 8 * 5],
+
+    [0, height / 8 * 3],
+    [0, height / 4],
+    [width / 9 * 2, height / 13 * 2],
   ],
 };
