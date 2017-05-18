@@ -50,10 +50,14 @@ export default class Game extends Component {
       <div id="game">
         <style jsx>{`
           #game {
-            position: relative;
+            height: 200vh;
+          }
+
+          #viewport {
+            position: fixed;
+            left: 0; top: 0;
             width: 100vw;
             height: 100vh;
-            overflow: hidden;
           }
 
           #origo {
@@ -66,10 +70,12 @@ export default class Game extends Component {
           }
         `}</style>
 
-        <div id="origo">
-          {tileList.map(tile => {
-            return <Tile {...tile} />;
-          })}
+        <div id="viewport">
+          <div id="origo">
+            {tileList.map(tile => {
+              return <Tile {...tile} />;
+            })}
+          </div>
         </div>
       </div>
     );
