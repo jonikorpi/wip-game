@@ -38,6 +38,8 @@ export default class Game extends Component {
             left: 50%; top: 50%;
             width: 0;
             height: 0;
+            margin-left: ${-hex.width / 2 * hex.renderingSize + hex.unit};
+            margin-top: ${-hex.height / 2 * hex.renderingSize + hex.unit};
           }
         `}</style>
 
