@@ -25,7 +25,7 @@ export default class Game extends Component {
   render() {
     const playerPosition = [0, 0];
     const visionRange = 3;
-    const renderRange = 5;
+    const renderRange = 10;
 
     const tileList = hex.hexesWithin(playerPosition, renderRange).map(tile => {
       const x = tile[0];

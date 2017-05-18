@@ -25,7 +25,7 @@ const yModifiers = [
   -0.5,
 ];
 
-const Water = ({ points }) => {
+const Water = ({ points, visible }) => {
   const waterRadius = hex.waveOffset;
   const path =
     points.reduce((result, point, index) => {

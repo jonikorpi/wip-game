@@ -84,10 +84,10 @@ export default class Tile extends PureComponent {
           }
         `}</style>
 
-        {visible &&
+        {/*{visible &&
           <Layer style={{ zIndex: 1 }} className="water">
             <Water visible={visible} seed={seed++} points={points} />
-          </Layer>}
+          </Layer>}*/}
 
         {tile.walkable &&
           <div>
@@ -110,7 +110,7 @@ export default class Tile extends PureComponent {
 
         {unit &&
           visible &&
-          <Layer zIndex={6} className="unit">
+          <Layer style={{ zIndex: 6 }} className="unit">
             <Entity {...unit} x={hex.width / 2} y={hex.height / 2} />
           </Layer>}
 

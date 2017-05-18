@@ -179,7 +179,7 @@ export default () => {
         html {
           font-size: 133%; /* Fallback: used if browser doesn't support calc() */
           font-size: calc(1em + 0.5vw + 0.5vh + 0.25vmin);
-          background-color: ${styles.map.water};
+          background-color: ${styles.water};
           color: white;
         }
 

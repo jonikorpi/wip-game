@@ -102,7 +102,7 @@ export default {
   pixelCoordinates: pixelCoordinates,
 
   roundingWidth: size / 7,
-  randomRange: size / 13,
+  randomRange: size / 16,
   ridgeHeight: size / 11,
 
   waterLineWidth: size / 50,
