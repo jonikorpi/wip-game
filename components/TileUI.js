@@ -34,14 +34,16 @@ export default class TileUI extends PureComponent {
     };
     const { targeted } = { ...this.state };
 
+    const transform = `translate(${(left - hex.width / 2) * hex.renderingSize + hex.unit}, ${(top - hex.height / 2) * hex.renderingSize + hex.unit})`;
+
     return (
       <div
         className="tileUI"
         style={{
           height: hex.height * hex.renderingSize + hex.unit,
           width: hex.width * hex.renderingSize + hex.unit,
-          left: (left - hex.width / 2) * hex.renderingSize + hex.unit,
-          top: (top - hex.height / 2) * hex.renderingSize + hex.unit,
+          transform: transform,
+          WebkitTransform: transform,
           opacity: targeted ? 1 : 0,
           zIndex: zIndex,
         }}
@@ -49,6 +51,7 @@ export default class TileUI extends PureComponent {
         <style jsx>{`
           .tileUI {
             position: absolute;
+            left: 0; top: 0;
           }
 
           .tileTarget {
@@ -80,7 +83,7 @@ export default class TileUI extends PureComponent {
           // onTouchCancel={this.handleTouchCancel}
           // onTouchMove={this.handleTouchMove}
         >
-          {tile.name} {entity}<br />
+          {tile.name} {entity} {tile.heroes[0] && "hero"}<br />
           <code className="tileCoordinates">{x},{y}</code>
         </button>
       </div>

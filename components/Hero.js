@@ -20,24 +20,32 @@ export default class Hero extends PureComponent {
     };
     let seed = (x || 123) * (y || 456) * (x || 123);
 
+    const transform = `translate(${(left - hex.width / 2) * hex.renderingSize + hex.unit}, ${(top - hex.height / 2) * hex.renderingSize + hex.unit})`;
+
     return (
       <div
         className="hero"
         style={{
           height: hex.height * hex.renderingSize + hex.unit,
           width: hex.width * hex.renderingSize + hex.unit,
-          left: (left - hex.width / 2) * hex.renderingSize + hex.unit,
-          top: (top - hex.height / 2) * hex.renderingSize + hex.unit,
         }}
       >
         <style jsx>{`
           .hero {
             position: absolute;
+            left: 0; top: 0;
             {/*outline: 1px solid;*/}
           }
         `}</style>
 
-        <Layer style={{ zIndex: 5 }} className="hero">
+        <Layer
+          style={{
+            transform: transform,
+            WebkitTransform: transform,
+            zIndex: 5,
+          }}
+          className="hero"
+        >
           <Entity
             type={"human"}
             x={(0.5 + maths.random(1, seed)) * hex.width / 2}

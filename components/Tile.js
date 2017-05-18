@@ -31,19 +31,20 @@ export default class Tile extends PureComponent {
       ];
     });
 
+    const transform = `translate(${(left - hex.width / 2) * hex.renderingSize + hex.unit}, ${(top - hex.height / 2) * hex.renderingSize + hex.unit})`;
+
     return (
       <div
         className="tile"
         style={{
           height: hex.height * hex.renderingSize + hex.unit,
           width: hex.width * hex.renderingSize + hex.unit,
-          left: (left - hex.width / 2) * hex.renderingSize + hex.unit,
-          top: (top - hex.height / 2) * hex.renderingSize + hex.unit,
         }}
       >
         <style jsx>{`
           .tile {
             position: absolute;
+            left: 0; top: 0;
             {/*outline: 1px solid;*/}
           }
         `}</style>
@@ -55,25 +56,60 @@ export default class Tile extends PureComponent {
 
         {tile.walkable &&
           <div>
-            <Layer style={{ zIndex: 2 }} className="reflection">
+            <Layer
+              style={{
+                transform: transform,
+                WebkitTransform: transform,
+                zIndex: 2,
+              }}
+              className="reflection"
+            >
               <Reflection visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer style={{ zIndex: 3 }} className="waterLine">
+            <Layer
+              style={{
+                transform: transform,
+                WebkitTransform: transform,
+                zIndex: 3,
+              }}
+              className="waterLine"
+            >
               <WaterLine visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer style={{ zIndex: 4 }} className="ridge">
+            <Layer
+              style={{
+                transform: transform,
+                WebkitTransform: transform,
+                zIndex: 4,
+              }}
+              className="ridge"
+            >
               <Ridge visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer style={{ zIndex: 5 }} className="ground">
+            <Layer
+              style={{
+                transform: transform,
+                WebkitTransform: transform,
+                zIndex: 5,
+              }}
+              className="ground"
+            >
               <Ground visible={visible} seed={seed++} points={points} />
             </Layer>
           </div>}
 
         {entity &&
-          <Layer style={{ zIndex: 6 }} className="entity">
+          <Layer
+            style={{
+              transform: transform,
+              WebkitTransform: transform,
+              zIndex: 6,
+            }}
+            className="entity"
+          >
             <Entity type={entity} x={0} y={0} seed={seed++} />
           </Layer>}
       </div>

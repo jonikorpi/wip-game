@@ -38,7 +38,7 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
           tileType.walkable &&
           "hero-" + x + y + x * y * x * Math.random();
 
-        const hero = visible && {
+        const hero = heroID && {
           key: heroID,
           ...commonProps,
         };
