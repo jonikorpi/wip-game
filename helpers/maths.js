@@ -17,16 +17,14 @@ export default {
       translate(
         calc(
           (
-            (${left * hex.renderingSize})
-            - ((var(--playerX) * ${hex.width * hex.renderingSize}))
+            (${left} - var(--playerX)) * ${hex.renderingSize}
           )
           * var(--zoom)
           * 1${hex.unit}
         ),
         calc(
           (
-            (${top * hex.renderingSize})
-            - ((var(--playerY) * ${hex.width * hex.renderingSize}))
+            (${top} - var(--playerY)) * ${hex.renderingSize}
           )
           * var(--zoom)
           * 1${hex.unit}

@@ -55,6 +55,7 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
           key: tileID,
           ...commonProps,
           visible: visible,
+          playerIsHere: playerPosition[0] === x && playerPosition[1] === y,
           entity: entityType,
           heroes: hero ? [hero] : [],
           ...tileType,
@@ -83,16 +84,22 @@ export default class World extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState(buildState);
+    this.updateCamera(nextProps.playerPosition);
   }
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
     this.updateScale();
+    this.updateCamera(this.props.playerPosition);
   }
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   }
+
+  handleScroll = () => {
+    requestAnimationFrame(this.updateScale);
+  };
 
   updateScale = () => {
     if (body) {
@@ -103,8 +110,10 @@ export default class World extends Component {
     }
   };
 
-  handleScroll = () => {
-    requestAnimationFrame(this.updateScale);
+  updateCamera = playerPosition => {
+    const pixelCoordinates = hex.pixelCoordinates(playerPosition);
+    this.world.style.setProperty("--playerX", pixelCoordinates[0]);
+    this.world.style.setProperty("--playerY", pixelCoordinates[1]);
   };
 
   render() {
