@@ -40,8 +40,8 @@ export default class TileUI extends PureComponent {
       <div
         className="tileUI"
         style={{
-          WebkitTransform: transform,
-          transform: transform,
+          //WebkitTransform: transform,
+          //transform: transform,
           opacity: targeted ? 1 : 0,
           zIndex: zIndex,
         }}

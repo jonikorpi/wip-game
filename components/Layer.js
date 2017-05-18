@@ -29,7 +29,6 @@ const Layer = ({ children, className, style, viewBox }) => (
           `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
       }
     >
-
       {children}
     </svg>
   </div>
