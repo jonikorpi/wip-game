@@ -1,6 +1,6 @@
 export default {
   default: {
-    name: "Default Unit",
+    name: "Default Entity",
     rarity: null,
     x: null,
     y: null,
@@ -20,7 +20,7 @@ export default {
     maxHealth: 10,
     minHealth: 0,
     healthUpgrade: null,
-    healthDowngrade: "destroyUnit",
+    healthDowngrade: "destroyEntity",
 
     skill: null,
     skillRange: null,

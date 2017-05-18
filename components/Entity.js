@@ -15,7 +15,12 @@ const entities = {
 
 const Entity = ({ key, x = 0, y = 0, type = "human" }) => {
   return (
-    <g key={key} transform={`translate(${x},${y})`}> {entities["human"]} </g>
+    <g
+      key={key}
+      transform={`translate(${hex.width / 2 + x},${hex.height / 2 + y})`}
+    >
+      {" "}{entities["human"]}{" "}
+    </g>
   );
 };
 

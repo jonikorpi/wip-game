@@ -5,7 +5,7 @@ import Tile from "../components/Tile.js";
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
 import styles from "../helpers/styles.js";
-import units from "../helpers/units.js";
+import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
 const env = (process && process.env && process.env.NODE_ENV) || "development";
@@ -42,7 +42,7 @@ export default class Game extends Component {
         zIndex: y + 100000,
         visible: hex.distanceBetween(playerPosition, tile) <= visionRange,
         tile: tiles.getRandomTile(x * y),
-        unit: maths.random(1, x * y) > 0.75 ? units["default"] : null,
+        entity: maths.random(1, x * y) > 0.75 ? entities["default"] : null,
       };
     });
 
@@ -65,8 +65,6 @@ export default class Game extends Component {
             left: 50%; top: 50%;
             width: 0;
             height: 0;
-            margin-left: -${hex.width / 2 * hex.renderingSize + hex.unit};
-            margin-top: -${hex.height / 2 * hex.renderingSize + hex.unit};
           }
         `}</style>
 

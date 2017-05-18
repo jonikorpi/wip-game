@@ -29,7 +29,7 @@ export default class Tile extends PureComponent {
   };
 
   render() {
-    const { x, y, zIndex, top, left, tile, unit, visible } = {
+    const { x, y, zIndex, top, left, tile, entity, visible } = {
       ...this.props,
     };
     const { targeted } = { ...this.state };
@@ -52,8 +52,8 @@ export default class Tile extends PureComponent {
         style={{
           height: hex.height * hex.renderingSize + hex.unit,
           width: hex.width * hex.renderingSize + hex.unit,
-          left: left * hex.renderingSize + hex.unit,
-          top: top * hex.renderingSize + hex.unit,
+          left: (left - hex.width / 2) * hex.renderingSize + hex.unit,
+          top: (top - hex.height / 2) * hex.renderingSize + hex.unit,
         }}
       >
         <style jsx>{`
@@ -65,6 +65,8 @@ export default class Tile extends PureComponent {
           .tileTarget {
             position: absolute;
             left: 0;
+            top: ${hex.height * hex.renderingSize * 0.125}${hex.unit};
+            height: ${hex.height * hex.renderingSize * 0.75}${hex.unit};
             width: 100%;
             pointer-events: all;
             overflow: hidden;
@@ -108,18 +110,16 @@ export default class Tile extends PureComponent {
             </Layer>
           </div>}
 
-        {unit &&
+        {entity &&
           visible &&
           <Layer style={{ zIndex: 6 }} className="unit">
-            <Entity {...unit} x={hex.width / 2} y={hex.height / 2} />
+            <Entity {...entity} x={0} y={0} />
           </Layer>}
 
         <button
           className="tileTarget"
           style={{
             zIndex: zIndex,
-            top: `${hex.height * hex.renderingSize * 0.125}${hex.unit}`,
-            height: `${hex.height * hex.renderingSize * 0.75}${hex.unit}`,
           }}
           //onMouseEnter={this.target}
           //onMouseLeave={this.untarget}
@@ -130,7 +130,7 @@ export default class Tile extends PureComponent {
           // onTouchCancel={this.handleTouchCancel}
           // onTouchMove={this.handleTouchMove}
         >
-          {tile.name} {unit && unit.name}<br />
+          {tile.name} {entity && entity.name}<br />
           <code className="tileCoordinates">{x},{y}</code>
         </button>
       </div>
