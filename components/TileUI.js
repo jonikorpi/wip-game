@@ -34,7 +34,7 @@ export default class TileUI extends PureComponent {
     };
     const { targeted } = { ...this.state };
 
-    const transform = `translate(${(left - hex.width / 2) * hex.renderingSize + hex.unit}, ${(top - hex.height / 2) * hex.renderingSize + hex.unit})`;
+    const transform = maths.calculateTransform(left, top, hex);
 
     return (
       <div
@@ -42,8 +42,8 @@ export default class TileUI extends PureComponent {
         style={{
           height: hex.height * hex.renderingSize + hex.unit,
           width: hex.width * hex.renderingSize + hex.unit,
-          transform: transform,
           WebkitTransform: transform,
+          transform: transform,
           opacity: targeted ? 1 : 0,
           zIndex: zIndex,
         }}

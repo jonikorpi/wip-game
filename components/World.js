@@ -10,6 +10,24 @@ import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
+const maxScale = 1;
+const minScale = maxScale / 100;
+const html = typeof document !== "undefined" && document.documentElement;
+const body = document.body;
+
+const updateScale = () => {
+  if (html) {
+    const scrolled =
+      1 - window.pageYOffset / (body.clientHeight - window.innerHeight);
+    const scale = scrolled * (maxScale - minScale) + minScale;
+    html.style.setProperty("--zoom", scale);
+  }
+};
+
+const handleScroll = () => {
+  requestAnimationFrame(updateScale);
+};
+
 const buildState = (state, { tiles, visionRange, playerPosition }) => {
   return {
     ...state,
@@ -81,6 +99,15 @@ export default class World extends Component {
     this.setState(buildState);
   }
 
+  componentDidMount() {
+    window.addEventListener("scroll", handleScroll);
+    updateScale();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", handleScroll);
+  }
+
   render() {
     const tiles = this.state.tiles;
     const tileList = Object.keys(tiles);
@@ -88,42 +115,31 @@ export default class World extends Component {
     const heroList = Object.keys(heroes);
 
     return (
-      <div id="game">
-        <style jsx>{`
-          #game {
-            height: 200vh;
+      <div id="world">
+        <style jsx global>{`
+          html {
+            --playerX: 0;
+            --playerY: 0;
+            --zoom: ${maxScale};
           }
 
-          #viewport {
-            position: fixed;
-            left: 0; top: 0;
-            width: 100vw;
-            height: 100vh;
-          }
-
-          #origo {
-            position: absolute;
-            left: 50%; top: 50%;
-            width: 0;
-            height: 0;
+          #world {
+            perspective: 1000px;
+            transform: translateZ(0);
           }
         `}</style>
 
-        <div id="viewport">
-          <div id="origo">
-            {tileList.map(tile => {
-              return <Tile {...tiles[tile]} heroes={undefined} />;
-            })}
+        {tileList.map(tile => {
+          return <Tile {...tiles[tile]} heroes={undefined} />;
+        })}
 
-            {heroList.map(hero => {
-              return <Hero {...heroes[hero]} />;
-            })}
+        {heroList.map(hero => {
+          return <Hero {...heroes[hero]} />;
+        })}
 
-            {tileList.map(tile => {
-              return <TileUI {...tiles[tile]} />;
-            })}
-          </div>
-        </div>
+        {tileList.map(tile => {
+          return <TileUI {...tiles[tile]} />;
+        })}
       </div>
     );
   }

@@ -31,7 +31,7 @@ export default class Tile extends PureComponent {
       ];
     });
 
-    const transform = `translate(${(left - hex.width / 2) * hex.renderingSize + hex.unit}, ${(top - hex.height / 2) * hex.renderingSize + hex.unit})`;
+    const transform = maths.calculateTransform(left, top, hex);
 
     return (
       <div

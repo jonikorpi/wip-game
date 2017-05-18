@@ -11,4 +11,29 @@ export default {
   fromIsometric: (isoX, isoY) => {
     return [(isoX - isoY) / 1.5, isoX / 3.0 + isoY / 1.5];
   },
+
+  calculateTransform: (left, top, hex) => {
+    return `
+      translate(
+        calc(
+          (
+            (${left * hex.renderingSize})
+            - ((var(--playerX) * ${hex.width * hex.renderingSize}))
+          )
+          * var(--zoom)
+          * 1${hex.unit}
+        ),
+        calc(
+          (
+            (${top * hex.renderingSize})
+            - ((var(--playerY) * ${hex.width * hex.renderingSize}))
+          )
+          * var(--zoom)
+          * 1${hex.unit}
+        )
+      )
+      scale(var(--zoom))
+      translate(-50%, -50%)
+    `;
+  },
 };
