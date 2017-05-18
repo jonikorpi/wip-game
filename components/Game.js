@@ -15,7 +15,7 @@ export default class Game extends Component {
   }
 
   render() {
-    const playerPosition = [90000, 90000];
+    const playerPosition = [9000000, 9000000];
     const visionRange = 3;
     const renderRange = 8;
 

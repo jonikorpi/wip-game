@@ -29,7 +29,17 @@ export default class TileUI extends PureComponent {
   };
 
   render() {
-    const { x, y, zIndex, top, left, entity, visible, ...tile } = {
+    const {
+      x,
+      y,
+      zIndex,
+      top,
+      left,
+      entity,
+      visible,
+      playerIsHere,
+      ...tile
+    } = {
       ...this.props,
     };
     const { targeted } = { ...this.state };
@@ -40,9 +50,9 @@ export default class TileUI extends PureComponent {
       <div
         className="tileUI"
         style={{
-          //WebkitTransform: transform,
-          //transform: transform,
-          opacity: targeted ? 1 : 0,
+          WebkitTransform: transform,
+          transform: transform,
+          opacity: targeted || playerIsHere ? 1 : 0,
           zIndex: zIndex,
         }}
       >
