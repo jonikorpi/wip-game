@@ -16,7 +16,7 @@ if (typeof window !== "undefined" && dev) {
   window.Perf.start();
 
   setTimeout(() => {
-    window.Perf.printInclusive();
+    window.Perf.printExclusive();
     window.Perf.printWasted();
   }, 5000);
 }
