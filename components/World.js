@@ -10,9 +10,30 @@ import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
-const maxScale = 1;
+const maxScale = 2;
 const minScale = maxScale / 100;
 const body = typeof document !== "undefined" && document.body;
+
+const getScale = () => {
+  return body
+    ? Math.max(
+        (1 - window.pageYOffset / (body.clientHeight - window.innerHeight)) *
+          (maxScale - minScale) +
+          minScale,
+        0
+      )
+    : maxScale;
+};
+
+const getTransform = playerPixelCoordinates => {
+  return `
+    scale(${getScale()})
+    translate(
+      ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
+      ${(-playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
+    )
+  `;
+};
 
 const buildState = (state, { tiles, visionRange, playerPosition }) => {
   return {
@@ -75,6 +96,7 @@ export default class World extends Component {
     this.state = {
       tiles: {},
       heroes: {},
+      scale: 1,
     };
   }
 
@@ -84,13 +106,12 @@ export default class World extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState(buildState);
-    this.updateCamera(nextProps.playerPosition);
+    this.updateCamera(null, nextProps.playerPixelCoordinates);
   }
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
-    this.updateScale();
-    this.updateCamera(this.props.playerPosition);
+    this.updateCamera();
   }
 
   componentWillUnmount() {
@@ -98,29 +119,26 @@ export default class World extends Component {
   }
 
   handleScroll = () => {
-    requestAnimationFrame(this.updateScale);
+    requestAnimationFrame(this.updateCamera);
   };
 
-  updateScale = () => {
-    if (body) {
-      const scrolled =
-        1 - window.pageYOffset / (body.clientHeight - window.innerHeight);
-      const scale = scrolled * (maxScale - minScale) + minScale;
-      this.world.style.setProperty("--zoom", scale);
-    }
-  };
-
-  updateCamera = playerPosition => {
-    const pixelCoordinates = hex.pixelCoordinates(playerPosition);
-    this.world.style.setProperty("--playerX", pixelCoordinates[0]);
-    this.world.style.setProperty("--playerY", pixelCoordinates[1]);
+  updateCamera = (
+    timestamp,
+    playerPixelCoordinates = this.props.playerPixelCoordinates
+  ) => {
+    const transform = getTransform(playerPixelCoordinates);
+    this.world.style.setProperty("WebkitTransform", transform);
+    this.world.style.setProperty("transform", transform);
   };
 
   render() {
-    const tiles = this.state.tiles;
+    const { playerPixelCoordinates } = { ...this.props };
+    const { tiles, heroes } = { ...this.state };
+
     const tileList = Object.keys(tiles);
-    const heroes = this.state.heroes;
     const heroList = Object.keys(heroes);
+
+    const transform = getTransform(playerPixelCoordinates);
 
     return (
       <div
@@ -128,14 +146,15 @@ export default class World extends Component {
         ref={ref => {
           this.world = ref;
         }}
+        style={{
+          WebkitTransform: transform,
+          transform: transform,
+        }}
       >
         <style jsx global>{`
           #world {
-            --playerX: 0;
-            --playerY: 0;
-            --zoom: ${maxScale};
-            perspective: 1000px;
-            transform: translateZ(0);
+            will-change: transform;
+            transform-origin: center center;
           }
         `}</style>
 

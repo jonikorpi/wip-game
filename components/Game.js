@@ -15,7 +15,7 @@ export default class Game extends Component {
   }
 
   render() {
-    const playerPosition = [7, -4];
+    const playerPosition = [7, -5];
     const visionRange = 5;
     const renderRange = 10;
 
@@ -23,7 +23,7 @@ export default class Game extends Component {
       <div id="game">
         <style jsx>{`
           #game {
-            height: 200vh;
+            height: 300vh;
           }
 
           #viewport {
@@ -38,8 +38,6 @@ export default class Game extends Component {
             left: 50%; top: 50%;
             width: 0;
             height: 0;
-            margin-left: ${-hex.width / 2 * hex.renderingSize + hex.unit};
-            margin-top: ${-hex.height / 2 * hex.renderingSize + hex.unit};
           }
         `}</style>
 
@@ -49,6 +47,7 @@ export default class Game extends Component {
               tiles={hex.hexesWithin(playerPosition, renderRange)}
               visionRange={visionRange}
               playerPosition={playerPosition}
+              playerPixelCoordinates={hex.pixelCoordinates(playerPosition)}
             />
           </div>
         </div>

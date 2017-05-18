@@ -16,21 +16,16 @@ export default {
     return `
       translate(
         calc(
-          (
-            (${left} - var(--playerX)) * ${hex.renderingSize}
-          )
-          * var(--zoom)
+          ${left}
+          * ${hex.renderingSize}
           * 1${hex.unit}
         ),
         calc(
-          (
-            (${top} - var(--playerY)) * ${hex.renderingSize}
-          )
-          * var(--zoom)
+          ${top}
+          * ${hex.renderingSize}
           * 1${hex.unit}
         )
       )
-      scale(var(--zoom))
     `;
   },
 };
