@@ -23,17 +23,17 @@ const getEntity = (type, seed) => {
       return (
         <g
           fill="none"
-          fill-rule="evenodd"
-          transform={`scale(${1.5 - maths.random(0.75, seed++)})`}
+          fillRule="evenodd"
+          transform={`scale(${1.5 - maths.random(0.75, seed++)}) translate(0, ${-10})`}
         >
           <polygon
             fill={styles.black}
-            fill-rule="nonzero"
+            fillRule="nonzero"
             points={`${26} 9.011 23.015 7.25 20.182 5.578 0 34.022 11.224 41.502 ${26} 49.033`}
           />
           <polygon
             fill={styles.rock}
-            fill-rule="nonzero"
+            fillRule="nonzero"
             points={`${26} 9.01 ${26} 49.03 40.15 41.861 52 34.02 32.459 5.578 29.127 7.348`}
           />
           <polygon
@@ -55,7 +55,7 @@ const getEntity = (type, seed) => {
 
 const Entity = ({ key, x = 0, y = 0, type = "human", seed }) => {
   return (
-    <g key={key}>
+    <g key={key} transform={`translate(${x}, ${y})`}>
       {getEntity(type, seed)}
     </g>
   );

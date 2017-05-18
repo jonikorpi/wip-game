@@ -9,7 +9,7 @@ import Water from "../components/Water.js";
 import Entity from "../components/Entity.js";
 
 import hex from "../helpers/hex.js";
-import tiles from "../helpers/tiles.js";
+import tileTypes from "../helpers/tileTypes.js";
 import styles from "../helpers/styles.js";
 import maths from "../helpers/maths.js";
 

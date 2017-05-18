@@ -44,7 +44,7 @@ export default class Game extends Component {
         <div id="viewport">
           <div id="origo">
             <World
-              tileList={hex.hexesWithin(playerPosition, renderRange)}
+              tiles={hex.hexesWithin(playerPosition, renderRange)}
               visionRange={visionRange}
               playerPosition={playerPosition}
             />
