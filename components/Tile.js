@@ -14,25 +14,10 @@ import styles from "../helpers/styles.js";
 import maths from "../helpers/maths.js";
 
 export default class Tile extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = { targeted: false };
-  }
-
-  target = () => {
-    this.setState({ targeted: true });
-  };
-
-  untarget = () => {
-    this.setState({ targeted: false });
-  };
-
   render() {
-    const { x, y, zIndex, top, left, tile, entity, visible } = {
+    const { x, y, zIndex, top, left, entity, visible, ...tile } = {
       ...this.props,
     };
-    const { targeted } = { ...this.state };
     let seed = (x || 123) * (y || 456) * (x || 123);
 
     const points = hex.baseHexCoordinates.map(point => {
@@ -60,29 +45,6 @@ export default class Tile extends PureComponent {
           .tile {
             position: absolute;
             {/*outline: 1px solid;*/}
-          }
-
-          .tileTarget {
-            position: absolute;
-            left: 0;
-            top: ${hex.height * hex.renderingSize * 0.125}${hex.unit};
-            height: ${hex.height * hex.renderingSize * 0.75}${hex.unit};
-            width: 100%;
-            pointer-events: all;
-            overflow: hidden;
-            cursor: pointer;
-            opacity: 0;
-            outline: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            outline: 1px solid;
-          }
-
-          .tileTarget:hover,
-          .tileTarget:focus {
-            opacity: 1;
           }
         `}</style>
 
@@ -114,24 +76,6 @@ export default class Tile extends PureComponent {
           <Layer style={{ zIndex: 6 }} className="entity">
             <Entity type={entity} x={0} y={0} seed={seed++} />
           </Layer>}
-
-        <button
-          className="tileTarget"
-          style={{
-            zIndex: zIndex,
-          }}
-          //onMouseEnter={this.target}
-          //onMouseLeave={this.untarget}
-          //onClick={this.randomizeTile}
-          // TODO: handle tapping vs. colliding with scroll
-          // onTouchStart={this.handleTouchStart}
-          // onTouchEnd={this.handleTouchEnd}
-          // onTouchCancel={this.handleTouchCancel}
-          // onTouchMove={this.handleTouchMove}
-        >
-          {tile.name} {entity}<br />
-          <code className="tileCoordinates">{x},{y}</code>
-        </button>
       </div>
     );
   }

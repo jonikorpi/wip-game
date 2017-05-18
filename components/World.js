@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Tile from "../components/Tile.js";
 import Hero from "../components/Hero.js";
+import TileUI from "../components/TileUI.js";
 
 import hex from "../helpers/hex.js";
 import tileTypes from "../helpers/tileTypes.js";
@@ -50,9 +51,9 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
           key: tileID,
           ...commonProps,
           visible: visible,
-          tile: tileType,
           entity: entityType,
           heroes: hero ? [hero] : [],
+          ...tileType,
         };
 
         return lists;
@@ -111,11 +112,15 @@ export default class World extends Component {
         <div id="viewport">
           <div id="origo">
             {tileList.map(tile => {
-              return <Tile {...tiles[tile]} />;
+              return <Tile {...tiles[tile]} heroes={undefined} />;
             })}
 
             {heroList.map(hero => {
               return <Hero {...heroes[hero]} />;
+            })}
+
+            {tileList.map(tile => {
+              return <TileUI {...tiles[tile]} />;
             })}
           </div>
         </div>
