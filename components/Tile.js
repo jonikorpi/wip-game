@@ -34,17 +34,13 @@ export default class Tile extends PureComponent {
     const transform = maths.calculateTransform(left, top, hex);
 
     return (
-      <div
-        className="tile"
-        style={{
-          height: hex.height * hex.renderingSize + hex.unit,
-          width: hex.width * hex.renderingSize + hex.unit,
-        }}
-      >
+      <div className="tile">
         <style jsx>{`
           .tile {
             position: absolute;
             left: 0; top: 0;
+            height: ${hex.height * hex.renderingSize + hex.unit};
+            width: ${hex.width * hex.renderingSize + hex.unit};
             {/*outline: 1px solid;*/}
           }
         `}</style>
@@ -58,8 +54,8 @@ export default class Tile extends PureComponent {
           <div>
             <Layer
               style={{
-                transform: transform,
                 WebkitTransform: transform,
+                transform: transform,
                 zIndex: 2,
               }}
               className="reflection"
@@ -69,8 +65,8 @@ export default class Tile extends PureComponent {
 
             <Layer
               style={{
-                transform: transform,
                 WebkitTransform: transform,
+                transform: transform,
                 zIndex: 3,
               }}
               className="waterLine"
@@ -80,8 +76,8 @@ export default class Tile extends PureComponent {
 
             <Layer
               style={{
-                transform: transform,
                 WebkitTransform: transform,
+                transform: transform,
                 zIndex: 4,
               }}
               className="ridge"
@@ -91,8 +87,8 @@ export default class Tile extends PureComponent {
 
             <Layer
               style={{
-                transform: transform,
                 WebkitTransform: transform,
+                transform: transform,
                 zIndex: 5,
               }}
               className="ground"

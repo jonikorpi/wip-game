@@ -23,25 +23,21 @@ export default class Hero extends PureComponent {
     const transform = maths.calculateTransform(left, top, hex);
 
     return (
-      <div
-        className="hero"
-        style={{
-          height: hex.height * hex.renderingSize + hex.unit,
-          width: hex.width * hex.renderingSize + hex.unit,
-        }}
-      >
+      <div className="hero">
         <style jsx>{`
           .hero {
             position: absolute;
             left: 0; top: 0;
+            height: ${hex.height * hex.renderingSize + hex.unit};
+            width: ${hex.width * hex.renderingSize + hex.unit};
             {/*outline: 1px solid;*/}
           }
         `}</style>
 
         <Layer
           style={{
-            transform: transform,
             WebkitTransform: transform,
+            transform: transform,
             zIndex: 5,
           }}
           className="hero"

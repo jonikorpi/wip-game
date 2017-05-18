@@ -15,6 +15,10 @@ export default {
   calculateTransform: (left, top, hex) => {
     return `
       translate(
+        ${-hex.width / 2 * hex.renderingSize + hex.unit},
+        ${-hex.height / 2 * hex.renderingSize + hex.unit}
+      )
+      translate(
         calc(
           (
             (${left * hex.renderingSize})
@@ -33,7 +37,6 @@ export default {
         )
       )
       scale(var(--zoom))
-      translate(-50%, -50%)
     `;
   },
 };

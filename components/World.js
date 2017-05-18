@@ -12,15 +12,15 @@ import maths from "../helpers/maths.js";
 
 const maxScale = 1;
 const minScale = maxScale / 100;
-const html = typeof document !== "undefined" && document.documentElement;
-const body = document.body;
+const body = typeof document !== "undefined" && document.body;
+const clientHeight = body.clientHeight;
 
 const updateScale = () => {
-  if (html) {
+  if (body) {
     const scrolled =
-      1 - window.pageYOffset / (body.clientHeight - window.innerHeight);
+      1 - window.pageYOffset / (clientHeight - window.innerHeight);
     const scale = scrolled * (maxScale - minScale) + minScale;
-    html.style.setProperty("--zoom", scale);
+    body.style.setProperty("--zoom", scale);
   }
 };
 
@@ -117,7 +117,7 @@ export default class World extends Component {
     return (
       <div id="world">
         <style jsx global>{`
-          html {
+          body {
             --playerX: 0;
             --playerY: 0;
             --zoom: ${maxScale};

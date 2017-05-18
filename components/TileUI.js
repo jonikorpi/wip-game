@@ -40,8 +40,6 @@ export default class TileUI extends PureComponent {
       <div
         className="tileUI"
         style={{
-          height: hex.height * hex.renderingSize + hex.unit,
-          width: hex.width * hex.renderingSize + hex.unit,
           WebkitTransform: transform,
           transform: transform,
           opacity: targeted ? 1 : 0,
@@ -52,11 +50,12 @@ export default class TileUI extends PureComponent {
           .tileUI {
             position: absolute;
             left: 0; top: 0;
+            height: ${hex.height * hex.renderingSize + hex.unit};
+            width: ${hex.width * hex.renderingSize + hex.unit};
           }
 
           .tileTarget {
-            position: absolute;
-            left: 0;
+            position: relative;
             top: ${hex.height * hex.renderingSize * 0.125}${hex.unit};
             height: ${hex.height * hex.renderingSize * 0.75}${hex.unit};
             width: 100%;
