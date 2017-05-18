@@ -10,7 +10,7 @@ import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
-const maxScale = 2;
+const maxScale = 1;
 const minScale = maxScale / 100;
 const body = typeof document !== "undefined" && document.body;
 
@@ -25,9 +25,9 @@ const getScale = () => {
     : maxScale;
 };
 
-const getTransform = playerPixelCoordinates => {
+const getTransform = (playerPixelCoordinates, ignoreScale) => {
   return `
-    scale(${getScale()})
+    scale(${ignoreScale ? maxScale : getScale()})
     translate(
       ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
       ${(-playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
@@ -61,7 +61,7 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
           visible &&
           !entityType &&
           tileType.walkable &&
-          "hero-" + x + y + x * y * x * Math.random();
+          "hero-" + maths.random(1000, x + y);
 
         const hero = heroID && {
           key: heroID,
@@ -89,6 +89,12 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
   };
 };
 
+const sortByKey = (a, b) => {
+  if (a.key < b.key) return -1;
+  if (a.key > b.key) return 1;
+  return 0;
+};
+
 export default class World extends Component {
   constructor(props) {
     super(props);
@@ -97,6 +103,7 @@ export default class World extends Component {
       tiles: {},
       heroes: {},
       scale: 1,
+      clientSide: false,
     };
   }
 
@@ -112,6 +119,7 @@ export default class World extends Component {
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
     this.updateCamera();
+    this.setState({ clientSide: true });
   }
 
   componentWillUnmount() {
@@ -133,12 +141,12 @@ export default class World extends Component {
 
   render() {
     const { playerPixelCoordinates } = { ...this.props };
-    const { tiles, heroes } = { ...this.state };
+    const { tiles, heroes, clientSide } = { ...this.state };
 
-    const tileList = Object.keys(tiles);
-    const heroList = Object.keys(heroes);
+    const tileList = Object.keys(tiles).sort(sortByKey);
+    const heroList = Object.keys(heroes).sort(sortByKey);
 
-    const transform = getTransform(playerPixelCoordinates);
+    const transform = getTransform(playerPixelCoordinates, !clientSide);
 
     return (
       <div
@@ -155,6 +163,7 @@ export default class World extends Component {
           #world {
             will-change: transform;
             transform-origin: center center;
+            transition: transform 62ms linear;
           }
         `}</style>
 
