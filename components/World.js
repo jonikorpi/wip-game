@@ -68,7 +68,7 @@ export default class World extends Component {
 
     this.state = {
       tiles: {},
-      heroGroups: {},
+      heroes: {},
     };
   }
 
