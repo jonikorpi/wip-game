@@ -11,15 +11,15 @@ import styles from "../helpers/styles.js";
 const env = (process && process.env && process.env.NODE_ENV) || "development";
 const dev = env === "development";
 
-if (typeof window !== "undefined" && dev) {
-  window.Perf = require("react-addons-perf");
-  window.Perf.start();
+// if (typeof window !== "undefined" && dev) {
+//   window.Perf = require("react-addons-perf");
+//   window.Perf.start();
 
-  setTimeout(() => {
-    window.Perf.printExclusive();
-    window.Perf.printWasted();
-  }, 5000);
-}
+//   setTimeout(() => {
+//     window.Perf.printExclusive();
+//     window.Perf.printWasted();
+//   }, 5000);
+// }
 
 // initializeFirebase();
 // initializeRollbar();
