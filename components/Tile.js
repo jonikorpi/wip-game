@@ -111,9 +111,8 @@ export default class Tile extends PureComponent {
           </div>}
 
         {entity &&
-          visible &&
-          <Layer style={{ zIndex: 6 }} className="unit">
-            <Entity {...entity} x={0} y={0} />
+          <Layer style={{ zIndex: 6 }} className="entity">
+            <Entity type={entity} x={0} y={0} seed={seed++} />
           </Layer>}
 
         <button
@@ -130,7 +129,7 @@ export default class Tile extends PureComponent {
           // onTouchCancel={this.handleTouchCancel}
           // onTouchMove={this.handleTouchMove}
         >
-          {tile.name} {entity && entity.name}<br />
+          {tile.name} {entity}<br />
           <code className="tileCoordinates">{x},{y}</code>
         </button>
       </div>
