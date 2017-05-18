@@ -42,6 +42,8 @@ export default class TileUI extends PureComponent {
           width: hex.width * hex.renderingSize + hex.unit,
           left: (left - hex.width / 2) * hex.renderingSize + hex.unit,
           top: (top - hex.height / 2) * hex.renderingSize + hex.unit,
+          opacity: targeted ? 1 : 0,
+          zIndex: zIndex,
         }}
       >
         <style jsx>{`
@@ -58,7 +60,6 @@ export default class TileUI extends PureComponent {
             pointer-events: all;
             overflow: hidden;
             cursor: pointer;
-            opacity: 0;
             outline: none;
             display: flex;
             flex-direction: column;
@@ -66,20 +67,12 @@ export default class TileUI extends PureComponent {
             align-items: center;
             outline: 1px solid;
           }
-
-          .tileTarget:hover,
-          .tileTarget:focus {
-            opacity: 1;
-          }
         `}</style>
 
         <button
           className="tileTarget"
-          style={{
-            zIndex: zIndex,
-          }}
-          //onMouseEnter={this.target}
-          //onMouseLeave={this.untarget}
+          onMouseEnter={this.target}
+          onMouseLeave={this.untarget}
           //onClick={this.randomizeTile}
           // TODO: handle tapping vs. colliding with scroll
           // onTouchStart={this.handleTouchStart}
