@@ -30,7 +30,7 @@ const getTransform = (playerPixelCoordinates, ignoreScale) => {
     scale(${ignoreScale ? maxScale : getScale()})
     translate(
       ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
-      ${(-playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
+      ${(playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
     )
   `;
 };
@@ -53,7 +53,7 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
           x: x,
           y: y,
           left: pixelCoordinates[0],
-          top: pixelCoordinates[1],
+          top: -pixelCoordinates[1],
           zIndex: y + 2147483646 / 2,
         };
 
@@ -90,8 +90,8 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
 };
 
 const sortByKey = (a, b) => {
-  if (a.key < b.key) return -1;
-  if (a.key > b.key) return 1;
+  if (a.y < b.y) return -1;
+  if (a.y > b.y) return 1;
   return 0;
 };
 
