@@ -12,13 +12,17 @@ const Layer = ({ children, className, style, viewBox }) => (
         position: absolute;
         left: -100%;
         top: -100%;
+        will-change: --zoom, --playerX, --playerY, transform;
+        {/*-webkit-backface-visibility: hidden;
+        backface-visibility: hidden;*/}
       }
 
       .layerSVG {
         width: 100%;
         height: 100%;
       }
-        `}</style>
+    `}</style>
+
     <svg
       className="layerSVG"
       shapeRendering="optimizeSpeed"

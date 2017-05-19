@@ -33,8 +33,6 @@ export default class Tile extends PureComponent {
       ];
     });
 
-    const transform = maths.calculateTransform(left, top, hex);
-
     return (
       <div className="tile">
         <style jsx>{`
@@ -55,59 +53,30 @@ export default class Tile extends PureComponent {
         {tile.walkable &&
           <div>
             <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 2,
-              }}
+              style={maths.getTransform(left, top, 2)}
               className="reflection"
             >
               <Reflection visible={visible} seed={seed++} points={points} />
             </Layer>
 
             <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 3,
-              }}
+              style={maths.getTransform(left, top, 3)}
               className="waterLine"
             >
               <WaterLine visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 4,
-              }}
-              className="beach"
-            >
+            <Layer style={maths.getTransform(left, top, 4)} className="beach">
               <Beach visible={visible} seed={seed++} points={points} />
             </Layer>
 
-            <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 5,
-              }}
-              className="ground"
-            >
+            <Layer style={maths.getTransform(left, top, 5)} className="ground">
               <Ground visible={visible} seed={seed++} points={points} />
             </Layer>
           </div>}
 
         {entity &&
-          <Layer
-            style={{
-              transform: transform,
-              WebkitTransform: transform,
-              zIndex: 6,
-            }}
-            className="entity"
-          >
+          <Layer style={maths.getTransform(left, top, 6)} className="entity">
             <Entity visible={visible} type={entity} x={0} y={0} seed={seed++} />
           </Layer>}
       </div>

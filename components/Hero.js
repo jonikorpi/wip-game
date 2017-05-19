@@ -15,8 +15,6 @@ export default class Hero extends PureComponent {
     };
     let seed = (x || 123) * (y || 456) * (x || 123);
 
-    const transform = maths.calculateTransform(left, top, hex);
-
     return (
       <div className="hero">
         <style jsx>{`
@@ -29,14 +27,7 @@ export default class Hero extends PureComponent {
           }
         `}</style>
 
-        <Layer
-          style={{
-            WebkitTransform: transform,
-            transform: transform,
-            zIndex: 5,
-          }}
-          className="hero"
-        >
+        <Layer style={maths.getTransform(left, top, 5)} className="hero">
           <Entity
             type={"human"}
             x={(0.5 + maths.random(1, seed)) * hex.width / 2}

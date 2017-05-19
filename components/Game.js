@@ -14,7 +14,7 @@ export default class Game extends Component {
     this.state = {
       playerPosition: [9000, -9000],
       visionRange: 5,
-      renderRange: 10,
+      renderRange: 5,
     };
   }
 

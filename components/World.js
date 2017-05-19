@@ -25,16 +25,6 @@ const getScale = () => {
     : maxScale;
 };
 
-const getTransform = (playerPixelCoordinates, clientSide = true) => {
-  return `
-    scale(${clientSide ? getScale() : 1})
-    translate(
-      ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
-      ${(playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
-    )
-  `;
-};
-
 const buildState = (state, { tiles, visionRange, playerPosition }) => {
   return {
     ...state,
@@ -163,8 +153,9 @@ export default class World extends Component {
             --playerX: 0;
             --playerY: 0;
             --zoom: ${maxScale};
-            {/*perspective: 1000px;*/}
-            {/*transform: translateZ(0);*/}
+            {/*perspective: 1000px;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;*/}
             will-change: --zoom, --playerX, --playerY;
           }
         `}</style>
