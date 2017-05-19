@@ -32,8 +32,7 @@ const Water = ({ points, visible }) => {
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
       const xPoint = point[0] + waterRadius * xModifiers[index];
-      const yPoint =
-        point[1] + hex.ridgeHeight + waterRadius * yModifiers[index];
+      const yPoint = point[1] + waterRadius * yModifiers[index];
       return `${result}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 

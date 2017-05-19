@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 import Layer from "../components/Layer.js";
 import Ground from "../components/Ground.js";
-import Ridge from "../components/Ridge.js";
+import Beach from "../components/Beach.js";
 import WaterLine from "../components/WaterLine.js";
 import Reflection from "../components/Reflection.js";
 import Water from "../components/Water.js";
@@ -82,9 +82,9 @@ export default class Tile extends PureComponent {
                 transform: transform,
                 zIndex: 4,
               }}
-              className="ridge"
+              className="beach"
             >
-              <Ridge visible={visible} seed={seed++} points={points} />
+              <Beach visible={visible} seed={seed++} points={points} />
             </Layer>
 
             <Layer
