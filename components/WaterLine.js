@@ -4,7 +4,26 @@ import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
 const xModifiers = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1];
-const yModifiers = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0];
+const yModifiers = [
+  -0.414,
+  -0.414,
+  -0.414,
+  -0.414,
+  -0.414,
+  -0.414,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  -0.414,
+  -0.414,
+  -0.414,
+];
 
 const WaterLine = ({ points, seed, visible }) => {
   const colors = visible ? styles : styles.faded;
