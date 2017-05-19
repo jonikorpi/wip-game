@@ -21,7 +21,8 @@ const Layer = ({ children, className, style, viewBox }) => (
         position: absolute;
         left: -100%;
         top: -100%;
-        will-change: --zoom, --playerX, --playerY, transform;
+        {/*will-change: --zoom, --playerX, --playerY, transform;*/}
+        will-change: --zoom, --playerX, --playerY;
         {/*-webkit-backface-visibility: hidden;
         backface-visibility: hidden;*/}
       }
