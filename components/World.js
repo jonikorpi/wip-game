@@ -93,7 +93,6 @@ export default class World extends Component {
       tiles: {},
       heroes: {},
       scale: 1,
-      clientSide: false,
     };
   }
 
@@ -110,7 +109,6 @@ export default class World extends Component {
     window.addEventListener("scroll", this.handleScroll);
     this.updateScale();
     this.updateCamera(this.props.playerPixelCoordinates);
-    this.setState({ clientSide: true });
   }
 
   componentWillUnmount() {
@@ -136,7 +134,7 @@ export default class World extends Component {
 
   render() {
     const { playerPixelCoordinates, playerPosition } = { ...this.props };
-    const { tiles, heroes, clientSide } = { ...this.state };
+    const { tiles, heroes } = { ...this.state };
 
     const tileList = Object.keys(tiles).sort(sortTiles);
     const heroList = Object.keys(heroes).sort(sortTiles);
