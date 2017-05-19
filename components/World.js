@@ -147,12 +147,7 @@ export default class World extends Component {
     const tileList = Object.keys(tiles).sort(sortTiles);
     const heroList = Object.keys(heroes).sort(sortTiles);
 
-<<<<<<< HEAD
-    const scaleTransform = `scale(${clientSide ? getScale() : 1})`;
-    const pannerTransform = getPannerTransform(playerPixelCoordinates);
-=======
     const transform = getTransform(playerPixelCoordinates, !clientSide);
->>>>>>> parent of c9165d8... Separates panning and zooming
 
     return (
       <div
@@ -169,7 +164,7 @@ export default class World extends Component {
           #world {
             will-change: transform;
             transform-origin: center center;
-            transition: transform 62ms linear;
+            transition: transform 162ms ease-out;
           }
         `}</style>
 

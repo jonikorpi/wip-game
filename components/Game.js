@@ -18,23 +18,23 @@ export default class Game extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.timer = setInterval(() => {
-  //     this.setState(state => {
-  //       return {
-  //         ...state,
-  //         playerPosition: [
-  //           state.playerPosition[0] + Math.floor(Math.random() * 3 - 1),
-  //           state.playerPosition[1] + Math.floor(Math.random() * 3 - 1),
-  //         ],
-  //       };
-  //     });
-  //   }, 2000);
-  // }
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState(state => {
+        return {
+          ...state,
+          playerPosition: [
+            state.playerPosition[0] + Math.floor(Math.random() * 3 - 1),
+            state.playerPosition[1] + Math.floor(Math.random() * 3 - 1),
+          ],
+        };
+      });
+    }, 5000);
+  }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.timer);
-  // }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
   render() {
     const { playerPosition, visionRange, renderRange } = { ...this.state };
