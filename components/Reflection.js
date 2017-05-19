@@ -11,9 +11,8 @@ const Reflection = ({ points, visible }) => {
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] + hex.beachWidth * xModifiers[index];
-      const yPoint =
-        point[1] + (hex.beachWidth + hex.reflectionHeight) * yModifiers[index];
+      const xPoint = point[0];
+      const yPoint = point[1] + hex.reflectionHeight;
       return `${result}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 
@@ -22,7 +21,7 @@ const Reflection = ({ points, visible }) => {
       d={path}
       fill={colors.reflection}
       stroke={colors.reflection}
-      strokeWidth={hex.roundingWidth - hex.beachWidth}
+      strokeWidth={hex.roundingWidth + hex.beachWidth}
       strokeLinejoin="round"
     />
   );

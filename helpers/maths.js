@@ -1,3 +1,26 @@
+import hex from "../helpers/hex.js";
+
+const calculateTransform = (offset, variableName) => {
+  return `calc(((${offset} - var(--${variableName})) * ${hex.renderingSize}) * var(--zoom) * 1${hex.unit})`;
+};
+
+// const getTransform = (x, y, z) => {
+//   const transform = `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}, ${z}px) scale(var(--zoom))`;
+//   return {
+//     WebkitTransform: transform,
+//     transform: transform,
+//   };
+// };
+
+const getTransform = (x, y, z) => {
+  const transform = `translate(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}) scale(var(--zoom))`;
+  return {
+    WebkitTransform: transform,
+    transform: transform,
+    zIndex: z,
+  };
+};
+
 export default {
   random: (number = 1, seed = 1) => {
     const rand = Math.sin(seed) * 10000;
@@ -12,20 +35,6 @@ export default {
     return [(isoX - isoY) / 1.5, isoX / 3.0 + isoY / 1.5];
   },
 
-  calculateTransform: (left, top, hex) => {
-    return `
-      translate(
-        calc(
-          ${left}
-          * ${hex.renderingSize}
-          * 1${hex.unit}
-        ),
-        calc(
-          ${top}
-          * ${hex.renderingSize}
-          * 1${hex.unit}
-        )
-      )
-    `;
-  },
+  calculateTransform: calculateTransform,
+  getTransform: getTransform,
 };

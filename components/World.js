@@ -25,16 +25,6 @@ const getScale = () => {
     : maxScale;
 };
 
-const getTransform = (playerPixelCoordinates, clientSide = true) => {
-  return `
-    scale(${clientSide ? getScale() : 1})
-    translate(
-      ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
-      ${(playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
-    )
-  `;
-};
-
 const buildState = (state, { tiles, visionRange, playerPosition }) => {
   return {
     ...state,
@@ -103,7 +93,6 @@ export default class World extends Component {
       tiles: {},
       heroes: {},
       scale: 1,
-      clientSide: false,
     };
   }
 
@@ -113,13 +102,13 @@ export default class World extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState(buildState);
-    this.updateCamera(null, nextProps.playerPixelCoordinates);
+    this.updateCamera(nextProps.playerPixelCoordinates);
   }
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
-    this.updateCamera();
-    this.setState({ clientSide: true });
+    this.updateScale();
+    this.updateCamera(this.props.playerPixelCoordinates);
   }
 
   componentWillUnmount() {
@@ -127,27 +116,28 @@ export default class World extends Component {
   }
 
   handleScroll = () => {
-    this.frame = this.frame || requestAnimationFrame(this.updateCamera);
+    this.frame = this.frame || requestAnimationFrame(this.updateScale);
+  };
+
+  updateScale = () => {
+    this.frame = null;
+    this.world.style.setProperty("--zoom", getScale());
   };
 
   updateCamera = (
     timestamp,
     playerPixelCoordinates = this.props.playerPixelCoordinates
   ) => {
-    this.frame = null;
-    const transform = getTransform(playerPixelCoordinates);
-    this.world.style.setProperty("WebkitTransform", transform);
-    this.world.style.setProperty("transform", transform);
+    this.world.style.setProperty("--playerX", playerPixelCoordinates[0]);
+    this.world.style.setProperty("--playerY", -playerPixelCoordinates[1]);
   };
 
   render() {
-    const { playerPixelCoordinates } = { ...this.props };
-    const { tiles, heroes, clientSide } = { ...this.state };
+    const { playerPixelCoordinates, playerPosition } = { ...this.props };
+    const { tiles, heroes } = { ...this.state };
 
     const tileList = Object.keys(tiles).sort(sortTiles);
     const heroList = Object.keys(heroes).sort(sortTiles);
-
-    const transform = getTransform(playerPixelCoordinates, clientSide);
 
     return (
       <div
@@ -155,36 +145,34 @@ export default class World extends Component {
         ref={ref => {
           this.world = ref;
         }}
-        style={{
-          WebkitTransform: transform,
-          transform: transform,
-        }}
       >
         <style jsx global>{`
           #world {
-            will-change: transform;
-            transform-origin: center center;
-            {/*transition: transform 162ms ease-out;*/}
+            --playerX: 0;
+            --playerY: 0;
+            --zoom: ${maxScale};
+            {/*perspective: 1000px;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;*/}
+            will-change: --zoom, --playerX, --playerY;
           }
         `}</style>
 
-        <div>
-          {tileList.map(tile => {
-            return <Tile {...tiles[tile]} heroes={undefined} />;
-          })}
-        </div>
+        {tileList.map(tile => {
+          return tile === "water"
+            ? null
+            : <Tile {...tiles[tile]} heroes={undefined} />;
+        })}
 
-        <div>
-          {heroList.map(hero => {
-            return <Hero {...heroes[hero]} />;
-          })}
-        </div>
+        {heroList.map(hero => {
+          return <Hero {...heroes[hero]} />;
+        })}
 
-        <div>
+        {/*
           {tileList.map(tile => {
             return <TileUI {...tiles[tile]} />;
           })}
-        </div>
+        */}
       </div>
     );
   }

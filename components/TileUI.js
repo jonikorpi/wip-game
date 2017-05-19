@@ -35,16 +35,12 @@ export default class TileUI extends PureComponent {
     };
     const { targeted } = { ...this.state };
 
-    const transform = maths.calculateTransform(left, top, hex);
-
     return (
       <div
         className="tileUI"
         style={{
-          WebkitTransform: transform,
-          transform: transform,
+          ...maths.getTransform(left, top, 7),
           opacity: targeted || playerIsHere ? 1 : 0,
-          zIndex: zIndex,
         }}
       >
         <style jsx>{`
@@ -84,8 +80,8 @@ export default class TileUI extends PureComponent {
           // onTouchCancel={this.handleTouchCancel}
           // onTouchMove={this.handleTouchMove}
         >
-          {tile.name} {entity} {tile.heroes[0] && "hero"}<br />
-          <code className="tileCoordinates">{x},{y}</code>
+          {/*{tile.name} {entity} {tile.heroes[0] && "hero"}<br />
+          <code className="tileCoordinates">{x},{y}</code>*/}
         </button>
       </div>
     );

@@ -20,7 +20,7 @@ export default class Tile extends PureComponent {
     const { x, y, zIndex, top, left, entity, visible, ...tile } = {
       ...this.props,
     };
-    let seed = (x || 123) + (y || 456);
+    let seed = Math.abs((x || 123) * (y || 456) / (x || 123));
 
     const points = hex.baseHexCoordinates.map(point => {
       return [
@@ -32,8 +32,6 @@ export default class Tile extends PureComponent {
             (point[1] < hex.height / 2 ? -0.5 : 0.5),
       ];
     });
-
-    const transform = maths.calculateTransform(left, top, hex);
 
     return (
       <div className="tile">
@@ -48,64 +46,50 @@ export default class Tile extends PureComponent {
         `}</style>
 
         {/*{visible &&
-          <Layer style={{ zIndex: 1 }} className="water">
+          <Layer seed={seed} style={{ zIndex: 1 }} className="water">
             <Water visible={visible} seed={seed++} points={points} />
           </Layer>}*/}
 
         {tile.walkable &&
-          <div>
-            <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 2,
-              }}
-              className="reflection"
-            >
-              <Reflection visible={visible} seed={seed++} points={points} />
-            </Layer>
+          <Layer
+            seed={seed}
+            style={maths.getTransform(left, top, 2)}
+            className="reflection"
+          >
+            <Reflection visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
-            <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 3,
-              }}
-              className="waterLine"
-            >
-              <WaterLine visible={visible} seed={seed++} points={points} />
-            </Layer>
+        {tile.walkable &&
+          <Layer
+            seed={seed}
+            style={maths.getTransform(left, top, 3)}
+            className="waterLine"
+          >
+            <WaterLine visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
-            <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 4,
-              }}
-              className="beach"
-            >
-              <Beach visible={visible} seed={seed++} points={points} />
-            </Layer>
+        {tile.walkable &&
+          <Layer
+            seed={seed}
+            style={maths.getTransform(left, top, 4)}
+            className="beach"
+          >
+            <Beach visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
-            <Layer
-              style={{
-                WebkitTransform: transform,
-                transform: transform,
-                zIndex: 5,
-              }}
-              className="ground"
-            >
-              <Ground visible={visible} seed={seed++} points={points} />
-            </Layer>
-          </div>}
+        {tile.walkable &&
+          <Layer
+            seed={seed}
+            style={maths.getTransform(left, top, 5)}
+            className="ground"
+          >
+            <Ground visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
         {entity &&
           <Layer
-            style={{
-              transform: transform,
-              WebkitTransform: transform,
-              zIndex: 6,
-            }}
+            seed={seed}
+            style={maths.getTransform(left, top, 6)}
             className="entity"
           >
             <Entity visible={visible} type={entity} x={0} y={0} seed={seed++} />
