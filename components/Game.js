@@ -12,7 +12,7 @@ export default class Game extends Component {
     super(props);
 
     this.state = {
-      playerPosition: [20000, -20000],
+      playerPosition: [90000, -90000],
       visionRange: 5,
       renderRange: 10,
     };
