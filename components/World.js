@@ -171,7 +171,9 @@ export default class World extends Component {
 
         <div>
           {tileList.map(tile => {
-            return <Tile {...tiles[tile]} heroes={undefined} />;
+            return tile === "water"
+              ? null
+              : <Tile {...tiles[tile]} heroes={undefined} />;
           })}
         </div>
 
