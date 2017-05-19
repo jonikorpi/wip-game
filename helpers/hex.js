@@ -110,7 +110,6 @@ export default {
   waveOffset: size / 7,
   waveLength: size / 1.5,
   waveGap: size / 0.5,
-  shallowsOffset: size / 2,
 
   baseHexCoordinates: [
     [width / 3, height / 13],

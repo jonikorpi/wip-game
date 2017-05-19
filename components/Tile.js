@@ -15,6 +15,8 @@ import maths from "../helpers/maths.js";
 
 export default class Tile extends PureComponent {
   render() {
+    // typeof window !== "undefined" && console.count("tile rendered");
+
     const { x, y, zIndex, top, left, entity, visible, ...tile } = {
       ...this.props,
     };

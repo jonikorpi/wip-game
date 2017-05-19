@@ -25,9 +25,9 @@ const getScale = () => {
     : maxScale;
 };
 
-const getTransform = (playerPixelCoordinates, ignoreScale) => {
+const getTransform = (playerPixelCoordinates, clientSide = true) => {
   return `
-    scale(${ignoreScale ? maxScale : getScale()})
+    scale(${clientSide ? getScale() : 1})
     translate(
       ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
       ${(playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
@@ -147,7 +147,7 @@ export default class World extends Component {
     const tileList = Object.keys(tiles).sort(sortTiles);
     const heroList = Object.keys(heroes).sort(sortTiles);
 
-    const transform = getTransform(playerPixelCoordinates, !clientSide);
+    const transform = getTransform(playerPixelCoordinates, clientSide);
 
     return (
       <div

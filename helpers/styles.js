@@ -5,7 +5,6 @@ const groundHue = waterHue - 180;
 
 const base = {
   water: `hsl(${waterHue}, 0%, 41.4%)`,
-  shallows: `hsl(${waterHue}, 0%, 50%)`,
   black: `hsl(${groundHue}, 0%, 0%)`,
   white: `white`,
   rock: `hsl(${groundHue}, 0%, 33.333%)`,
@@ -22,6 +21,5 @@ export default {
   ...base,
   faded: {
     ...faded,
-    shallows: base.shallows,
   },
 };
