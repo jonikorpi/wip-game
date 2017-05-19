@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 import Layer from "../components/Layer.js";
 import Ground from "../components/Ground.js";
-import Ridge from "../components/Ridge.js";
+import Beach from "../components/Beach.js";
 import WaterLine from "../components/WaterLine.js";
 import Reflection from "../components/Reflection.js";
 import Water from "../components/Water.js";
@@ -15,10 +15,12 @@ import maths from "../helpers/maths.js";
 
 export default class Tile extends PureComponent {
   render() {
+    // typeof window !== "undefined" && console.count("tile rendered");
+
     const { x, y, zIndex, top, left, entity, visible, ...tile } = {
       ...this.props,
     };
-    let seed = (x || 123) * (y || 456) * (x || 123);
+    let seed = (x || 123) + (y || 456);
 
     const points = hex.baseHexCoordinates.map(point => {
       return [
@@ -80,9 +82,9 @@ export default class Tile extends PureComponent {
                 transform: transform,
                 zIndex: 4,
               }}
-              className="ridge"
+              className="beach"
             >
-              <Ridge visible={visible} seed={seed++} points={points} />
+              <Beach visible={visible} seed={seed++} points={points} />
             </Layer>
 
             <Layer
@@ -106,7 +108,7 @@ export default class Tile extends PureComponent {
             }}
             className="entity"
           >
-            <Entity type={entity} x={0} y={0} seed={seed++} />
+            <Entity visible={visible} type={entity} x={0} y={0} seed={seed++} />
           </Layer>}
       </div>
     );

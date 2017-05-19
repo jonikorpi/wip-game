@@ -25,26 +25,25 @@ const yModifiers = [
   -0.5,
 ];
 
-const Water = ({ points, visible }) => {
+const Beach = ({ points, visible }) => {
   const colors = visible ? styles : styles.faded;
-  const waterRadius = hex.waveOffset;
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] + waterRadius * xModifiers[index];
-      const yPoint = point[1] + waterRadius * yModifiers[index];
+      const xPoint = point[0] + hex.beachWidth * xModifiers[index];
+      const yPoint = point[1] + hex.beachWidth * yModifiers[index];
       return `${result}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 
   return (
     <path
       d={path}
-      stroke={colors.water}
-      fill={colors.water}
-      strokeWidth={hex.roundingWidth}
+      fill={colors.rock}
+      stroke={colors.rock}
+      strokeWidth={hex.beachWidth * 0.25}
       strokeLinejoin="round"
     />
   );
 };
 
-export default Water;
+export default Beach;

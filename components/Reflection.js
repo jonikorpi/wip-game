@@ -3,24 +3,26 @@ import React from "react";
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-const multipliers = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0];
+const xModifiers = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1];
+const yModifiers = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0];
 
 const Reflection = ({ points, visible }) => {
+  const colors = visible ? styles : styles.faded;
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
-      const xPoint = point[0];
+      const xPoint = point[0] + hex.beachWidth * xModifiers[index];
       const yPoint =
-        point[1] + hex.ridgeHeight + hex.ridgeHeight * multipliers[index];
+        point[1] + (hex.beachWidth + hex.reflectionHeight) * yModifiers[index];
       return `${result}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 
   return (
     <path
       d={path}
-      fill={styles.reflection}
-      stroke={styles.reflection}
-      strokeWidth={hex.roundingWidth}
+      fill={colors.reflection}
+      stroke={colors.reflection}
+      strokeWidth={hex.roundingWidth - hex.beachWidth}
       strokeLinejoin="round"
     />
   );

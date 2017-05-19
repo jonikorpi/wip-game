@@ -27,33 +27,30 @@ const yModifiers = [
 const dashArray = `${hex.waveLength}, ${hex.waveGap}`;
 
 const WaterLine = ({ points, seed, visible }) => {
+  const colors = visible ? styles : styles.faded;
   const waterLinePath =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] + hex.waterLineOffset * xModifiers[index];
+      const xPoint =
+        point[0] + (hex.beachWidth + hex.waterLineWidth) * xModifiers[index];
       const yPoint =
-        point[1] +
-        hex.ridgeHeight +
-        hex.waterLineOffset * yModifiers[index] +
-        hex.waterLineWidth;
+        point[1] + (hex.beachWidth + hex.waterLineWidth) * yModifiers[index];
       return `${result}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 
   const wavePath =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] + hex.waveOffset * xModifiers[index];
+      const xPoint =
+        point[0] + (hex.beachWidth + hex.waveOffset) * xModifiers[index];
       const yPoint =
-        point[1] +
-        hex.ridgeHeight +
-        hex.waveOffset * yModifiers[index] +
-        hex.waterLineWidth;
+        point[1] + (hex.beachWidth + hex.waveOffset) * yModifiers[index];
       return `${result}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 
   return (
     <g
-      stroke={styles.wave}
+      stroke={colors.wave}
       strokeWidth={hex.waterLineWidth}
       strokeLinejoin="round"
       strokeLinecap="round"
@@ -61,7 +58,7 @@ const WaterLine = ({ points, seed, visible }) => {
     >
       <path d={waterLinePath} />
       <path
-        stroke={styles.wave}
+        stroke={colors.wave}
         d={wavePath}
         strokeDasharray={dashArray}
         strokeDashoffset={seed * hex.waveGap}

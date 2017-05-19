@@ -14,6 +14,27 @@ const maxScale = 1;
 const minScale = maxScale / 100;
 const body = typeof document !== "undefined" && document.body;
 
+const getScale = () => {
+  return body
+    ? Math.max(
+        (1 - window.pageYOffset / (body.clientHeight - window.innerHeight)) *
+          (maxScale - minScale) +
+          minScale,
+        0
+      )
+    : maxScale;
+};
+
+const getTransform = (playerPixelCoordinates, clientSide = true) => {
+  return `
+    scale(${clientSide ? getScale() : 1})
+    translate(
+      ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
+      ${(playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
+    )
+  `;
+};
+
 const buildState = (state, { tiles, visionRange, playerPosition }) => {
   return {
     ...state,
@@ -32,15 +53,15 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
           x: x,
           y: y,
           left: pixelCoordinates[0],
-          top: pixelCoordinates[1],
-          zIndex: y + 100000,
+          top: -pixelCoordinates[1],
+          zIndex: y + 2147483646 / 2,
         };
 
         const heroID =
           visible &&
           !entityType &&
           tileType.walkable &&
-          "hero-" + x + y + x * y * x * Math.random();
+          "hero-" + maths.random(1000, x + y);
 
         const hero = heroID && {
           key: heroID,
@@ -68,6 +89,12 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
   };
 };
 
+const sortTiles = (a, b) => {
+  if (a.y < b.y) return -1;
+  if (a.y > b.y) return 1;
+  return 0;
+};
+
 export default class World extends Component {
   constructor(props) {
     super(props);
@@ -75,6 +102,8 @@ export default class World extends Component {
     this.state = {
       tiles: {},
       heroes: {},
+      scale: 1,
+      clientSide: false,
     };
   }
 
@@ -84,13 +113,14 @@ export default class World extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState(buildState);
-    this.updateCamera(nextProps.playerPosition);
+    this.updateCamera(nextProps.playerPixelCoordinates);
   }
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
     this.updateScale();
-    this.updateCamera(this.props.playerPosition);
+    this.updateCamera(this.props.playerPixelCoordinates);
+    this.setState({ clientSide: true });
   }
 
   componentWillUnmount() {
@@ -98,29 +128,28 @@ export default class World extends Component {
   }
 
   handleScroll = () => {
-    requestAnimationFrame(this.updateScale);
+    this.frame = this.frame || requestAnimationFrame(this.updateScale);
   };
 
   updateScale = () => {
-    if (body) {
-      const scrolled =
-        1 - window.pageYOffset / (body.clientHeight - window.innerHeight);
-      const scale = scrolled * (maxScale - minScale) + minScale;
-      this.world.style.setProperty("--zoom", scale);
-    }
+    this.frame = null;
+    this.world.style.setProperty("--zoom", getScale());
   };
 
-  updateCamera = playerPosition => {
-    const pixelCoordinates = hex.pixelCoordinates(playerPosition);
-    this.world.style.setProperty("--playerX", pixelCoordinates[0]);
-    this.world.style.setProperty("--playerY", pixelCoordinates[1]);
+  updateCamera = (
+    timestamp,
+    playerPixelCoordinates = this.props.playerPixelCoordinates
+  ) => {
+    this.world.style.setProperty("--playerX", playerPixelCoordinates[0]);
+    this.world.style.setProperty("--playerY", -playerPixelCoordinates[1]);
   };
 
   render() {
-    const tiles = this.state.tiles;
-    const tileList = Object.keys(tiles);
-    const heroes = this.state.heroes;
-    const heroList = Object.keys(heroes);
+    const { playerPixelCoordinates, playerPosition } = { ...this.props };
+    const { tiles, heroes, clientSide } = { ...this.state };
+
+    const tileList = Object.keys(tiles).sort(sortTiles);
+    const heroList = Object.keys(heroes).sort(sortTiles);
 
     return (
       <div
@@ -134,8 +163,8 @@ export default class World extends Component {
             --playerX: 0;
             --playerY: 0;
             --zoom: ${maxScale};
-            perspective: 1000px;
-            transform: translateZ(0);
+            {/*perspective: 1000px;*/}
+            {/*transform: translateZ(0);*/}
             will-change: --zoom;
           }
         `}</style>
