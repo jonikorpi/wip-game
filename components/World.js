@@ -146,7 +146,7 @@ export default class World extends Component {
     const tileList = Object.keys(tiles).sort(sortTiles);
     const heroList = Object.keys(heroes).sort(sortTiles);
 
-    const scaleTransform = `scale(${getScale()})`;
+    const scaleTransform = `scale(${clientSide ? getScale() : 1})`;
     const pannerTransform = getPannerTransform(playerPixelCoordinates);
 
     return (
