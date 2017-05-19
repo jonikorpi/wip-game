@@ -20,7 +20,7 @@ export default class Tile extends PureComponent {
     const { x, y, zIndex, top, left, entity, visible, ...tile } = {
       ...this.props,
     };
-    let seed = (x || 123) * (y || 456) * (x || 123);
+    let seed = (x || 123) + (y || 456);
 
     const points = hex.baseHexCoordinates.map(point => {
       return [
