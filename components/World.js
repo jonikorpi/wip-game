@@ -25,9 +25,8 @@ const getScale = () => {
     : maxScale;
 };
 
-const getTransform = (playerPixelCoordinates, ignoreScale) => {
+const getPannerTransform = playerPixelCoordinates => {
   return `
-    scale(${ignoreScale ? maxScale : getScale()})
     translate(
       ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
       ${(playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
@@ -135,7 +134,7 @@ export default class World extends Component {
     playerPixelCoordinates = this.props.playerPixelCoordinates
   ) => {
     this.frame = null;
-    const transform = getTransform(playerPixelCoordinates);
+    const transform = `scale(${getScale()})`;
     this.world.style.setProperty("WebkitTransform", transform);
     this.world.style.setProperty("transform", transform);
   };
@@ -147,7 +146,8 @@ export default class World extends Component {
     const tileList = Object.keys(tiles).sort(sortTiles);
     const heroList = Object.keys(heroes).sort(sortTiles);
 
-    const transform = getTransform(playerPixelCoordinates, !clientSide);
+    const scaleTransform = `scale(${getScale()})`;
+    const pannerTransform = getPannerTransform(playerPixelCoordinates);
 
     return (
       <div
@@ -156,34 +156,48 @@ export default class World extends Component {
           this.world = ref;
         }}
         style={{
-          WebkitTransform: transform,
-          transform: transform,
+          WebkitTransform: scaleTransform,
+          transform: scaleTransform,
         }}
       >
-        <style jsx global>{`
-          #world {
-            will-change: transform;
-            transform-origin: center center;
-            transition: transform 62ms linear;
-          }
-        `}</style>
+        <div
+          id="worldPanner"
+          ref={ref => {
+            this.worldPanner = ref;
+          }}
+          style={{
+            WebkitTransform: pannerTransform,
+            transform: pannerTransform,
+          }}
+        >
+          <style jsx global>{`
+            #world, #worldPanner {
+              will-change: transform;
+              transform-origin: center center;
+            }
 
-        <div>
-          {tileList.map(tile => {
-            return <Tile {...tiles[tile]} heroes={undefined} />;
-          })}
-        </div>
+            #worldPanner {
+              transition: transform 414ms ease-out;
+            }
+          `}</style>
 
-        <div>
-          {heroList.map(hero => {
-            return <Hero {...heroes[hero]} />;
-          })}
-        </div>
+          <div>
+            {tileList.map(tile => {
+              return <Tile {...tiles[tile]} heroes={undefined} />;
+            })}
+          </div>
 
-        <div>
-          {tileList.map(tile => {
-            return <TileUI {...tiles[tile]} />;
-          })}
+          <div>
+            {heroList.map(hero => {
+              return <Hero {...heroes[hero]} />;
+            })}
+          </div>
+
+          <div>
+            {tileList.map(tile => {
+              return <TileUI {...tiles[tile]} />;
+            })}
+          </div>
         </div>
       </div>
     );
