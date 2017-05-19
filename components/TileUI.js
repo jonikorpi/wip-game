@@ -65,7 +65,8 @@ export default class TileUI extends PureComponent {
           }
 
           .tileTarget {
-            position: relative;
+            position: absolute;
+            left: 0;
             top: ${hex.height * hex.renderingSize * 0.125}${hex.unit};
             height: ${hex.height * hex.renderingSize * 0.75}${hex.unit};
             width: 100%;
