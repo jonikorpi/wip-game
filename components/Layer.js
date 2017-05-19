@@ -2,7 +2,7 @@ import React from "react";
 
 import hex from "../helpers/hex.js";
 
-const Layer = ({ children, className, style, viewBox }) => (
+const Layer = ({ children, className, style, viewBox, seed }) => (
   <svg
     className={`layer ${className ? className : ""}`}
     style={style}
