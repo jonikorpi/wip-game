@@ -165,7 +165,7 @@ export default class World extends Component {
             --zoom: ${maxScale};
             {/*perspective: 1000px;*/}
             {/*transform: translateZ(0);*/}
-            will-change: --zoom;
+            will-change: --zoom, --playerX, --playerY;
           }
         `}</style>
 
