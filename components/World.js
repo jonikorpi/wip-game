@@ -164,7 +164,7 @@ export default class World extends Component {
           #world {
             will-change: transform;
             transform-origin: center center;
-            transition: transform 162ms ease-out;
+            {/*transition: transform 162ms ease-out;*/}
           }
         `}</style>
 
