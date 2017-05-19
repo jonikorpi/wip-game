@@ -51,29 +51,27 @@ export default class Tile extends PureComponent {
           </Layer>}*/}
 
         {tile.walkable &&
-          <div>
-            <Layer
-              style={maths.getTransform(left, top, 2)}
-              className="reflection"
-            >
-              <Reflection visible={visible} seed={seed++} points={points} />
-            </Layer>
+          <Layer
+            style={maths.getTransform(left, top, 2)}
+            className="reflection"
+          >
+            <Reflection visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
-            <Layer
-              style={maths.getTransform(left, top, 3)}
-              className="waterLine"
-            >
-              <WaterLine visible={visible} seed={seed++} points={points} />
-            </Layer>
+        {tile.walkable &&
+          <Layer style={maths.getTransform(left, top, 3)} className="waterLine">
+            <WaterLine visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
-            <Layer style={maths.getTransform(left, top, 4)} className="beach">
-              <Beach visible={visible} seed={seed++} points={points} />
-            </Layer>
+        {tile.walkable &&
+          <Layer style={maths.getTransform(left, top, 4)} className="beach">
+            <Beach visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
-            <Layer style={maths.getTransform(left, top, 5)} className="ground">
-              <Ground visible={visible} seed={seed++} points={points} />
-            </Layer>
-          </div>}
+        {tile.walkable &&
+          <Layer style={maths.getTransform(left, top, 5)} className="ground">
+            <Ground visible={visible} seed={seed++} points={points} />
+          </Layer>}
 
         {entity &&
           <Layer style={maths.getTransform(left, top, 6)} className="entity">

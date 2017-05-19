@@ -160,25 +160,21 @@ export default class World extends Component {
           }
         `}</style>
 
-        <div>
-          {tileList.map(tile => {
-            return tile === "water"
-              ? null
-              : <Tile {...tiles[tile]} heroes={undefined} />;
-          })}
-        </div>
+        {tileList.map(tile => {
+          return tile === "water"
+            ? null
+            : <Tile {...tiles[tile]} heroes={undefined} />;
+        })}
 
-        <div>
-          {heroList.map(hero => {
-            return <Hero {...heroes[hero]} />;
-          })}
-        </div>
+        {heroList.map(hero => {
+          return <Hero {...heroes[hero]} />;
+        })}
 
-        {/*<div>
+        {/*
           {tileList.map(tile => {
             return <TileUI {...tiles[tile]} />;
           })}
-        </div>*/}
+        */}
       </div>
     );
   }
