@@ -174,11 +174,11 @@ export default class World extends Component {
           })}
         </div>
 
-        <div>
+        {/*<div>
           {tileList.map(tile => {
             return <TileUI {...tiles[tile]} />;
           })}
-        </div>
+        </div>*/}
       </div>
     );
   }

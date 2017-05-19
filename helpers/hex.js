@@ -103,14 +103,13 @@ export default {
 
   roundingWidth: size / 7,
   randomRange: size / 16,
-  reflectionHeight: size / 12,
+  reflectionHeight: size / 11,
   beachWidth: size / 8,
 
-  waterLineWidth: size / 50,
-  waterLineOffset: size / 18,
-  waveOffset: size / 8,
+  waterLineWidth: size / 100,
+  waterLineOffset: size / 20,
   waveLength: size / 2,
-  waveGap: size / 0.414,
+  waveGap: size,
 
   baseHexCoordinates: [
     [width / 3, height / 13],
