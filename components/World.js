@@ -25,8 +25,9 @@ const getScale = () => {
     : maxScale;
 };
 
-const getPannerTransform = playerPixelCoordinates => {
+const getTransform = (playerPixelCoordinates, ignoreScale) => {
   return `
+    scale(${ignoreScale ? maxScale : getScale()})
     translate(
       ${(-playerPixelCoordinates[0] - hex.width / 2) * hex.renderingSize + hex.unit},
       ${(playerPixelCoordinates[1] - hex.height / 2) * hex.renderingSize + hex.unit}
@@ -134,7 +135,7 @@ export default class World extends Component {
     playerPixelCoordinates = this.props.playerPixelCoordinates
   ) => {
     this.frame = null;
-    const transform = `scale(${getScale()})`;
+    const transform = getTransform(playerPixelCoordinates);
     this.world.style.setProperty("WebkitTransform", transform);
     this.world.style.setProperty("transform", transform);
   };
@@ -146,8 +147,12 @@ export default class World extends Component {
     const tileList = Object.keys(tiles).sort(sortTiles);
     const heroList = Object.keys(heroes).sort(sortTiles);
 
+<<<<<<< HEAD
     const scaleTransform = `scale(${clientSide ? getScale() : 1})`;
     const pannerTransform = getPannerTransform(playerPixelCoordinates);
+=======
+    const transform = getTransform(playerPixelCoordinates, !clientSide);
+>>>>>>> parent of c9165d8... Separates panning and zooming
 
     return (
       <div
@@ -156,48 +161,34 @@ export default class World extends Component {
           this.world = ref;
         }}
         style={{
-          WebkitTransform: scaleTransform,
-          transform: scaleTransform,
+          WebkitTransform: transform,
+          transform: transform,
         }}
       >
-        <div
-          id="worldPanner"
-          ref={ref => {
-            this.worldPanner = ref;
-          }}
-          style={{
-            WebkitTransform: pannerTransform,
-            transform: pannerTransform,
-          }}
-        >
-          <style jsx global>{`
-            #world, #worldPanner {
-              will-change: transform;
-              transform-origin: center center;
-            }
+        <style jsx global>{`
+          #world {
+            will-change: transform;
+            transform-origin: center center;
+            transition: transform 62ms linear;
+          }
+        `}</style>
 
-            #worldPanner {
-              transition: transform 414ms ease-out;
-            }
-          `}</style>
+        <div>
+          {tileList.map(tile => {
+            return <Tile {...tiles[tile]} heroes={undefined} />;
+          })}
+        </div>
 
-          <div>
-            {tileList.map(tile => {
-              return <Tile {...tiles[tile]} heroes={undefined} />;
-            })}
-          </div>
+        <div>
+          {heroList.map(hero => {
+            return <Hero {...heroes[hero]} />;
+          })}
+        </div>
 
-          <div>
-            {heroList.map(hero => {
-              return <Hero {...heroes[hero]} />;
-            })}
-          </div>
-
-          <div>
-            {tileList.map(tile => {
-              return <TileUI {...tiles[tile]} />;
-            })}
-          </div>
+        <div>
+          {tileList.map(tile => {
+            return <TileUI {...tiles[tile]} />;
+          })}
         </div>
       </div>
     );
