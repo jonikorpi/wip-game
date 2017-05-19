@@ -54,7 +54,7 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
           y: y,
           left: pixelCoordinates[0],
           top: pixelCoordinates[1],
-          zIndex: y + 100000,
+          zIndex: y + 2147483646 / 2,
         };
 
         const heroID =
