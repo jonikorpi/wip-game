@@ -106,7 +106,7 @@ export default class Tile extends PureComponent {
             }}
             className="entity"
           >
-            <Entity type={entity} x={0} y={0} seed={seed++} />
+            <Entity visible={visible} type={entity} x={0} y={0} seed={seed++} />
           </Layer>}
       </div>
     );
