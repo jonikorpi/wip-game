@@ -27,6 +27,7 @@ const yModifiers = [
 const dashArray = `${hex.waveLength}, ${hex.waveGap}`;
 
 const WaterLine = ({ points, seed, visible }) => {
+  const colors = visible ? styles : styles.faded;
   const waterLinePath =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
@@ -53,7 +54,7 @@ const WaterLine = ({ points, seed, visible }) => {
 
   return (
     <g
-      stroke={styles.wave}
+      stroke={colors.wave}
       strokeWidth={hex.waterLineWidth}
       strokeLinejoin="round"
       strokeLinecap="round"
@@ -61,7 +62,7 @@ const WaterLine = ({ points, seed, visible }) => {
     >
       <path d={waterLinePath} />
       <path
-        stroke={styles.wave}
+        stroke={colors.wave}
         d={wavePath}
         strokeDasharray={dashArray}
         strokeDashoffset={seed * hex.waveGap}

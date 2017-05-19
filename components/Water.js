@@ -26,6 +26,7 @@ const yModifiers = [
 ];
 
 const Water = ({ points, visible }) => {
+  const colors = visible ? styles : styles.faded;
   const waterRadius = hex.waveOffset;
   const path =
     points.reduce((result, point, index) => {
@@ -39,8 +40,8 @@ const Water = ({ points, visible }) => {
   return (
     <path
       d={path}
-      stroke={styles.water}
-      fill={styles.water}
+      stroke={colors.water}
+      fill={colors.water}
       strokeWidth={hex.roundingWidth}
       strokeLinejoin="round"
     />
