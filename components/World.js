@@ -89,7 +89,7 @@ const buildState = (state, { tiles, visionRange, playerPosition }) => {
   };
 };
 
-const sortByKey = (a, b) => {
+const sortTiles = (a, b) => {
   if (a.y < b.y) return -1;
   if (a.y > b.y) return 1;
   return 0;
@@ -143,8 +143,8 @@ export default class World extends Component {
     const { playerPixelCoordinates } = { ...this.props };
     const { tiles, heroes, clientSide } = { ...this.state };
 
-    const tileList = Object.keys(tiles).sort(sortByKey);
-    const heroList = Object.keys(heroes).sort(sortByKey);
+    const tileList = Object.keys(tiles).sort(sortTiles);
+    const heroList = Object.keys(heroes).sort(sortTiles);
 
     const transform = getTransform(playerPixelCoordinates, !clientSide);
 
