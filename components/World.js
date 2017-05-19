@@ -127,13 +127,14 @@ export default class World extends Component {
   }
 
   handleScroll = () => {
-    requestAnimationFrame(this.updateCamera);
+    this.frame = this.frame || requestAnimationFrame(this.updateCamera);
   };
 
   updateCamera = (
     timestamp,
     playerPixelCoordinates = this.props.playerPixelCoordinates
   ) => {
+    this.frame = null;
     const transform = getTransform(playerPixelCoordinates);
     this.world.style.setProperty("WebkitTransform", transform);
     this.world.style.setProperty("transform", transform);
