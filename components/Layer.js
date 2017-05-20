@@ -4,7 +4,7 @@ import hex from "../helpers/hex.js";
 
 const padding = 0.25;
 
-const Layer = ({ children, className, style, viewBox, seed }) => (
+const Layer = ({ children, className, style, viewBox }) => (
   <svg
     className={`layer ${className ? className : ""}`}
     style={style}

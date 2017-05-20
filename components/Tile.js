@@ -11,16 +11,29 @@ import Entity from "../components/Entity.js";
 import hex from "../helpers/hex.js";
 import tileTypes from "../helpers/tileTypes.js";
 import styles from "../helpers/styles.js";
+import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
 export default class Tile extends PureComponent {
   render() {
-    // typeof window !== "undefined" && console.count("tile rendered");
-
-    const { x, y, zIndex, top, left, entity, visible, ...tile } = {
+    const { x, y } = {
       ...this.props,
     };
+    // const tileID = `${x},${y}`;
+    const pixelCoordinates = hex.pixelCoordinates([x, y]);
+    const left = pixelCoordinates[0];
+    const top = -pixelCoordinates[1];
+    // const zIndex = y + 2147483646 / 2;
+
     let seed = Math.abs((x || 123) * (y || 456) / (x || 123));
+    const tileType = tileTypes.getRandomTile(x * y);
+    const entityType = maths.random(1, x * y) > 0.95 && "mountain";
+    // typeof window !== "undefined" && console.count("tile rendered");
+
+    const heroes = !entityType &&
+    tileType.walkable && [
+      ...Array(Math.floor(maths.random(10, seed++))).keys(),
+    ];
 
     const points = hex.baseHexCoordinates.map(point => {
       return [
@@ -46,53 +59,58 @@ export default class Tile extends PureComponent {
         `}</style>
 
         {/*{visible &&
-          <Layer seed={seed} style={{ zIndex: 1 }} className="water">
-            <Water visible={visible} seed={seed++} points={points} />
+          <Layer
+            <Water visible={true} seed={seed++} points={points} />
           </Layer>}*/}
 
-        {tile.walkable &&
+        {tileType.walkable &&
           <Layer
-            seed={seed}
             style={maths.getTransform(left, top, 2)}
             className="reflection"
           >
-            <Reflection visible={visible} seed={seed++} points={points} />
+            <Reflection visible={true} seed={seed++} points={points} />
           </Layer>}
 
-        {tile.walkable &&
-          <Layer
-            seed={seed}
-            style={maths.getTransform(left, top, 3)}
-            className="waterLine"
-          >
-            <WaterLine visible={visible} seed={seed++} points={points} />
+        {tileType.walkable &&
+          <Layer style={maths.getTransform(left, top, 3)} className="waterLine">
+            <WaterLine visible={true} seed={seed++} points={points} />
           </Layer>}
 
-        {tile.walkable &&
-          <Layer
-            seed={seed}
-            style={maths.getTransform(left, top, 4)}
-            className="beach"
-          >
-            <Beach visible={visible} seed={seed++} points={points} />
+        {tileType.walkable &&
+          <Layer style={maths.getTransform(left, top, 4)} className="beach">
+            <Beach visible={true} seed={seed++} points={points} />
           </Layer>}
 
-        {tile.walkable &&
-          <Layer
-            seed={seed}
-            style={maths.getTransform(left, top, 5)}
-            className="ground"
-          >
-            <Ground visible={visible} seed={seed++} points={points} />
+        {tileType.walkable &&
+          <Layer style={maths.getTransform(left, top, 5)} className="ground">
+            <Ground visible={true} seed={seed++} points={points} />
           </Layer>}
 
-        {entity &&
-          <Layer
-            seed={seed}
-            style={maths.getTransform(left, top, 6)}
-            className="entity"
-          >
-            <Entity visible={visible} type={entity} x={0} y={0} seed={seed++} />
+        {entityType &&
+          <Layer style={maths.getTransform(left, top, 6)} className="entity">
+            <Entity
+              type={entityType}
+              x={0}
+              y={0}
+              visible={true}
+              seed={seed++}
+            />
+          </Layer>}
+
+        {heroes &&
+          heroes.length > 0 &&
+          <Layer style={maths.getTransform(left, top, 6)} className="heroes">
+            {heroes.map(hero => (
+              <Entity
+                type="hero"
+                x={hex.width * (maths.random(0.5, seed++) + 0.25)}
+                y={hex.height * (maths.random(0.5, seed++) + 0.25)}
+                visible={true}
+                key={seed++}
+                seed={seed++}
+              />
+            ))}
+
           </Layer>}
       </div>
     );

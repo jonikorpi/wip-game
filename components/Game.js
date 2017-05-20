@@ -7,6 +7,12 @@ import hex from "../helpers/hex.js";
 const env = (process && process.env && process.env.NODE_ENV) || "development";
 const dev = env === "development";
 
+// const sortTiles = (a, b) => {
+//   if (a.y < b.y) return -1;
+//   if (a.y > b.y) return 1;
+//   return 0;
+// };
+
 export default class Game extends Component {
   constructor(props) {
     super(props);

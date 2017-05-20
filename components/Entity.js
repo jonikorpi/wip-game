@@ -11,7 +11,7 @@ const shift = (number, seed) => {
 const getEntity = (type, seed, colors) => {
   switch (type) {
     default:
-    case "human":
+    case "hero":
       return (
         <path
           fill={colors.white}
@@ -53,10 +53,10 @@ const getEntity = (type, seed, colors) => {
   }
 };
 
-const Entity = ({ key, x = 0, y = 0, type = "human", seed, visible }) => {
+const Entity = ({ x = 0, y = 0, type = "hero", seed, visible }) => {
   const colors = visible ? styles : styles.faded;
   return (
-    <g key={key} transform={`translate(${x}, ${y})`}>
+    <g transform={`translate(${x}, ${y})`}>
       {getEntity(type, seed, colors)}
     </g>
   );
