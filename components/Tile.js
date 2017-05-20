@@ -54,7 +54,15 @@ export default class Tile extends Component {
             left: 0; top: 0;
             height: ${hex.height * hex.renderingSize + hex.unit};
             width: ${hex.width * hex.renderingSize + hex.unit};
+            pointer-events: none;
             /*outline: 1px solid;*/
+          }
+
+          .tileTarget {
+            pointer-events: all;
+            cursor: pointer;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
           }
         `}</style>
 
@@ -110,8 +118,16 @@ export default class Tile extends Component {
                 seed={seed++}
               />
             ))}
-
           </Layer>}
+
+        <Layer style={maths.getTransform(left, top, 7)} className="tileTargets">
+          <polygon
+            stroke="none"
+            fill="none"
+            points={hex.baseHexCoordinates}
+            className="tileTarget"
+          />
+        </Layer>
       </div>
     );
   }
