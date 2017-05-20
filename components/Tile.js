@@ -68,7 +68,7 @@ export default class Tile extends Component {
 
         {/*{visible &&
           <Layer
-            <Water visible={true} seed={seed++} points={points} />
+            <Water  seed={seed++} points={points} />
           </Layer>}*/}
 
         {tileType.walkable &&
@@ -76,22 +76,22 @@ export default class Tile extends Component {
             style={maths.getTransform(left, top, 2)}
             className="reflection"
           >
-            <Reflection visible={true} seed={seed++} points={points} />
+            <Reflection seed={seed++} points={points} />
           </Layer>}
 
         {tileType.walkable &&
           <Layer style={maths.getTransform(left, top, 3)} className="waterLine">
-            <WaterLine visible={true} seed={seed++} points={points} />
+            <WaterLine seed={seed++} points={points} />
           </Layer>}
 
         {tileType.walkable &&
           <Layer style={maths.getTransform(left, top, 4)} className="beach">
-            <Beach visible={true} seed={seed++} points={points} />
+            <Beach seed={seed++} points={points} />
           </Layer>}
 
         {tileType.walkable &&
           <Layer style={maths.getTransform(left, top, 5)} className="ground">
-            <Ground visible={true} seed={seed++} points={points} />
+            <Ground seed={seed++} points={points} />
           </Layer>}
 
         {entityType &&
@@ -100,7 +100,6 @@ export default class Tile extends Component {
               type={entityType}
               x={0}
               y={0}
-              visible={true}
               seed={seed++}
             />
           </Layer>}
@@ -113,7 +112,6 @@ export default class Tile extends Component {
                 type="hero"
                 x={hex.width * (maths.random(0.5, seed++) + 0.25)}
                 y={hex.height * (maths.random(0.5, seed++) + 0.25)}
-                visible={true}
                 key={seed++}
                 seed={seed++}
               />
