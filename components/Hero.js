@@ -23,7 +23,7 @@ export default class Hero extends PureComponent {
             left: 0; top: 0;
             height: ${hex.height * hex.renderingSize + hex.unit};
             width: ${hex.width * hex.renderingSize + hex.unit};
-            {/*outline: 1px solid;*/}
+            /*outline: 1px solid;*/
           }
         `}</style>
 

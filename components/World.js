@@ -72,10 +72,10 @@ export default class World extends Component {
             --playerX: 0;
             --playerY: 0;
             --zoom: ${maxScale};
-            {/*perspective: 1000px;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;*/}
             will-change: --zoom, --playerX, --playerY;
+            /*perspective: 1000px;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;*/
           }
         `}</style>
 

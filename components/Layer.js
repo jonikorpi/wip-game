@@ -23,20 +23,20 @@ const Layer = ({ children, className, style, viewBox }) => (
         position: absolute;
         left: ${padding * -100}%;
         top: ${padding * -100}%;
-        {/*will-change: --zoom, --playerX, --playerY, transform;*/}
-        will-change: --zoom, --playerX, --playerY;
-        {/*-webkit-backface-visibility: hidden;
-        backface-visibility: hidden;*/}
         transition: transform 2000ms ease-out;
-        {/*--selfZoom: 0;
+        will-change: transform, --zoom, --playerX, --playerY;
+        /*-webkit-backface-visibility: hidden;
+        backface-visibility: hidden;*/
+
+        /*--selfZoom: 0;
         animation: entry 414ms ease-out 333ms;
-        animation-fill-mode: forwards;*/}
+        animation-fill-mode: forwards;*/
       }
 
-      {/*@keyframes entry {
+      /*@keyframes entry {
         0% { --selfZoom: 0; }
         100% { --selfZoom: 1; }
-      }*/}
+      }*/
     `}</style>
 
     {children}
