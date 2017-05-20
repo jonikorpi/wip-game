@@ -2,6 +2,8 @@ import React from "react";
 
 import hex from "../helpers/hex.js";
 
+const padding = 0.25;
+
 const Layer = ({ children, className, style, viewBox, seed }) => (
   <svg
     className={`layer ${className ? className : ""}`}
@@ -11,16 +13,16 @@ const Layer = ({ children, className, style, viewBox, seed }) => (
     version="1.1"
     viewBox={
       viewBox ||
-        `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
+        `${hex.width * -padding} ${hex.height * -padding} ${hex.width * (1 + padding * 2)} ${hex.height * (1 + padding * 2)}`
     }
   >
     <style jsx>{`
       .layer {
-        width: 300%;
-        height: 300%;
+        width: ${(1 + padding * 2) * 100}%;
+        height: ${(1 + padding * 2) * 100}%;
         position: absolute;
-        left: -100%;
-        top: -100%;
+        left: ${padding * -100}%;
+        top: ${padding * -100}%;
         {/*will-change: --zoom, --playerX, --playerY, transform;*/}
         will-change: --zoom, --playerX, --playerY;
         {/*-webkit-backface-visibility: hidden;
