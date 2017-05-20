@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import World from "../components/World.js";
-import Entity from "../components/Entity.js";
+import Hero from "../components/Hero.js";
 import Layer from "../components/Layer.js";
 
 import hex from "../helpers/hex.js";
@@ -82,12 +82,7 @@ export default class Game extends Component {
           <div id="origo">
             <div className="player">
               <Layer className="playerLayer">
-                <Entity
-                  type="hero"
-                  x={hex.width / 2}
-                  y={hex.height / 2}
-                  visible={true}
-                />
+                <Hero x={hex.width / 2} y={hex.height / 2} />
               </Layer>
             </div>
 

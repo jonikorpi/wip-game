@@ -56,7 +56,7 @@ const getEntity = (type, seed, colors) => {
 const Entity = ({ x = 0, y = 0, type = "hero", seed, visible }) => {
   const colors = visible ? styles : styles;
   return (
-    <g transform={`translate(${x}, ${y})`}>
+    <g transform={`translate(${x}, ${y})`} className={`entity-${type}`}>
       {getEntity(type, seed, colors)}
     </g>
   );
