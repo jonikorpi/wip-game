@@ -16,7 +16,7 @@ const Layer = ({ children, className, style, viewBox }) => (
         `${hex.width * -padding} ${hex.height * -padding} ${hex.width * (1 + padding * 2)} ${hex.height * (1 + padding * 2)}`
     }
   >
-    <style jsx>{`
+    <style jsx global>{`
       .layer {
         width: ${(1 + padding * 2) * 100}%;
         height: ${(1 + padding * 2) * 100}%;

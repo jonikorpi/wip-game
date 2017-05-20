@@ -48,7 +48,7 @@ export default class Tile extends PureComponent {
 
     return (
       <div className="tile">
-        <style jsx>{`
+        <style jsx global>{`
           .tile {
             position: absolute;
             left: 0; top: 0;

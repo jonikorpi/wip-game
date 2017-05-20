@@ -47,7 +47,7 @@ export default class Game extends Component {
 
     return (
       <div id="game">
-        <style jsx>{`
+        <style jsx global>{`
           #game {
             height: 300vh;
           }

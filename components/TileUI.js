@@ -43,7 +43,7 @@ export default class TileUI extends PureComponent {
           opacity: targeted || playerIsHere ? 1 : 0,
         }}
       >
-        <style jsx>{`
+        <style jsx global>{`
           .tileUI {
             position: absolute;
             left: 0; top: 0;

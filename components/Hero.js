@@ -17,7 +17,7 @@ export default class Hero extends PureComponent {
 
     return (
       <div className="hero">
-        <style jsx>{`
+        <style jsx global>{`
           .hero {
             position: absolute;
             left: 0; top: 0;
