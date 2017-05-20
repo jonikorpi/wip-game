@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import Location from "../components/Location.js";
 
@@ -17,7 +17,7 @@ const getScale = () => {
     : maxScale;
 };
 
-export default class World extends Component {
+export default class World extends PureComponent {
   constructor(props) {
     super(props);
 
