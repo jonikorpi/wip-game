@@ -13,7 +13,10 @@ const calculateTransform = (offset, variableName) => {
 // };
 
 const getTransform = (x, y, z) => {
-  const transform = `translate(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}) scale(var(--zoom))`;
+  const transform = `
+    translate(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")})
+    scale(var(--zoom))
+  `;
   return {
     WebkitTransform: transform,
     transform: transform,

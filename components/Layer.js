@@ -27,7 +27,16 @@ const Layer = ({ children, className, style, viewBox, seed }) => (
         will-change: --zoom, --playerX, --playerY;
         {/*-webkit-backface-visibility: hidden;
         backface-visibility: hidden;*/}
+        transition: transform 2000ms ease-out;
+        {/*--selfZoom: 0;
+        animation: entry 414ms ease-out 333ms;
+        animation-fill-mode: forwards;*/}
       }
+
+      {/*@keyframes entry {
+        0% { --selfZoom: 0; }
+        100% { --selfZoom: 1; }
+      }*/}
     `}</style>
 
     {children}

@@ -14,27 +14,27 @@ export default class Game extends Component {
     this.state = {
       playerPosition: [9000000, -9000000],
       visionRange: 5,
-      renderRange: 8,
+      renderRange: 5,
     };
   }
 
-  // componentDidMount() {
-  //   this.timer = setInterval(() => {
-  //     this.setState(state => {
-  //       return {
-  //         ...state,
-  //         playerPosition: [
-  //           state.playerPosition[0] + Math.floor(Math.random() * 3 - 1),
-  //           state.playerPosition[1] + Math.floor(Math.random() * 3 - 1),
-  //         ],
-  //       };
-  //     });
-  //   }, 5000);
-  // }
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState(state => {
+        return {
+          ...state,
+          playerPosition: [
+            state.playerPosition[0] + Math.floor(Math.random() * 3 - 1),
+            state.playerPosition[1] + Math.floor(Math.random() * 3 - 1),
+          ],
+        };
+      });
+    }, 5000);
+  }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.timer);
-  // }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
   render() {
     const { playerPosition, visionRange, renderRange } = { ...this.state };
