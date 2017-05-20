@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
 import World from "../components/World.js";
+import Entity from "../components/Entity.js";
+import Layer from "../components/Layer.js";
 
 import hex from "../helpers/hex.js";
 
@@ -67,10 +69,28 @@ export default class Game extends Component {
             margin-left: ${-hex.width / 2 * hex.renderingSize + hex.unit};
             margin-top: ${-hex.height / 2 * hex.renderingSize + hex.unit};
           }
+
+          .player {
+            position: absolute;
+            height: ${hex.height * hex.renderingSize + hex.unit};
+            width: ${hex.width * hex.renderingSize + hex.unit};
+            z-index: 100;
+          }
         `}</style>
 
         <div id="viewport">
           <div id="origo">
+            <div className="player">
+              <Layer className="playerLayer">
+                <Entity
+                  type="hero"
+                  x={hex.width / 2}
+                  y={hex.height / 2}
+                  visible={true}
+                />
+              </Layer>
+            </div>
+
             <World
               tiles={hex.hexesWithin(playerPosition, renderRange)}
               visionRange={visionRange}
