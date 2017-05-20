@@ -98,7 +98,7 @@ export default class Tile extends Component {
           }
 
           .entity-hero {
-            transition: all 2s ease-in-out;
+            transition: transform 2s ease-in-out;
           }
         `}</style>
 
