@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
-import Tile from "../components/Tile.js";
-// import Hero from "../components/Hero.js";
-// import TileUI from "../components/TileUI.js";
+import Location from "../components/Location.js";
 
 const maxScale = 1;
 const minScale = maxScale / 100;
@@ -83,7 +81,7 @@ export default class World extends Component {
 
         {tiles.map(tile => {
           return (
-            <Tile
+            <Location
               key={`${tile[0]},${tile[1]}`}
               x={tile[0]}
               y={tile[1]}
@@ -91,16 +89,6 @@ export default class World extends Component {
             />
           );
         })}
-
-        {/*{heroList.map(hero => {
-          return <Hero {...heroes[hero]} />;
-        })}*/}
-
-        {/*
-          {tileList.map(tile => {
-            return <TileUI {...tiles[tile]} />;
-          })}
-        */}
       </div>
     );
   }

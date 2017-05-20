@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import Layer from "../components/Layer.js";
 import Ground from "../components/Ground.js";
@@ -14,7 +14,7 @@ import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
-export default class Tile extends PureComponent {
+export default class Tile extends Component {
   render() {
     const { x, y } = {
       ...this.props,
