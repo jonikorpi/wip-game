@@ -24,7 +24,10 @@ const createFakeHeroes = () => {
 export default class Tile extends Component {
   constructor(props) {
     super(props);
+
     const { x, y } = { ...props };
+    const tileID = `${x},${y}`;
+    const pixelCoordinates = hex.pixelCoordinates([x, y]);
 
     const originalSeed = Math.abs((x || 123) * (y || 456) / (x || 123));
     const tileType = tileTypes.getRandomTile(x * y);
@@ -32,6 +35,11 @@ export default class Tile extends Component {
     const heroes = !entityType && tileType.walkable && createFakeHeroes();
 
     this.state = {
+      id: tileID,
+      x: x,
+      y: y,
+      left: pixelCoordinates[0],
+      top: -pixelCoordinates[1],
       originalSeed: originalSeed,
       tileType: tileType,
       entityType: entityType,
@@ -56,15 +64,20 @@ export default class Tile extends Component {
   //   clearInterval(this.timer);
   // }
 
+  handleMouseEnter = () => {
+    this.props.targetTile(this.state);
+  };
+
+  handleMouseLeave = () => {
+    this.props.targetTile(null);
+  };
+
   render() {
-    const { x, y } = { ...this.props };
-    const { originalSeed, tileType, entityType, heroes } = { ...this.state };
+    const { x, y, left, top, originalSeed, tileType, entityType, heroes } = {
+      ...this.state,
+    };
 
     let seed = originalSeed;
-    // const tileID = `${x},${y}`;
-    const pixelCoordinates = hex.pixelCoordinates([x, y]);
-    const left = pixelCoordinates[0];
-    const top = -pixelCoordinates[1];
     // const zIndex = y + 2147483646 / 2;
 
     const points = hex.baseHexCoordinates.map(point => {
@@ -94,6 +107,11 @@ export default class Tile extends Component {
             cursor: pointer;
             -ms-touch-action: manipulation;
             touch-action: manipulation;
+            opacity: 0;
+          }
+
+          .tileTarget:hover {
+            opacity: 1;
           }
 
           .entity-hero {
@@ -149,10 +167,12 @@ export default class Tile extends Component {
 
         <Layer style={maths.getTransform(left, top, 7)} className="tileTargets">
           <polygon
-            stroke="currentcolor"
+            stroke={styles.white}
             fill="none"
             points={hex.baseHexCoordinates}
             className="tileTarget"
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
           />
         </Layer>
       </div>

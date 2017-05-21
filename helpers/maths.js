@@ -4,8 +4,13 @@ const calculateTransform = (offset, variableName) => {
   return `calc(((${offset} - var(--${variableName})) * ${hex.renderingSize}) * var(--zoom) * 1${hex.unit})`;
 };
 
-const getTransform = (x, y, z) => {
-  const transform = `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}, 0) scale3d(var(--zoom), var(--zoom), var(--zoom))`;
+const getTransform = (x, y, z, noZoom = false) => {
+  let transform = `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}, 0)`;
+
+  if (!noZoom) {
+    transform += "scale3d(var(--zoom), var(--zoom), var(--zoom))";
+  }
+
   return {
     WebkitTransform: transform,
     transform: transform,
