@@ -86,7 +86,6 @@ export default class Tile extends Component {
             left: 0; top: 0;
             height: ${hex.height * hex.renderingSize + hex.unit};
             width: ${hex.width * hex.renderingSize + hex.unit};
-            pointer-events: none;
             /*outline: 1px solid;*/
           }
 
@@ -150,7 +149,7 @@ export default class Tile extends Component {
 
         <Layer style={maths.getTransform(left, top, 7)} className="tileTargets">
           <polygon
-            stroke="none"
+            stroke="currentcolor"
             fill="none"
             points={hex.baseHexCoordinates}
             className="tileTarget"
