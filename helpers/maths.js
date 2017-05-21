@@ -4,25 +4,26 @@ const calculateTransform = (offset, variableName) => {
   return `calc(((${offset} - var(--${variableName})) * ${hex.renderingSize}) * var(--zoom) * 1${hex.unit})`;
 };
 
-// const getTransform = (x, y, z) => {
-//   const transform = `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}, ${z}px) scale(var(--zoom))`;
-//   return {
-//     WebkitTransform: transform,
-//     transform: transform,
-//   };
-// };
-
 const getTransform = (x, y, z) => {
-  const transform = `
-    translate(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")})
-    scale(var(--zoom))
-  `;
+  const transform = `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}, 0) scale3d(var(--zoom), var(--zoom), var(--zoom))`;
   return {
     WebkitTransform: transform,
     transform: transform,
     zIndex: z,
   };
 };
+
+// const getTransform = (x, y, z) => {
+//   const transform = `
+//     translate(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")})
+//     scale(var(--zoom))
+//   `;
+//   return {
+//     WebkitTransform: transform,
+//     transform: transform,
+//     zIndex: z,
+//   };
+// };
 
 export default {
   random: (number = 1, seed = 1) => {

@@ -23,11 +23,11 @@ const Layer = ({ children, className, style, viewBox }) => (
         position: absolute;
         left: ${padding * -100}%;
         top: ${padding * -100}%;
-        transition: transform 3000ms ease-out;
-        will-change: transform, --zoom, --playerX, --playerY;
+        transition: transform 3000ms linear;
+        will-change: transform, opacity, --zoom, --playerX, --playerY;
         opacity: 0;
-        /*-webkit-backface-visibility: hidden;
-        backface-visibility: hidden;*/
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
 
         animation: entry 333ms ease-out 3000ms;
         animation-fill-mode: forwards;

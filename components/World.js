@@ -73,9 +73,9 @@ export default class World extends PureComponent {
             --playerY: 0;
             --zoom: ${maxScale};
             will-change: --zoom, --playerX, --playerY;
-            /*perspective: 1000px;
+            perspective: 1000px;
             -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;*/
+            backface-visibility: hidden;
           }
         `}</style>
 
