@@ -39,22 +39,22 @@ export default class Tile extends Component {
     };
   }
 
-  componentDidMount() {
-    if (this.state.heroes) {
-      this.timer = setInterval(() => {
-        this.setState(state => {
-          return {
-            ...state,
-            heroes: createFakeHeroes(),
-          };
-        });
-      }, Math.floor(2000 + maths.random(6000, this.state.seed)));
-    }
-  }
+  // componentDidMount() {
+  //   if (this.state.heroes) {
+  //     this.timer = setInterval(() => {
+  //       this.setState(state => {
+  //         return {
+  //           ...state,
+  //           heroes: createFakeHeroes(),
+  //         };
+  //       });
+  //     }, Math.floor(2000 + maths.random(6000, this.state.seed)));
+  //   }
+  // }
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.timer);
+  // }
 
   render() {
     const { x, y } = { ...this.props };
