@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Camera from "../components/Camera.js";
 import World from "../components/World.js";
 import Hero from "../components/Hero.js";
 import Layer from "../components/Layer.js";
@@ -20,9 +21,9 @@ export default class Game extends Component {
     super(props);
 
     this.state = {
-      playerPosition: [9000000, -9000000],
-      visionRange: 5,
-      renderRange: 5,
+      playerPosition: [9, 10],
+      visionRange: 8,
+      renderRange: 8,
     };
   }
 
@@ -47,6 +48,8 @@ export default class Game extends Component {
   render() {
     const { playerPosition, visionRange, renderRange } = { ...this.state };
 
+    const playerPixelCoordinates = hex.pixelCoordinates(playerPosition);
+
     return (
       <div id="game">
         <style jsx global>{`
@@ -62,13 +65,15 @@ export default class Game extends Component {
             pointer-events: none;
           }
 
-          #origo {
+          #camera {
             position: absolute;
             left: 50%; top: 50%;
             width: 0;
             height: 0;
-            margin-left: ${-hex.width / 2 * hex.renderingSize + hex.unit};
-            margin-top: ${-hex.height / 2 * hex.renderingSize + hex.unit};
+            will-change: transform;
+            perspective: 1000px;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
           }
 
           .player {
@@ -80,20 +85,13 @@ export default class Game extends Component {
         `}</style>
 
         <div id="viewport">
-          <div id="origo">
-            <div className="player">
-              <Layer className="playerLayer">
-                <Hero x={hex.width / 2} y={hex.height / 2} />
-              </Layer>
-            </div>
-
+          <Camera playerPixelCoordinates={playerPixelCoordinates}>
             <World
               tiles={hex.hexesWithin(playerPosition, renderRange)}
-              visionRange={visionRange}
               playerPosition={playerPosition}
-              playerPixelCoordinates={hex.pixelCoordinates(playerPosition)}
+              visionRange={visionRange}
             />
-          </div>
+          </Camera>
         </div>
       </div>
     );
