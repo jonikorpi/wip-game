@@ -1,5 +1,5 @@
 const size = 64;
-const renderingSize = 0.18;
+const renderingSize = 0.36;
 const unit = "vmin";
 const height = size;
 const width = Math.sqrt(3) / 2 * size * 2;
