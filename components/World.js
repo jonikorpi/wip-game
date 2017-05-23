@@ -1,14 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
-import Tile from "../components/Tile.js";
-import Hero from "../components/Hero.js";
-import TileUI from "../components/TileUI.js";
-
-import hex from "../helpers/hex.js";
-import tileTypes from "../helpers/tileTypes.js";
-import styles from "../helpers/styles.js";
-import entities from "../helpers/entities.js";
-import maths from "../helpers/maths.js";
+import WorldUI from "../components/WorldUI.js";
+import Location from "../components/Location.js";
 
 const maxScale = 1;
 const minScale = maxScale / 100;
@@ -25,83 +18,16 @@ const getScale = () => {
     : maxScale;
 };
 
-const buildState = (state, { tiles, visionRange, playerPosition }) => {
-  return {
-    ...state,
-    ...tiles.reduce(
-      (lists, tile) => {
-        const x = tile[0];
-        const y = tile[1];
-        const tileID = `${x},${y}`;
-        const pixelCoordinates = hex.pixelCoordinates([x, y]);
-        const visible =
-          hex.distanceBetween(playerPosition, tile) <= visionRange;
-        const tileType = tileTypes.getRandomTile(x * y);
-        const entityType = maths.random(1, x * y) > 0.95 && "mountain";
-
-        const commonProps = {
-          x: x,
-          y: y,
-          left: pixelCoordinates[0],
-          top: -pixelCoordinates[1],
-          zIndex: y + 2147483646 / 2,
-        };
-
-        const heroID =
-          visible &&
-          !entityType &&
-          tileType.walkable &&
-          "hero-" + maths.random(1000, x + y);
-
-        const hero = heroID && {
-          key: heroID,
-          ...commonProps,
-        };
-
-        if (hero) {
-          lists.heroes[heroID] = hero;
-        }
-
-        lists.tiles[tileID] = {
-          key: tileID,
-          ...commonProps,
-          visible: visible,
-          playerIsHere: playerPosition[0] === x && playerPosition[1] === y,
-          entity: entityType,
-          heroes: hero ? [hero] : [],
-          ...tileType,
-        };
-
-        return lists;
-      },
-      { tiles: {}, heroes: {} }
-    ),
-  };
-};
-
-const sortTiles = (a, b) => {
-  if (a.y < b.y) return -1;
-  if (a.y > b.y) return 1;
-  return 0;
-};
-
-export default class World extends Component {
+export default class World extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      tiles: {},
-      heroes: {},
-      scale: 1,
+      targetedTile: null,
     };
   }
 
-  componentWillMount() {
-    this.setState(buildState);
-  }
-
   componentWillReceiveProps(nextProps) {
-    this.setState(buildState);
     this.updateCamera(nextProps.playerPixelCoordinates);
   }
 
@@ -132,12 +58,15 @@ export default class World extends Component {
     this.world.style.setProperty("--playerY", -playerPixelCoordinates[1]);
   };
 
-  render() {
-    const { playerPixelCoordinates, playerPosition } = { ...this.props };
-    const { tiles, heroes } = { ...this.state };
+  targetTile = tile => {
+    this.setState({ targetedTile: tile });
+  };
 
-    const tileList = Object.keys(tiles).sort(sortTiles);
-    const heroList = Object.keys(heroes).sort(sortTiles);
+  render() {
+    const { playerPixelCoordinates, playerPosition, tiles, visionRange } = {
+      ...this.props,
+    };
+    const { targetedTile } = { ...this.state };
 
     return (
       <div
@@ -151,28 +80,26 @@ export default class World extends Component {
             --playerX: 0;
             --playerY: 0;
             --zoom: ${maxScale};
-            {/*perspective: 1000px;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;*/}
             will-change: --zoom, --playerX, --playerY;
+            perspective: 1000px;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
           }
         `}</style>
 
-        {tileList.map(tile => {
-          return tile === "water"
-            ? null
-            : <Tile {...tiles[tile]} heroes={undefined} />;
-        })}
+        <WorldUI targetedTile={targetedTile} />
 
-        {heroList.map(hero => {
-          return <Hero {...heroes[hero]} />;
+        {tiles.map(tile => {
+          return (
+            <Location
+              key={`${tile[0]},${tile[1]}`}
+              x={tile[0]}
+              y={tile[1]}
+              targetTile={this.targetTile}
+              //visible={hex.distanceBetween(playerPosition, tile) <= visionRange}
+            />
+          );
         })}
-
-        {/*
-          {tileList.map(tile => {
-            return <TileUI {...tiles[tile]} />;
-          })}
-        */}
       </div>
     );
   }

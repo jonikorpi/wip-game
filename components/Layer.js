@@ -2,7 +2,9 @@ import React from "react";
 
 import hex from "../helpers/hex.js";
 
-const Layer = ({ children, className, style, viewBox, seed }) => (
+const padding = 0.25;
+
+const Layer = ({ children, className, style, viewBox }) => (
   <svg
     className={`layer ${className ? className : ""}`}
     style={style}
@@ -11,20 +13,29 @@ const Layer = ({ children, className, style, viewBox, seed }) => (
     version="1.1"
     viewBox={
       viewBox ||
-        `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
+        `${hex.width * -padding} ${hex.height * -padding} ${hex.width * (1 + padding * 2)} ${hex.height * (1 + padding * 2)}`
     }
   >
-    <style jsx>{`
+    <style jsx global>{`
       .layer {
-        width: 300%;
-        height: 300%;
+        width: ${(1 + padding * 2) * 100}%;
+        height: ${(1 + padding * 2) * 100}%;
         position: absolute;
-        left: -100%;
-        top: -100%;
-        {/*will-change: --zoom, --playerX, --playerY, transform;*/}
-        will-change: --zoom, --playerX, --playerY;
-        {/*-webkit-backface-visibility: hidden;
-        backface-visibility: hidden;*/}
+        left: ${padding * -100}%;
+        top: ${padding * -100}%;
+        transition: transform 618ms linear;
+        will-change: transform, opacity, --zoom, --playerX, --playerY;
+        opacity: 0;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+
+        animation: entry 333ms ease-out 3000ms;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes entry {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
       }
     `}</style>
 

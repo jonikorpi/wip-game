@@ -26,7 +26,7 @@ const yModifiers = [
 ];
 
 const Water = ({ points, visible }) => {
-  const colors = visible ? styles : styles.faded;
+  const colors = visible ? styles : styles;
   const waterRadius = hex.waveOffset;
   const path =
     points.reduce((result, point, index) => {

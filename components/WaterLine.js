@@ -26,7 +26,7 @@ const yModifiers = [
 ];
 
 const WaterLine = ({ points, seed, visible }) => {
-  const colors = visible ? styles : styles.faded;
+  const colors = visible ? styles : styles;
 
   const waterLinePath =
     points.reduce((result, point, index) => {

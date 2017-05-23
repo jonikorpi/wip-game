@@ -7,7 +7,7 @@ const xModifiers = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1];
 const yModifiers = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0];
 
 const Reflection = ({ points, visible }) => {
-  const colors = visible ? styles : styles.faded;
+  const colors = visible ? styles : styles;
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";

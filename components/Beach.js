@@ -26,7 +26,7 @@ const yModifiers = [
 ];
 
 const Beach = ({ points, visible }) => {
-  const colors = visible ? styles : styles.faded;
+  const colors = visible ? styles : styles;
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";

@@ -1,5 +1,5 @@
 const size = 64;
-const renderingSize = 0.18;
+const renderingSize = 0.36;
 const unit = "vmin";
 const height = size;
 const width = Math.sqrt(3) / 2 * size * 2;
@@ -116,7 +116,7 @@ export default {
     [width / 2, 0],
     [width / 3 * 2, height / 13],
 
-    [width / 9 * 7, height / 13 * 2],
+    [width / 9 * 7, height / 13 * 1.666],
     [width, height / 4],
     [width, height / 8 * 3],
 
@@ -128,12 +128,12 @@ export default {
     [width / 2, height],
     [width / 8 * 3, height / 13 * 12],
 
-    [width / 9 * 2, height / 6 * 5],
+    [width / 9 * 2, height / 6 * 5.1],
     [0, height * 0.75],
     [0, height / 8 * 5],
 
     [0, height / 8 * 3],
     [0, height / 4],
-    [width / 9 * 2, height / 13 * 2],
+    [width / 9 * 2, height / 13 * 1.666],
   ],
 };
