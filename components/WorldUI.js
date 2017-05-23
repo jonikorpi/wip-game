@@ -39,8 +39,8 @@ const WorldUI = ({ targetedTile }) => {
       `}</style>
 
       {fields &&
-        Object.keys(fields).map(field => {
-          return <p>{field}: <b>{fields[field] || "null"}</b></p>;
+        Object.keys(fields).map((field, key) => {
+          return <p key={key}>{field}: <b>{fields[field] || "null"}</b></p>;
         })}
     </div>
   );
