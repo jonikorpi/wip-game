@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import Camera from "../components/Camera.js";
 import World from "../components/World.js";
 import Hero from "../components/Hero.js";
 import Layer from "../components/Layer.js";
@@ -21,9 +20,9 @@ export default class Game extends Component {
     super(props);
 
     this.state = {
-      playerPosition: [9, 10],
+      playerPosition: [50000, 50000],
       visionRange: 8,
-      renderRange: 8,
+      renderRange: 6,
     };
   }
 
@@ -65,17 +64,6 @@ export default class Game extends Component {
             pointer-events: none;
           }
 
-          #camera {
-            position: absolute;
-            left: 50%; top: 50%;
-            width: 0;
-            height: 0;
-            will-change: transform;
-            perspective: 1000px;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-          }
-
           .player {
             position: absolute;
             height: ${hex.height * hex.renderingSize + hex.unit};
@@ -85,13 +73,12 @@ export default class Game extends Component {
         `}</style>
 
         <div id="viewport">
-          <Camera playerPixelCoordinates={playerPixelCoordinates}>
-            <World
-              tiles={hex.hexesWithin(playerPosition, renderRange)}
-              playerPosition={playerPosition}
-              visionRange={visionRange}
-            />
-          </Camera>
+          <World
+            tiles={hex.hexesWithin(playerPosition, renderRange)}
+            playerPosition={playerPosition}
+            playerPixelCoordinates={playerPixelCoordinates}
+            visionRange={visionRange}
+          />
         </div>
       </div>
     );

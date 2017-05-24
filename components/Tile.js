@@ -91,6 +91,12 @@ export default class Tile extends Component {
     let seed = originalSeed;
     // const zIndex = y + 2147483646 / 2;
 
+    const transformString = maths.getTransform(left, top);
+    const transform = {
+      WebkitTransform: transformString,
+      transform: transformString,
+    };
+
     const points = hex.baseHexCoordinates.map(point => {
       return [
         point[0] +
@@ -103,14 +109,7 @@ export default class Tile extends Component {
     });
 
     return (
-      <div
-        className="tile"
-        style={{
-          left: (left - hex.width / 2) * hex.renderingSize + hex.unit,
-          top: (top - hex.height / 2) * hex.renderingSize + hex.unit,
-          opacity: visible ? 1 : 0.5,
-        }}
-      >
+      <div className="tile">
         <style jsx global>{`
           .tile {
             position: absolute;
@@ -142,33 +141,33 @@ export default class Tile extends Component {
           </Layer>}*/}
 
         {tileType.walkable &&
-          <Layer style={{ zIndex: 2 }} className="reflection">
+          <Layer style={{ ...transform, zIndex: 2 }} className="reflection">
             <Reflection seed={seed++} points={points} />
           </Layer>}
 
         {tileType.walkable &&
-          <Layer style={{ zIndex: 3 }} className="waterLine">
+          <Layer style={{ ...transform, zIndex: 3 }} className="waterLine">
             <WaterLine seed={seed++} points={points} />
           </Layer>}
 
         {tileType.walkable &&
-          <Layer style={{ zIndex: 4 }} className="beach">
+          <Layer style={{ ...transform, zIndex: 4 }} className="beach">
             <Beach seed={seed++} points={points} />
           </Layer>}
 
         {tileType.walkable &&
-          <Layer style={{ zIndex: 5 }} className="ground">
+          <Layer style={{ ...transform, zIndex: 5 }} className="ground">
             <Ground seed={seed++} points={points} />
           </Layer>}
 
         {entityType &&
-          <Layer style={{ zIndex: 6 }} className="entity">
+          <Layer style={{ ...transform, zIndex: 6 }} className="entity">
             <Entity type={entityType} x={0} y={0} seed={seed++} />
           </Layer>}
 
         {heroes &&
           heroes.length > 0 &&
-          <Layer style={{ zIndex: 6 }} className="heroes">
+          <Layer style={{ ...transform, zIndex: 6 }} className="heroes">
             {heroes.map((hero, index) => (
               <Hero
                 key={index}
@@ -179,7 +178,7 @@ export default class Tile extends Component {
             ))}
           </Layer>}
 
-        <Layer style={{ zIndex: 7 }} className="tileTargets">
+        <Layer style={{ ...transform, zIndex: 7 }} className="tileTargets">
           <polygon
             stroke={styles.white}
             fill="none"

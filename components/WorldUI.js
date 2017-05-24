@@ -10,22 +10,14 @@ const WorldUI = ({ targetedTile }) => {
   const fields = targetedTile && flatten(targetedTile);
 
   return (
-    <div
-      id="worldUI"
-      style={{
-        left: (left - hex.width / 2) * hex.renderingSize + hex.unit,
-        top: (top - hex.height / 2) * hex.renderingSize + hex.unit,
-      }}
-    >
+    <div id="worldUI">
       <style jsx global>{`
         #worldUI {
           position: absolute;
-          left: ${hex.width / 2 * hex.renderingSize + hex.unit};
-          bottom: 0;
+          left: 0; top: 0;
           z-index: 100;
-          font-size: 0.625rem;
+          font-size: 0.5rem;
           line-height: 0.75rem;
-          border-left: 1px solid ${styles.white};
           padding: 0.25rem;
         }
 

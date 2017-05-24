@@ -1,21 +1,11 @@
 import hex from "../helpers/hex.js";
 
 const calculateTransform = (offset, variableName) => {
-  return `calc(((${offset} - var(--${variableName})) * ${hex.renderingSize}) * var(--zoom) * 1${hex.unit})`;
+  return `calc(((${offset} - var(--${variableName})) * ${hex.renderingSize}) * 1${hex.unit})`;
 };
 
-const getTransform = (x, y, z, noZoom = false) => {
-  let transform = `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")}, 0)`;
-
-  if (!noZoom) {
-    transform += "scale3d(var(--zoom), var(--zoom), var(--zoom))";
-  }
-
-  return {
-    WebkitTransform: transform,
-    transform: transform,
-    zIndex: z,
-  };
+const getTransform = (x, y) => {
+  return `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(-y, "playerY")}, 0)`;
 };
 
 // const getTransform = (x, y, z) => {
@@ -44,6 +34,6 @@ export default {
     return [(isoX - isoY) / 1.5, isoX / 3.0 + isoY / 1.5];
   },
 
-  calculateTransform: calculateTransform,
+  // calculateTransform: calculateTransform,
   getTransform: getTransform,
 };

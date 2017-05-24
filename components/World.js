@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
+import CustomProperties from "react-custom-properties";
 
+import Camera from "../components/Camera.js";
 import WorldUI from "../components/WorldUI.js";
 import Location from "../components/Location.js";
 
@@ -19,7 +21,7 @@ export default class World extends PureComponent {
   };
 
   render() {
-    const { tiles, visionRange, playerPosition } = {
+    const { tiles, visionRange, playerPosition, playerPixelCoordinates } = {
       ...this.props,
     };
     const { targetedTile } = { ...this.state };
@@ -28,17 +30,26 @@ export default class World extends PureComponent {
       <div id="world">
         <WorldUI targetedTile={targetedTile} />
 
-        {tiles.map(tile => {
-          return (
-            <Location
-              key={`${tile[0]},${tile[1]}`}
-              x={tile[0]}
-              y={tile[1]}
-              targetTile={this.targetTile}
-              visible={hex.distanceBetween(playerPosition, tile) <= visionRange}
-            />
-          );
-        })}
+        <Camera playerPixelCoordinates={playerPixelCoordinates}>
+          <CustomProperties
+            properties={{
+              "--playerX": playerPixelCoordinates[0],
+              "--playerY": playerPixelCoordinates[1],
+            }}
+          >
+            {tiles.map(tile => {
+              return (
+                <Location
+                  key={`${tile[0]},${tile[1]}`}
+                  x={tile[0]}
+                  y={tile[1]}
+                  targetTile={this.targetTile}
+                  //visible={hex.distanceBetween(playerPosition, tile) <= visionRange}
+                />
+              );
+            })}
+          </CustomProperties>
+        </Camera>
       </div>
     );
   }

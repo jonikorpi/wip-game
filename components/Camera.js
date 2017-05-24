@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { Motion, spring } from "react-motion";
 
 import hex from "../helpers/hex.js";
 
@@ -55,25 +54,27 @@ export default class Camera extends PureComponent {
     const [left, top] = [...playerPixelCoordinates];
 
     return (
-      <Motion
-        defaultStyle={{ left: left, top: top, scale: scale }}
+      <div
+        id="camera"
         style={{
-          left: spring(left),
-          top: spring(top),
-          scale: spring(scale),
+          transform: `scale3d(${scale}, ${scale}, ${scale})`,
         }}
       >
-        {({ left, top, scale }) => (
-          <div
-            id="camera"
-            style={{
-              transform: `translate3d(${-left * hex.renderingSize * scale + hex.unit}, ${top * hex.renderingSize * scale + hex.unit}, 0) scale3d(${scale}, ${scale}, ${scale})`,
-            }}
-          >
-            {this.props.children}
-          </div>
-        )}
-      </Motion>
+        <style jsx global>{`
+          #camera {
+            position: absolute;
+            left: 50%; top: 50%;
+            width: 0;
+            height: 0;
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            perspective: 1000px;
+          }
+        `}</style>
+
+        {this.props.children}
+      </div>
     );
   }
 }

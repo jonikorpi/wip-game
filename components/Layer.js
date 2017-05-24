@@ -23,6 +23,11 @@ const Layer = ({ children, className, style, viewBox }) => (
         position: absolute;
         left: ${padding * -100}%;
         top: ${padding * -100}%;
+
+        will-change: transform, opacity;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transition: transform 2s ease-in-out;
       }
     `}</style>
 
