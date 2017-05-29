@@ -1,11 +1,6 @@
 const size = 64;
-const renderingSize = 0.18;
-const unit = "vmin";
 const height = size;
 const width = Math.sqrt(3) / 2 * size * 2;
-
-const perRow = 10;
-const perColumn = 10;
 
 const axialDirections = [
   [+1, 0],
@@ -72,6 +67,20 @@ const hexesWithin = (hex, N) => {
   return results;
 };
 
+const rectangleOfHexes = (width, height) => {
+  let results = [];
+  const originOffset = -Math.floor(height) + 1;
+
+  for (let r = originOffset; r < height + originOffset; r++) {
+    const offset = Math.floor(r / 2);
+    for (let q = -offset; q < width - offset; q++) {
+      results.push(toHex([q, -q - r, r]));
+    }
+  }
+
+  return results;
+};
+
 const pixelCoordinates = hex => {
   const x = size * Math.sqrt(3) * (hex[0] + hex[1] / 2);
   const y = height / 2 * 3 / 2 * hex[1];
@@ -81,16 +90,10 @@ const pixelCoordinates = hex => {
 
 export default {
   size: size,
-  renderingSize: renderingSize,
-  unit: unit,
   height: height,
   width: width,
-  perRow: perRow,
-  perColumn: perColumn,
-  perCell: perRow * perColumn,
 
-  cellWidth: perRow * width * renderingSize,
-  cellHeight: perColumn * height * 0.75 * renderingSize,
+  perRegionAxis: 9,
 
   direction: direction,
   toHex: toHex,
@@ -99,6 +102,7 @@ export default {
   distanceBetweenCubes: distanceBetweenCubes,
   distanceBetween: distanceBetween,
   hexesWithin: hexesWithin,
+  rectangleOfHexes: rectangleOfHexes,
   pixelCoordinates: pixelCoordinates,
 
   roundingWidth: size / 7,

@@ -25,18 +25,21 @@ const yModifiers = [
   -0.414,
 ];
 
-const WaterLine = ({ points, seed, visible }) => {
-  const colors = visible ? styles : styles;
-
-  const waterLinePath =
-    points.reduce((result, point, index) => {
-      const command = index === 0 ? "M" : "L";
-      const xPoint =
-        point[0] + (hex.beachWidth + hex.waterLineOffset) * xModifiers[index];
-      const yPoint =
-        point[1] + (hex.beachWidth + hex.waterLineOffset) * yModifiers[index];
-      return `${result}${command}${xPoint},${yPoint}`;
-    }, "") + "Z";
+const WaterLine = ({ points }) => {
+  const waterLinePath = points.reduce((path, location) => {
+    return (
+      path +
+      location.reduce((result, point, index) => {
+        const command = index === 0 ? "M" : "L";
+        const xPoint =
+          point[0] + (hex.beachWidth + hex.waterLineOffset) * xModifiers[index];
+        const yPoint =
+          point[1] + (hex.beachWidth + hex.waterLineOffset) * yModifiers[index];
+        return `${result}${command}${xPoint},${yPoint}`;
+      }, "") +
+      "Z"
+    );
+  }, "");
 
   // const wavePath =
   //   points.reduce((result, point, index) => {
@@ -51,7 +54,7 @@ const WaterLine = ({ points, seed, visible }) => {
   return (
     <path
       d={waterLinePath /* + wavePath*/}
-      stroke={colors.wave}
+      stroke={styles.wave}
       strokeWidth={hex.waterLineWidth}
       //strokeDasharray={`${hex.waveLength}, ${hex.waveGap}`}
       //strokeDashoffset={seed * hex.waveGap}

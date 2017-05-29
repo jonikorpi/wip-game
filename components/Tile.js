@@ -1,72 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 
-import Layer from "../components/Layer.js";
-import Ground from "../components/Ground.js";
-import Beach from "../components/Beach.js";
-import WaterLine from "../components/WaterLine.js";
-import Reflection from "../components/Reflection.js";
-import Water from "../components/Water.js";
 import Entity from "../components/Entity.js";
 import Hero from "../components/Hero.js";
 
 import hex from "../helpers/hex.js";
-import tileTypes from "../helpers/tileTypes.js";
+import tiles from "../helpers/tiles.js";
 import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
-const createFakeHeroes = () => {
-  return [...Array(Math.floor(Math.random() * 10)).keys()].map(hero => {
-    return Math.random() / 2;
-  });
-};
-
-export default class Tile extends Component {
-  constructor(props) {
-    super(props);
-
-    const { x, y, visible } = { ...props };
-    const tileID = `${x},${y}`;
-    const pixelCoordinates = hex.pixelCoordinates([x, y]);
-
-    const originalSeed = Math.abs((x || 123) * (y || 456) / (x || 123));
-    const tileType = tileTypes.getRandomTile(x * y);
-    const entityType = maths.random(1, x * y) > 0.95 && "mountain";
-    const heroes = !entityType && tileType.walkable && createFakeHeroes();
-
-    this.state = {
-      id: tileID,
-      x: x,
-      y: y,
-      left: pixelCoordinates[0] - hex.width / 2,
-      top: -pixelCoordinates[1] + hex.height / 2,
-      originalSeed: originalSeed,
-      tileType: tileType,
-      entityType: entityType,
-      heroes: heroes,
-      visible: visible,
-    };
-  }
-
-  // componentDidMount() {
-  //   if (this.state.heroes) {
-  //     this.timer = setInterval(() => {
-  //       this.setState(state => {
-  //         return {
-  //           ...state,
-  //           heroes: createFakeHeroes(),
-  //         };
-  //       });
-  //     }, Math.floor(2000 + maths.random(6000, this.state.seed)));
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.timer);
-  // }
-
+export default class Tile extends React.PureComponent {
   handleMouseEnter = () => {
-    this.props.targetTile(this.state);
+    this.props.targetTile(this.props.locationID);
   };
 
   handleMouseLeave = () => {
@@ -74,27 +19,9 @@ export default class Tile extends Component {
   };
 
   render() {
-    const {
-      x,
-      y,
-      left,
-      top,
-      originalSeed,
-      tileType,
-      entityType,
-      heroes,
-      visible,
-    } = {
-      ...this.state,
-    };
-
-    let seed = originalSeed;
-    // const zIndex = y + 2147483646 / 2;
-
-    const transformString = maths.getTransform(left, top);
-    const transform = {
-      WebkitTransform: transformString,
-      transform: transformString,
+    return null;
+    const { left, top, originalSeed, tileType, entityType, heroes, visible } = {
+      ...this.props,
     };
 
     const points = hex.baseHexCoordinates.map(point => {

@@ -25,21 +25,25 @@ const yModifiers = [
   -0.75,
 ];
 
-const Beach = ({ points, visible }) => {
-  const colors = visible ? styles : styles;
-  const path =
-    points.reduce((result, point, index) => {
-      const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] + hex.beachWidth * xModifiers[index];
-      const yPoint = point[1] + hex.beachWidth * yModifiers[index];
-      return `${result}${command}${xPoint},${yPoint}`;
-    }, "") + "Z";
+const Beach = ({ points }) => {
+  const path = points.reduce((path, location) => {
+    return (
+      path +
+      location.reduce((result, point, index) => {
+        const command = index === 0 ? "M" : "L";
+        const xPoint = point[0] + hex.beachWidth * xModifiers[index];
+        const yPoint = point[1] + hex.beachWidth * yModifiers[index];
+        return `${result}${command}${xPoint},${yPoint}`;
+      }, "") +
+      "Z"
+    );
+  }, "");
 
   return (
     <path
       d={path}
-      fill={colors.rock}
-      stroke={colors.rock}
+      fill={styles.rock}
+      stroke={styles.rock}
       strokeWidth={hex.beachWidth * 0.25}
       strokeLinejoin="round"
     />

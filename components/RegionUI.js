@@ -5,14 +5,14 @@ import hex from "../helpers/hex.js";
 import maths from "../helpers/maths.js";
 import styles from "../helpers/styles.js";
 
-const WorldUI = ({ targetedTile }) => {
-  const { left, top } = { ...targetedTile };
-  const fields = targetedTile && flatten(targetedTile);
+const RegionUI = ({ targetLocation }) => {
+  const { left, top } = { ...targetLocation };
+  const fields = targetLocation && flatten(targetLocation);
 
   return (
-    <div id="worldUI">
+    <div id="regionUI">
       <style jsx global>{`
-        #worldUI {
+        #regionUI {
           position: absolute;
           left: 0; top: 0;
           z-index: 100;
@@ -21,16 +21,16 @@ const WorldUI = ({ targetedTile }) => {
           padding: 0.25rem;
         }
 
-        #worldUI b {
+        #regionUI b {
           font-weight: bold;
         }
 
-        #worldUI p {
+        #regionUI p {
           white-space: nowrap;
         }
       `}</style>
 
-      <div id="worldUI">
+      <div id="regionUI">
         {fields &&
           Object.keys(fields).map((field, key) => {
             return <p key={key}>{field}: <b>{fields[field] || "null"}</b></p>;
@@ -40,4 +40,4 @@ const WorldUI = ({ targetedTile }) => {
   );
 };
 
-export default WorldUI;
+export default RegionUI;

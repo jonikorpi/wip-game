@@ -34,6 +34,10 @@ export default {
     return [(isoX - isoY) / 1.5, isoX / 3.0 + isoY / 1.5];
   },
 
+  getSeed: coordinates => {
+    return Math.abs((coordinates[0] || 123) * (coordinates[1] || 456));
+  },
+
   // calculateTransform: calculateTransform,
   getTransform: getTransform,
 };

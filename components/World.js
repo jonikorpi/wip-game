@@ -1,62 +1,27 @@
-import React, { PureComponent } from "react";
-import CustomProperties from "react-custom-properties";
+import React from "react";
+import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
-import Camera from "../components/Camera.js";
-import WorldUI from "../components/WorldUI.js";
-import Location from "../components/Location.js";
+import Region from "../components/Region.js";
 
-import hex from "../helpers/hex.js";
-
-export default class World extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      targetedTile: null,
-    };
-  }
-
-  targetTile = tile => {
-    this.setState({ targetedTile: tile });
-  };
-
+export default class World extends React.PureComponent {
   render() {
-    const { tiles, visionRange, playerPosition, playerPixelCoordinates } = {
-      ...this.props,
-    };
-    const { targetedTile } = { ...this.state };
+    const { playerPosition } = { ...this.props };
 
     return (
       <div id="world">
         <style jsx global>{`
           #world {
-            --playerX: 0;
-            --playerY: 1;
+
           }
         `}</style>
 
-        <WorldUI targetedTile={targetedTile} />
-
-        <Camera playerPixelCoordinates={playerPixelCoordinates}>
-          <CustomProperties
-            properties={{
-              "--playerX": playerPixelCoordinates[0],
-              "--playerY": playerPixelCoordinates[1],
-            }}
-          >
-            {tiles.map(tile => {
-              return (
-                <Location
-                  key={`${tile[0]},${tile[1]}`}
-                  x={tile[0]}
-                  y={tile[1]}
-                  targetTile={this.targetTile}
-                  //visible={hex.distanceBetween(playerPosition, tile) <= visionRange}
-                />
-              );
-            })}
-          </CustomProperties>
-        </Camera>
+        <CSSTransitionGroup
+          transitionName="region"
+          transitionEnterTimeout={1000}
+          transitionLeaveTimeout={1000}
+        >
+          <Region coordinates={playerPosition} />
+        </CSSTransitionGroup>
       </div>
     );
   }
