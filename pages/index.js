@@ -175,18 +175,6 @@ export default () => {
             "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
           ;
         }
-
-        html {
-          font-size: 133%; /* Fallback: used if browser doesn't support calc() */
-          font-size: calc(1em + 0.5vw + 0.5vh + 0.25vmin);
-          background-color: ${styles.water};
-          color: white;
-        }
-
-        body {
-          line-height: 1rem;
-          font-size: 0.8rem; /* = line-height of 1.25 */
-        }
       `}</style>
 
       <Game />

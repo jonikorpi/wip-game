@@ -5,12 +5,12 @@ import styles from "../helpers/styles.js";
 
 const xModifiers = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1];
 const yModifiers = [
-  -0.5,
-  -0.5,
-  -0.5,
-  -0.5,
-  -0.5,
-  -0.5,
+  -0.75,
+  -0.75,
+  -0.75,
+  -0.75,
+  -0.75,
+  -0.75,
   1,
   1,
   1,
@@ -20,9 +20,9 @@ const yModifiers = [
   1,
   1,
   1,
-  -0.5,
-  -0.5,
-  -0.5,
+  -0.75,
+  -0.75,
+  -0.75,
 ];
 
 const Beach = ({ points, visible }) => {

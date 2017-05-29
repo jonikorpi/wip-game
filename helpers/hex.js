@@ -103,11 +103,13 @@ export default {
 
   roundingWidth: size / 7,
   randomRange: size / 16,
+
+  waterRadius: size / 4,
   reflectionHeight: size / 11,
   beachWidth: size / 8,
 
   waterLineWidth: size / 100,
-  waterLineOffset: size / 20,
+  waterLineOffset: size / 40,
   waveLength: size / 2,
   waveGap: size,
 

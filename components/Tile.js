@@ -38,8 +38,8 @@ export default class Tile extends Component {
       id: tileID,
       x: x,
       y: y,
-      left: pixelCoordinates[0],
-      top: -pixelCoordinates[1],
+      left: pixelCoordinates[0] - hex.width / 2,
+      top: -pixelCoordinates[1] + hex.height / 2,
       originalSeed: originalSeed,
       tileType: tileType,
       entityType: entityType,
@@ -135,10 +135,9 @@ export default class Tile extends Component {
           }
         `}</style>
 
-        {/*{visible &&
-          <Layer
-            <Water  seed={seed++} points={points} />
-          </Layer>}*/}
+        <Layer style={{ ...transform, zIndex: 1 }} className="water">
+          <Water seed={seed++} points={points} />
+        </Layer>
 
         {tileType.walkable &&
           <Layer style={{ ...transform, zIndex: 2 }} className="reflection">

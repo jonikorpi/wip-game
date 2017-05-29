@@ -27,12 +27,11 @@ const yModifiers = [
 
 const Water = ({ points, visible }) => {
   const colors = visible ? styles : styles;
-  const waterRadius = hex.waveOffset;
   const path =
     points.reduce((result, point, index) => {
       const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] + waterRadius * xModifiers[index];
-      const yPoint = point[1] + waterRadius * yModifiers[index];
+      const xPoint = point[0] + hex.waterRadius * xModifiers[index];
+      const yPoint = point[1] + hex.waterRadius * yModifiers[index];
       return `${result}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 

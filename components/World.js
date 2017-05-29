@@ -28,6 +28,13 @@ export default class World extends PureComponent {
 
     return (
       <div id="world">
+        <style jsx global>{`
+          #world {
+            --playerX: 0;
+            --playerY: 1;
+          }
+        `}</style>
+
         <WorldUI targetedTile={targetedTile} />
 
         <Camera playerPixelCoordinates={playerPixelCoordinates}>
