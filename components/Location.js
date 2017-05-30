@@ -15,7 +15,7 @@ export default class Location extends React.Component {
   };
 
   render() {
-    const { locationID, x, y } = { ...this.props };
+    const { locationID, x, y, heightRatio } = { ...this.props };
     let zIndex = 10;
     const viewBox = `0 ${hex.height * -1 / 16} ${hex.width * (hex.perRegionAxis + 0.5)} ${hex.height * (hex.perRegionAxis + 3 / 4) * 3 / 4}`;
     const pixelCoordinates = hex.pixelCoordinates([x, y]);

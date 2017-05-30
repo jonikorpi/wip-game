@@ -4,7 +4,9 @@ import Location from "../components/Location";
 
 export default class Locations extends React.Component {
   render() {
-    const { locationList, locations, regionCoordinates } = { ...this.props };
+    const { locationList, locations, regionCoordinates, heightRatio } = {
+      ...this.props,
+    };
 
     if (!locationList || locationList.length === 0) {
       return null;
@@ -23,6 +25,7 @@ export default class Locations extends React.Component {
               y={+locationCoordinates[1]}
               regionCoordinates={regionCoordinates}
               targetLocation={this.props.targetLocation}
+              heightRatio={heightRatio}
               {...locations[locationID]}
             />
           );

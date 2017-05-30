@@ -11,7 +11,7 @@ import maths from "../helpers/maths.js";
 
 export default class Terrain extends React.PureComponent {
   render() {
-    const { terrainList, regionCoordinates } = { ...this.props };
+    const { terrainList, regionCoordinates, heightRatio } = { ...this.props };
 
     if (!terrainList || terrainList.length === 0) {
       return null;
@@ -44,19 +44,19 @@ export default class Terrain extends React.PureComponent {
 
     return (
       <g className="terrain">
-        <Layer zOffset={2}>
+        <Layer heightRatio={heightRatio} zOffset={10}>
           <Reflection points={points} />
         </Layer>
 
-        <Layer zOffset={1}>
+        <Layer heightRatio={heightRatio} zOffset={2}>
           <WaterLine points={points} />
         </Layer>
 
-        <Layer zOffset={1}>
+        <Layer heightRatio={heightRatio} zOffset={2}>
           <Beach points={points} />
         </Layer>
 
-        <Layer>
+        <Layer heightRatio={heightRatio}>
           <Ground points={points} />
         </Layer>
       </g>

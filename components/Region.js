@@ -1,4 +1,5 @@
 import React from "react";
+import Measure from "react-measure";
 
 import RegionUI from "../components/RegionUI.js";
 import Locations from "../components/Locations.js";
@@ -74,33 +75,54 @@ export default class Region extends React.PureComponent {
             pointer-events: none;
           }
 
-          .svg {
-            width: 100%;
-            height: 100%;
+          .svgContainer {
             position: absolute;
             left: 0; top: 0; right: 0; bottom: 0;
             max-height: ${styles.maxHeight * 100}vw;
             margin: auto;
           }
+
+          .svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0; top: 0; right: 0; bottom: 0;
+          }
         `}</style>
 
-        <svg
-          className="svg"
-          shapeRendering="optimizeSpeed"
-          xmlns="http://www.w3.org/2000/svg"
-          version="1.1"
-          preserveAspectRatio="none"
-          viewBox={`${-padding} ${-padding} ${2 * padding + hex.width * (hex.perRegionAxis + 0.5)} ${2 * padding + hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4)}`}
-        >
-          <Terrain terrainList={terrainList} regionCoordinates={coordinates} />
+        <Measure bounds>
+          {({ measureRef, contentRect }) => {
+            const heightRatio =
+              contentRect.bounds.height / contentRect.bounds.width || 1;
 
-          <Locations
-            locations={locations}
-            locationList={locationList}
-            regionCoordinates={coordinates}
-            targetLocation={this.targetLocation}
-          />
-        </svg>
+            return (
+              <div className="svgContainer" ref={measureRef}>
+                <svg
+                  className="svg"
+                  shapeRendering="optimizeSpeed"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                  preserveAspectRatio="none"
+                  viewBox={`${-padding} ${-padding} ${2 * padding + hex.width * (hex.perRegionAxis + 0.5)} ${2 * padding + hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4)}`}
+                >
+                  <Terrain
+                    terrainList={terrainList}
+                    regionCoordinates={coordinates}
+                    heightRatio={heightRatio}
+                  />
+
+                  <Locations
+                    locations={locations}
+                    locationList={locationList}
+                    regionCoordinates={coordinates}
+                    targetLocation={this.targetLocation}
+                    heightRatio={heightRatio}
+                  />
+                </svg>
+              </div>
+            );
+          }}
+        </Measure>
 
         <RegionUI
           targetLocation={targetLocation ? locations[targetLocation] : null}
