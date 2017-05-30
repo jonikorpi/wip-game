@@ -105,15 +105,16 @@ export default {
   rectangleOfHexes: rectangleOfHexes,
   pixelCoordinates: pixelCoordinates,
 
-  roundingWidth: size / 7,
-  randomRange: size / 16,
+  roundingWidth: size / 8,
+  randomRange: size / 10,
 
   waterRadius: size / 4,
   reflectionHeight: size / 11,
-  beachWidth: size / 8,
+  beachWidth: size / 15,
 
-  waterLineWidth: size / 100,
-  waterLineOffset: size / 40,
+  waterLineWidth: size / 150,
+  waterLineOffset: size / 15,
+  waveOffset: size / 5,
   waveLength: size / 2,
   waveGap: size,
 

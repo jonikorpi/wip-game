@@ -44,7 +44,7 @@ export default class Terrain extends React.PureComponent {
 
     return (
       <g className="terrain">
-        <Layer heightRatio={heightRatio} zOffset={10}>
+        <Layer heightRatio={heightRatio} zOffset={6}>
           <Reflection points={points} />
         </Layer>
 
@@ -52,7 +52,7 @@ export default class Terrain extends React.PureComponent {
           <WaterLine points={points} />
         </Layer>
 
-        <Layer heightRatio={heightRatio} zOffset={2}>
+        <Layer heightRatio={heightRatio} zOffset={1}>
           <Beach points={points} />
         </Layer>
 

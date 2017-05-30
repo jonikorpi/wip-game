@@ -19,7 +19,8 @@ const faded = Object.keys(base).reduce((faded, color) => {
 }, {});
 
 export default {
-  maxHeight: 0.86062,
+  maxHeight: 0.764,
+  // maxHeight: 1,
   perspective: 10,
   padding: 0.236,
 
