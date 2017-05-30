@@ -29,21 +29,32 @@ export default class Location extends React.Component {
           .target {
             pointer-events: all;
             touch-action: manipulation;
+            opacity: 0;
           }
 
           .target:hover, .target:focus {
             stroke: ${styles.white};
+            opacity: 1;
           }
         `}</style>
 
         <polygon
           className="target"
-          stroke="none"
+          stroke={styles.white}
           fill="none"
           points={hex.baseHexCoordinates}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         />
+
+        {/* <text
+          style={{ fontSize: 10 }}
+          fill="white"
+          x={hex.width / 2}
+          y={hex.height / 2}
+        >
+          {x},{y}
+        </text> */}
       </g>
     );
   }
