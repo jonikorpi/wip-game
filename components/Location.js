@@ -45,6 +45,7 @@ export default class Location extends React.Component {
           points={hex.baseHexCoordinates}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
+          vectorEffect="non-scaling-stroke"
         />
 
         {/* <text
