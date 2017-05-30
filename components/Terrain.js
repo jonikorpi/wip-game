@@ -53,7 +53,7 @@ export default class Terrain extends React.PureComponent {
           }
         `}</style>
 
-        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={3}>
+        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={2}>
           <Reflection points={points} />
         </Layer>
 
