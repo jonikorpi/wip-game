@@ -58,6 +58,7 @@ export default class Region extends React.PureComponent {
   render() {
     const { coordinates } = { ...this.props };
     const { targetLocation, locations } = { ...this.state };
+    const padding = styles.padding * hex.size;
 
     const locationList = locations && Object.keys(locations);
     const terrainList =
@@ -89,9 +90,10 @@ export default class Region extends React.PureComponent {
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
           preserveAspectRatio="none"
-          viewBox={`0 0 ${hex.width * (hex.perRegionAxis + 0.5)} ${hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4)}`}
+          viewBox={`${-padding} ${-padding} ${2 * padding + hex.width * (hex.perRegionAxis + 0.5)} ${2 * padding + hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4)}`}
         >
           <Terrain terrainList={terrainList} regionCoordinates={coordinates} />
+
           <Locations
             locations={locations}
             locationList={locationList}

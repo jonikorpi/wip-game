@@ -21,6 +21,7 @@ const faded = Object.keys(base).reduce((faded, color) => {
 export default {
   maxHeight: 0.91,
   perspective: 1,
+  padding: 0.236,
 
   ...base,
   faded: {
