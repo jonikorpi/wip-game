@@ -1,5 +1,6 @@
 import React from "react";
 
+import Layer from "../components/Layer";
 import Reflection from "../components/Reflection";
 import WaterLine from "../components/WaterLine";
 import Beach from "../components/Beach";
@@ -37,15 +38,11 @@ export default class Terrain extends React.PureComponent {
       });
     });
 
+    const viewBox = `0 ${hex.height * -1 / 16} ${hex.width * (hex.perRegionAxis + 0.5)} ${hex.height * (hex.perRegionAxis + 3 / 4) * 3 / 4}`;
+    let zIndex = 1;
+
     return (
-      <svg
-        className="terrain"
-        shapeRendering="optimizeSpeed"
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        viewBox={`0 ${hex.height * -1 / 16} ${hex.width * (hex.perRegionAxis + 0.5)} ${hex.height * (hex.perRegionAxis + 3 / 4) * 3 / 4}`}
-        // preserveAspectRatio="none"
-      >
+      <div className="terrain">
         <style jsx global>{`
           .terrain {
             width: 100%;
@@ -56,11 +53,22 @@ export default class Terrain extends React.PureComponent {
           }
         `}</style>
 
-        <Reflection points={points} />
-        <WaterLine points={points} />
-        <Beach points={points} />
-        <Ground points={points} />
-      </svg>
+        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={3}>
+          <Reflection points={points} />
+        </Layer>
+
+        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={1}>
+          <WaterLine points={points} />
+        </Layer>
+
+        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={1}>
+          <Beach points={points} />
+        </Layer>
+
+        <Layer viewBox={viewBox} zIndex={zIndex++}>
+          <Ground points={points} />
+        </Layer>
+      </div>
     );
   }
 }

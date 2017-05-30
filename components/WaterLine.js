@@ -61,6 +61,7 @@ const WaterLine = ({ points }) => {
       strokeLinejoin="round"
       strokeLinecap="round"
       fill="none"
+      vectorEffect="non-scaling-stroke"
     />
   );
 };

@@ -67,7 +67,14 @@ export default class Region extends React.PureComponent {
     return (
       <div className="region">
         <style jsx global>{`
-
+          .region {
+            position: absolute;
+            left: 0; top: 0; right: 0; bottom: 0;
+            margin: auto;
+            width: 100%;
+            height: 100%;
+            max-height: ${styles.maxHeight * 100}vw;
+          }
         `}</style>
 
         {terrainList &&
