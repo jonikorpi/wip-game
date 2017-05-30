@@ -11,9 +11,13 @@ import maths from "../helpers/maths.js";
 
 export default class Terrain extends React.PureComponent {
   render() {
-    const { locations, regionCoordinates } = { ...this.props };
+    const { terrainList, regionCoordinates } = { ...this.props };
 
-    const points = locations.map(locationID => {
+    if (!terrainList || terrainList.length === 0) {
+      return null;
+    }
+
+    const points = terrainList.map(locationID => {
       const location = locationID.split(",");
       const x = +location[0];
       const y = +location[1];
@@ -38,37 +42,24 @@ export default class Terrain extends React.PureComponent {
       });
     });
 
-    const viewBox = `0 ${hex.height * -1 / 16} ${hex.width * (hex.perRegionAxis + 0.5)} ${hex.height * (hex.perRegionAxis + 3 / 4) * 3 / 4}`;
-    let zIndex = 1;
-
     return (
-      <div className="terrain">
-        <style jsx global>{`
-          .terrain {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-          }
-        `}</style>
-
-        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={2}>
+      <g className="terrain">
+        <Layer zOffset={2}>
           <Reflection points={points} />
         </Layer>
 
-        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={1}>
+        <Layer zOffset={1}>
           <WaterLine points={points} />
         </Layer>
 
-        <Layer viewBox={viewBox} zIndex={zIndex++} zOffset={1}>
+        <Layer zOffset={1}>
           <Beach points={points} />
         </Layer>
 
-        <Layer viewBox={viewBox} zIndex={zIndex++}>
+        <Layer>
           <Ground points={points} />
         </Layer>
-      </div>
+      </g>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 import RegionUI from "../components/RegionUI.js";
-import Location from "../components/Location.js";
+import Locations from "../components/Locations.js";
 import Terrain from "../components/Terrain.js";
 
 import hex from "../helpers/hex.js";
@@ -51,8 +51,8 @@ export default class Region extends React.PureComponent {
     });
   }
 
-  targetLocation = tile => {
-    this.setState({ targetLocation: tile });
+  targetLocation = locationID => {
+    this.setState({ targetLocation: locationID });
   };
 
   render() {
@@ -70,35 +70,38 @@ export default class Region extends React.PureComponent {
           .region {
             position: absolute;
             left: 0; top: 0; right: 0; bottom: 0;
-            margin: auto;
+            pointer-events: none;
+          }
+
+          .svg {
             width: 100%;
             height: 100%;
+            position: absolute;
+            left: 0; top: 0; right: 0; bottom: 0;
             max-height: ${styles.maxHeight * 100}vw;
+            margin: auto;
           }
         `}</style>
 
-        {terrainList &&
-          <Terrain locations={terrainList} regionCoordinates={coordinates} />}
-
-        {/* {locationList.length > 0 &&
-          locationList.map(locationID => {
-            const locationCoordinates = locationID.split(",");
-
-            return (
-              <Location
-                key={locationID}
-                locationID={locationID}
-                x={locationCoordinates[0]}
-                y={locationCoordinates[1]}
-                regionCoordinates={coordinates}
-                targetLocation={this.targetLocation}
-                {...locations[locationID]}
-              />
-            );
-          })} */}
+        <svg
+          className="svg"
+          shapeRendering="optimizeSpeed"
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          preserveAspectRatio="none"
+          viewBox={`0 0 ${hex.width * (hex.perRegionAxis + 0.5)} ${hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4)}`}
+        >
+          <Terrain terrainList={terrainList} regionCoordinates={coordinates} />
+          <Locations
+            locations={locations}
+            locationList={locationList}
+            regionCoordinates={coordinates}
+            targetLocation={this.targetLocation}
+          />
+        </svg>
 
         <RegionUI
-          targetLocation={targetLocation ? locations(targetLocation) : null}
+          targetLocation={targetLocation ? locations[targetLocation] : null}
         />
       </div>
     );
