@@ -48,11 +48,6 @@ export default class Game extends Component {
     return (
       <div id="game">
         <style jsx global>{`
-          html, body {
-            overflow: hidden;
-            height: 100%;
-          }
-
           html {
             font-size: 133%; /* Fallback: used if browser doesn't support calc() */
             font-size: calc(1em + 0.5vw + 0.5vh + 0.25vmin);
