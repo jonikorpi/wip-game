@@ -31,15 +31,15 @@ const Ground = ({ points }) => {
     return (
       path +
       location.reduce((result, point, index) => {
-        let locationSeed = maths.getSeed([point[0], point[1]]);
+        const locationSeed = maths.getSeed([point[0], point[1]]);
 
         const command = index === 0 ? "M" : "L";
         const xPoint =
           point[0] -
-          maths.random(hex.beachWidth, locationSeed++) * xModifiers[index];
+          maths.random(hex.beachWidth * 0.5, locationSeed) * xModifiers[index];
         const yPoint =
           point[1] -
-          maths.random(hex.beachWidth, locationSeed++) * yModifiers[index];
+          maths.random(hex.beachWidth * 0.5, locationSeed) * yModifiers[index];
 
         return `${result}${command}${xPoint},${yPoint}`;
       }, "") +

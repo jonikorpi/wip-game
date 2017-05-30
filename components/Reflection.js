@@ -23,6 +23,7 @@ const Reflection = ({ points }) => {
       fill={styles.reflection}
       stroke={styles.reflection}
       strokeWidth={hex.roundingWidth}
+      strokeLinejoin="round"
     />
   );
 };

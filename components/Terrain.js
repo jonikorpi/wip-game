@@ -2,7 +2,6 @@ import React from "react";
 
 import Layer from "../components/Layer";
 import Reflection from "../components/Reflection";
-import WaterLine from "../components/WaterLine";
 import Beach from "../components/Beach";
 import Ground from "../components/Ground";
 
@@ -44,12 +43,8 @@ export default class Terrain extends React.PureComponent {
 
     return (
       <g className="terrain">
-        <Layer heightRatio={heightRatio} zOffset={6}>
+        <Layer heightRatio={heightRatio} zOffset={5}>
           <Reflection points={points} />
-        </Layer>
-
-        <Layer heightRatio={heightRatio} zOffset={2}>
-          <WaterLine points={points} />
         </Layer>
 
         <Layer heightRatio={heightRatio} zOffset={1}>
