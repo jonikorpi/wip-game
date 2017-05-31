@@ -120,13 +120,13 @@ export default {
 
     [width, height / 8 * 5],
     [width, height * 0.75],
-    [width / 8 * 7, height / 5 * 4],
+    [width * 6.25 / 8, height * 6 / 7],
 
-    [width / 8 * 5, height / 13 * 12],
+    [width / 8 * 5, height * 15 / 16],
     [width / 2, height],
-    [width / 8 * 3, height / 13 * 12],
+    [width * 3 / 8, height * 15 / 16],
 
-    [width / 9 * 2, height / 6 * 5.1],
+    [width / 9 * 2, height * 6 / 7],
     [0, height * 0.75],
     [0, height / 8 * 5],
 
