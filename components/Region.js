@@ -14,7 +14,22 @@ import maths from "../helpers/maths.js";
 
 const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
 
-export default class Region extends React.PureComponent {
+const randomizeState = oldState => {
+  let state = { ...oldState };
+
+  Object.keys(state.heroes).forEach(heroID => {
+    const hero = state.heroes[heroID];
+    const [x, y] = hero.location.split(",");
+    const [newX, newY] = locationList[
+      Math.floor(Math.random() * locationList.length)
+    ];
+    hero.location = `${newX},${newY}`;
+  });
+
+  return state;
+};
+
+export default class Region extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,6 +75,14 @@ export default class Region extends React.PureComponent {
         return heroes;
       }, {}),
     });
+
+    this.timer = setInterval(() => {
+      this.setState(randomizeState);
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   render() {
@@ -77,6 +100,8 @@ export default class Region extends React.PureComponent {
           ...tileTypes.tiles["water"],
           ...tile,
         },
+        entity: null,
+        heroes: {},
       };
 
       return locations;
@@ -99,10 +124,7 @@ export default class Region extends React.PureComponent {
     if (heroList.length > 0) {
       heroList.forEach(heroID => {
         const locationID = heroes[heroID].location;
-        locations[locationID].heroes = {
-          ...locations[locationID].heroes,
-          [heroID]: heroes[heroID],
-        };
+        locations[locationID].heroes[heroID] = heroes[heroID];
       });
     }
 

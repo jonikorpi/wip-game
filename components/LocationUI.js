@@ -33,7 +33,9 @@ const LocationUI = ({ target }) => {
 
       {fields &&
         Object.keys(fields).map((field, key) => {
-          return <p key={key}>{field}: <b>{fields[field] || "null"}</b></p>;
+          return (
+            <p key={key}>{field}: <b>{"" + fields[field] || "null"}</b></p>
+          );
         })}
     </div>
   );
