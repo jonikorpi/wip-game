@@ -1,5 +1,7 @@
 import chroma from "chroma-js";
 
+import hex from "../helpers/hex";
+
 const waterHue = 205;
 const groundHue = waterHue - 360 * Math.sqrt(2);
 
@@ -18,15 +20,22 @@ const faded = Object.keys(base).reduce((faded, color) => {
   return faded;
 }, {});
 
-export default {
+let styles = {
   maxHeight: 1,
   minHeight: 0.382,
   // maxHeight: 1,
   perspective: 10,
-  padding: 0.382,
+
+  padding: 0.382 * hex.size,
 
   ...base,
   faded: {
     ...faded,
   },
 };
+
+styles.width = 2 * styles.padding + hex.width * (hex.perRegionAxis + 0.5);
+styles.height =
+  2 * styles.padding + hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4);
+
+export default styles;

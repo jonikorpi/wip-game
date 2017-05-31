@@ -1,30 +1,26 @@
 import React from "react";
 import Measure from "react-measure";
 
-import RegionUI from "../components/RegionUI.js";
 import Locations from "../components/Locations.js";
 import Terrain from "../components/Terrain.js";
 import SVG from "../components/SVG.js";
 
 import hex from "../helpers/hex.js";
-import tiles from "../helpers/tiles.js";
+import tileTypes from "../helpers/tileTypes.js";
 import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
-const createFakeHeroes = () => {
-  return [...Array(Math.floor(Math.random() * 10)).keys()].map(hero => {
-    return Math.random() / 2;
-  });
-};
+const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
 
 export default class Region extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      targetLocation: null,
-      locations: null,
+      tiles: {},
+      entities: {},
+      heroes: {},
     };
   }
 
@@ -33,39 +29,86 @@ export default class Region extends React.PureComponent {
     let seed = maths.getSeed(coordinates);
 
     this.setState({
-      locations: hex
-        .rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis)
-        .reduce((locations, location) => {
-          const [x, y] = location;
+      tiles: locationList.reduce((locations, location) => {
+        const tile = tileTypes.getRandomTile(seed++);
 
-          const tileType = tiles.getRandomTile(seed++);
-          const entity = maths.random(1, seed++) > 0.95 && "mountain";
-          const heroes = !entity && tileType.walkable && createFakeHeroes();
-
+        if (tile.type !== "water") {
           locations[`${location[0]},${location[1]}`] = {
-            tile: tileType,
-            entity: entity,
-            heroes: heroes,
+            ...tile,
           };
+        }
+        return locations;
+      }, {}),
 
-          return locations;
-        }, {}),
+      entities: locationList.reduce((entities, location) => {
+        if (maths.random(1, seed++) > 0.8) {
+          entities["entity-" + maths.random(seed++)] = {
+            ...entities["mountain"],
+            location: `${location[0]},${location[1]}`,
+          };
+        }
+        return entities;
+      }, {}),
+
+      heroes: locationList.reduce((heroes, location) => {
+        if (maths.random(1, seed++) > 0.5) {
+          heroes["hero-" + maths.random(seed++)] = {
+            location: `${location[0]},${location[1]}`,
+          };
+        }
+        return heroes;
+      }, {}),
     });
   }
 
-  targetLocation = locationID => {
-    this.setState({ targetLocation: locationID });
-  };
-
   render() {
     const { coordinates } = { ...this.props };
-    const { targetLocation, locations } = { ...this.state };
-    const padding = styles.padding * hex.size;
+    const { tiles, entities, heroes } = { ...this.state };
 
-    const locationList = locations && Object.keys(locations);
+    // Bundle tiles into locations
+    let locations = locationList.reduce((locations, location) => {
+      const [x, y] = location;
+      const locationID = `${x},${y}`;
+      const tile = tiles[locationID] || {};
+
+      locations[locationID] = {
+        tile: {
+          ...tileTypes.tiles["water"],
+          ...tile,
+        },
+      };
+
+      return locations;
+    }, {});
+
+    // Add entities
+    const entityList = entities && Object.keys(entities);
+    if (entityList.length > 0) {
+      entityList.forEach(entityID => {
+        const locationID = entities[entityID].location;
+        locations[locationID].entity = {
+          key: entityID,
+          ...entities[entityID],
+        };
+      });
+    }
+
+    // Add heroes
+    const heroList = heroes && Object.keys(heroes);
+    if (heroList.length > 0) {
+      heroList.forEach(heroID => {
+        const locationID = heroes[heroID].location;
+        locations[locationID].heroes = {
+          ...locations[locationID].heroes,
+          [heroID]: heroes[heroID],
+        };
+      });
+    }
+
+    // List terrain tiles
+    const tileList = tiles && Object.keys(tiles);
     const terrainList =
-      locationList &&
-      locationList.filter(locationID => locations[locationID].tile.walkable);
+      tileList && tileList.filter(locationID => tiles[locationID].walkable);
 
     return (
       <div className="region">
@@ -82,6 +125,7 @@ export default class Region extends React.PureComponent {
             left: 0; top: 0; right: 0; bottom: 0;
             max-height: ${styles.maxHeight * 100}vw;
             margin: auto;
+            overflow: hidden;
           }
         `}</style>
 
@@ -93,38 +137,25 @@ export default class Region extends React.PureComponent {
             return (
               <div className="centerer" ref={measureRef}>
                 <SVG
-                  viewBox={`${-padding} ${-padding} ${2 * padding + hex.width * (hex.perRegionAxis + 0.5)} ${2 * padding + hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4)}`}
+                  viewBox={`${-styles.padding} ${-styles.padding} ${styles.width} ${styles.height}`}
                 >
                   <Terrain
                     terrainList={terrainList}
                     regionCoordinates={coordinates}
                     heightRatio={heightRatio}
                   />
-
-                  <Locations
-                    locations={locations}
-                    locationList={locationList}
-                    regionCoordinates={coordinates}
-                    targetLocation={this.targetLocation}
-                    heightRatio={heightRatio}
-                  />
                 </SVG>
+
+                <Locations locations={locations} heightRatio={heightRatio} />
+
+                {/* <Heroes
+                  heroes={heroes}
+                  heightRatio={heightRatio}
+                /> */}
               </div>
             );
           }}
         </Measure>
-
-        <RegionUI
-          targetLocation={
-            targetLocation
-              ? {
-                  x: targetLocation.split(",")[0],
-                  y: targetLocation.split(",")[1],
-                  ...locations[targetLocation],
-                }
-              : null
-          }
-        />
       </div>
     );
   }

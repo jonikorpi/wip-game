@@ -1,6 +1,6 @@
 import maths from "../helpers/maths.js";
 
-const tiles = {
+let tiles = {
   water: {
     name: "Water",
     rarity: 1,
@@ -80,6 +80,10 @@ const tiles = {
   },
 };
 
+Object.keys(tiles).forEach(tileType => {
+  tiles[tileType].type = tileType;
+});
+
 export default {
   tiles: tiles,
 
@@ -87,8 +91,6 @@ export default {
     const tileKeys = Object.keys(tiles);
     const tileKey =
       tileKeys[Math.floor(maths.random(1, seed) * tileKeys.length)];
-    let tile = tiles[tileKey];
-    tile.type = tileKey;
-    return tile;
+    return tiles[tileKey];
   },
 };

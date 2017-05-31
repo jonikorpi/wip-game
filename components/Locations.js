@@ -4,16 +4,18 @@ import Location from "../components/Location";
 
 export default class Locations extends React.Component {
   render() {
-    const { locationList, locations, regionCoordinates, heightRatio } = {
+    const { locations, heightRatio } = {
       ...this.props,
     };
+
+    const locationList = locations && Object.keys(locations);
 
     if (!locationList || locationList.length === 0) {
       return null;
     }
 
     return (
-      <g className="locations">
+      <div className="locations">
         {locationList.map(locationID => {
           const locationCoordinates = locationID.split(",");
 
@@ -23,14 +25,13 @@ export default class Locations extends React.Component {
               locationID={locationID}
               x={+locationCoordinates[0]}
               y={+locationCoordinates[1]}
-              regionCoordinates={regionCoordinates}
-              targetLocation={this.props.targetLocation}
               heightRatio={heightRatio}
-              {...locations[locationID]}
+              tile={locations[locationID].tile}
+              entity={locations[locationID].entity}
             />
           );
         })}
-      </g>
+      </div>
     );
   }
 }

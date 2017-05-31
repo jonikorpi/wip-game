@@ -5,16 +5,16 @@ import hex from "../helpers/hex.js";
 import maths from "../helpers/maths.js";
 import styles from "../helpers/styles.js";
 
-const RegionUI = ({ targetLocation }) => {
-  const { left, top } = { ...targetLocation };
-  const fields = targetLocation && flatten(targetLocation);
+const LocationUI = ({ target }) => {
+  const { left, top } = { ...target };
+  const fields = target && flatten(target);
 
   return (
-    <div id="regionUI">
+    <div className="regionUI">
       <style jsx global>{`
-        #regionUI {
+        .regionUI {
           position: absolute;
-          left: 0; top: 0; bottom: 0; right: 0;
+          left: 100%;
           overflow: hidden;
           z-index: 100;
           font-size: 0.5rem;
@@ -22,23 +22,21 @@ const RegionUI = ({ targetLocation }) => {
           padding: 0.25rem;
         }
 
-        #regionUI b {
+        .regionUI b {
           font-weight: bold;
         }
 
-        #regionUI p {
+        .regionUI p {
           white-space: nowrap;
         }
       `}</style>
 
-      <div id="regionUI">
-        {fields &&
-          Object.keys(fields).map((field, key) => {
-            return <p key={key}>{field}: <b>{fields[field] || "null"}</b></p>;
-          })}
-      </div>
+      {fields &&
+        Object.keys(fields).map((field, key) => {
+          return <p key={key}>{field}: <b>{fields[field] || "null"}</b></p>;
+        })}
     </div>
   );
 };
 
-export default RegionUI;
+export default LocationUI;
