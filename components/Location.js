@@ -47,15 +47,6 @@ export default class Location extends React.Component {
           onMouseLeave={this.handleMouseLeave}
           vectorEffect="non-scaling-stroke"
         />
-
-        {/* <text
-          style={{ fontSize: 10 }}
-          fill="white"
-          x={hex.width / 2}
-          y={hex.height / 2}
-        >
-          {x},{y}
-        </text> */}
       </g>
     );
   }

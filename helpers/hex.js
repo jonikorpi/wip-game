@@ -72,9 +72,9 @@ const rectangleOfHexes = (width, height) => {
   const originOffset = -Math.floor(height) + 1;
 
   for (let r = originOffset; r < height + originOffset; r++) {
-    const offset = Math.floor(r / 2);
+    const offset = Math.floor(-r / 2);
     for (let q = -offset; q < width - offset; q++) {
-      results.push(toHex([q, -q - r, r]));
+      results.push(toHex([q, -q - r, -r]));
     }
   }
 
@@ -85,7 +85,7 @@ const pixelCoordinates = hex => {
   const x = size * Math.sqrt(3) * (hex[0] + hex[1] / 2);
   const y = height / 2 * 3 / 2 * hex[1];
 
-  return [x, -y];
+  return [x, y];
 };
 
 export default {
