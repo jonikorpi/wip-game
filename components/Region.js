@@ -4,6 +4,7 @@ import Measure from "react-measure";
 import RegionUI from "../components/RegionUI.js";
 import Locations from "../components/Locations.js";
 import Terrain from "../components/Terrain.js";
+import SVG from "../components/SVG.js";
 
 import hex from "../helpers/hex.js";
 import tiles from "../helpers/tiles.js";
@@ -76,18 +77,11 @@ export default class Region extends React.PureComponent {
             pointer-events: none;
           }
 
-          .svgContainer {
+          .centerer {
             position: absolute;
             left: 0; top: 0; right: 0; bottom: 0;
             max-height: ${styles.maxHeight * 100}vw;
             margin: auto;
-          }
-
-          .svg {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0; top: 0; right: 0; bottom: 0;
           }
         `}</style>
 
@@ -97,13 +91,8 @@ export default class Region extends React.PureComponent {
               contentRect.bounds.height / contentRect.bounds.width || 1;
 
             return (
-              <div className="svgContainer" ref={measureRef}>
-                <svg
-                  className="svg"
-                  shapeRendering="optimizeSpeed"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                  preserveAspectRatio="none"
+              <div className="centerer" ref={measureRef}>
+                <SVG
                   viewBox={`${-padding} ${-padding} ${2 * padding + hex.width * (hex.perRegionAxis + 0.5)} ${2 * padding + hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4)}`}
                 >
                   <Terrain
@@ -119,7 +108,7 @@ export default class Region extends React.PureComponent {
                     targetLocation={this.targetLocation}
                     heightRatio={heightRatio}
                   />
-                </svg>
+                </SVG>
               </div>
             );
           }}
