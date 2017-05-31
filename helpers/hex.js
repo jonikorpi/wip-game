@@ -105,9 +105,9 @@ export default {
   rectangleOfHexes: rectangleOfHexes,
   pixelCoordinates: pixelCoordinates,
 
-  roundingWidth: size / 6,
-  randomRange: size / 8,
-  beachWidth: size / 10,
+  roundingWidth: size / 5,
+  randomRange: size / 6,
+  beachWidth: size / 20,
 
   baseHexCoordinates: [
     [width / 3, height / 13],
