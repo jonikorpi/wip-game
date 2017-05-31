@@ -61,7 +61,8 @@ export default class Game extends Component {
           }
 
           #game {
-            /*pointer-events: none;*/
+            pointer-events: none;
+            user-select: none;
           }
         `}</style>
 

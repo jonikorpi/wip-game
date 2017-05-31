@@ -117,7 +117,6 @@ export default class Region extends React.PureComponent {
             position: absolute;
             left: 0; top: 0; right: 0; bottom: 0;
             min-height: ${styles.minHeight * 100}vw;
-            pointer-events: none;
           }
 
           .centerer {
