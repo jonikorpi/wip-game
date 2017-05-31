@@ -126,7 +126,15 @@ export default class Region extends React.PureComponent {
         </Measure>
 
         <RegionUI
-          targetLocation={targetLocation ? locations[targetLocation] : null}
+          targetLocation={
+            targetLocation
+              ? {
+                  x: targetLocation.split(",")[0],
+                  y: targetLocation.split(",")[1],
+                  ...locations[targetLocation],
+                }
+              : null
+          }
         />
       </div>
     );
