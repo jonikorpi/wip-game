@@ -2,6 +2,7 @@ import React from "react";
 import Measure from "react-measure";
 
 import Locations from "../components/Locations.js";
+import Heroes from "../components/Heroes.js";
 import Terrain from "../components/Terrain.js";
 import SVG from "../components/SVG.js";
 
@@ -146,11 +147,7 @@ export default class Region extends React.PureComponent {
                 </SVG>
 
                 <Locations locations={locations} heightRatio={heightRatio} />
-
-                {/* <Heroes
-                  heroes={heroes}
-                  heightRatio={heightRatio}
-                /> */}
+                <Heroes heroes={heroes} heightRatio={heightRatio} />
               </div>
             );
           }}

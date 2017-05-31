@@ -25,10 +25,13 @@ export default class Location extends React.Component {
   };
 
   render() {
-    const { locationID, x, y, heightRatio } = { ...this.props };
+    const { locationID, x, y, heightRatio, tile, entity } = {
+      ...this.props,
+    };
     const { targeted } = { ...this.state };
-    let zIndex = 10;
+
     const pixelCoordinates = hex.pixelCoordinates([x, y]);
+    const viewBox = `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
 
     return (
       <div
@@ -58,17 +61,29 @@ export default class Location extends React.Component {
           }
         `}</style>
 
-        <SVG
-          viewBox={`${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`}
-        >
+        {entity &&
+          <SVG viewBox={viewBox} style={{ zIndex: y + 10 }}>
+            <Layer heightRatio={heightRatio}>
+              <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
+                E
+              </text>
+            </Layer>
+            <Layer heightRatio={heightRatio} zOffset={-2}>
+              <text fill={styles.white} x={hex.width / 2} y={hex.height / 2}>
+                E
+              </text>
+            </Layer>
+          </SVG>}
+
+        <SVG viewBox={viewBox}>
           <polygon
             className="target"
             stroke={styles.white}
             fill="none"
             points={hex.baseHexCoordinates}
+            vectorEffect="non-scaling-stroke"
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
-            vectorEffect="non-scaling-stroke"
           />
         </SVG>
 

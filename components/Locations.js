@@ -28,6 +28,7 @@ export default class Locations extends React.Component {
               heightRatio={heightRatio}
               tile={locations[locationID].tile}
               entity={locations[locationID].entity}
+              heroes={locations[locationID].heroes}
             />
           );
         })}
