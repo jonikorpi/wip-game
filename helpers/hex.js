@@ -106,7 +106,7 @@ export default {
   pixelCoordinates: pixelCoordinates,
 
   roundingWidth: size / 5,
-  randomRange: size / 6,
+  randomRange: size / 8,
   beachWidth: size / 20,
 
   baseHexCoordinates: [
