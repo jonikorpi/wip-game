@@ -43,7 +43,7 @@ export default class Terrain extends React.PureComponent {
 
     return (
       <g className="terrain">
-        <Layer heightRatio={heightRatio} zOffset={6}>
+        <Layer heightRatio={heightRatio} zOffset={5}>
           <Reflection points={points} />
         </Layer>
 

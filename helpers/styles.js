@@ -10,7 +10,7 @@ const base = {
   white: `white`,
   rock: `hsl(${groundHue}, 0%, 50%)`,
   wave: `hsl(${waterHue}, 0%, 85.4%)`,
-  reflection: `hsl(${waterHue}, 0%, 33.333%)`,
+  reflection: `hsl(${waterHue}, 0%, 30%)`,
 };
 
 const faded = Object.keys(base).reduce((faded, color) => {
