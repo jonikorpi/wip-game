@@ -1,8 +1,8 @@
 import React from "react";
 import Measure from "react-measure";
 
-import Locations from "../components/Locations.js";
-import Heroes from "../components/Heroes.js";
+import Location from "../components/Location.js";
+import Hero from "../components/Hero.js";
 import Terrain from "../components/Terrain.js";
 import SVG from "../components/SVG.js";
 
@@ -168,8 +168,33 @@ export default class Region extends React.Component {
                   />
                 </SVG>
 
-                <Locations locations={locations} heightRatio={heightRatio} />
-                <Heroes heroes={heroes} heightRatio={heightRatio} />
+                {locationList.map(location => {
+                  const locationID = `${location[0]},${location[1]}`;
+                  return (
+                    <Location
+                      key={locationID}
+                      locationID={locationID}
+                      x={location[0]}
+                      y={location[1]}
+                      heightRatio={heightRatio}
+                      tile={locations[locationID].tile}
+                      entity={locations[locationID].entity}
+                      heroes={locations[locationID].heroes}
+                    />
+                  );
+                })}
+
+                {heroList &&
+                  heroList.length > 0 &&
+                  heroList.map(heroID => {
+                    return (
+                      <Hero
+                        key={heroID}
+                        {...heroes[heroID]}
+                        heightRatio={heightRatio}
+                      />
+                    );
+                  })}
               </div>
             );
           }}
