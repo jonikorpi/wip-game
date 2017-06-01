@@ -17,22 +17,38 @@ const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
 const randomizeState = oldState => {
   let state = { ...oldState };
 
+  // Randomize some tiles
   Object.keys(state.tiles).forEach(locationID => {
-    const tile = tileTypes.getRandomTile(Math.random());
-    const [x, y] = locationID.split(",");
+    if (Math.random() > 0.75) {
+      const tile = tileTypes.getRandomTile(Math.random());
+      const [x, y] = locationID.split(",");
 
-    state.tiles[`${x},${y}`] = {
-      ...tile,
-    };
+      state.tiles[`${x},${y}`] = {
+        ...tile,
+      };
+    }
   });
 
+  // Randomize some entities
+  Object.keys(state.entities).forEach(entityID => {
+    if (Math.random() > 0.75) {
+      const entity = state.entities[entityID];
+      const [newX, newY] = locationList[
+        Math.floor(Math.random() * locationList.length)
+      ];
+      entity.location = `${newX},${newY}`;
+    }
+  });
+
+  // Randomize some heroes
   Object.keys(state.heroes).forEach(heroID => {
-    const hero = state.heroes[heroID];
-    const [x, y] = hero.location.split(",");
-    const [newX, newY] = locationList[
-      Math.floor(Math.random() * locationList.length)
-    ];
-    hero.location = `${newX},${newY}`;
+    if (Math.random() > 0.75) {
+      const hero = state.heroes[heroID];
+      const [newX, newY] = locationList[
+        Math.floor(Math.random() * locationList.length)
+      ];
+      hero.location = `${newX},${newY}`;
+    }
   });
 
   return state;
