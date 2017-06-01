@@ -2,33 +2,23 @@ import React from "react";
 
 import Layer from "../components/Layer.js";
 import SVG from "../components/SVG.js";
-import LocationUI from "../components/LocationUI.js";
 
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-export default class Location extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      targeted: false,
-    };
-  }
-
+export default class Location extends React.PureComponent {
   handleMouseEnter = () => {
-    this.setState({ targeted: true });
+    this.props.setTargetedLocation(this.props.locationID);
   };
 
   handleMouseLeave = () => {
-    this.setState({ targeted: false });
+    this.props.setTargetedLocation(this.props.locationID);
   };
 
   render() {
     const { locationID, x, y, heightRatio, tile, entity } = {
       ...this.props,
     };
-    const { targeted } = { ...this.state };
 
     const pixelCoordinates = hex.pixelCoordinates([x, y]);
     const viewBox = `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
@@ -86,8 +76,6 @@ export default class Location extends React.Component {
             onMouseLeave={this.handleMouseLeave}
           />
         </SVG>
-
-        {targeted && <LocationUI target={this.props} />}
       </div>
     );
   }

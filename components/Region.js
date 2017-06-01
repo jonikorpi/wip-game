@@ -5,6 +5,7 @@ import Location from "../components/Location.js";
 import Hero from "../components/Hero.js";
 import Terrain from "../components/Terrain.js";
 import SVG from "../components/SVG.js";
+import LocationUI from "../components/LocationUI.js";
 
 import hex from "../helpers/hex.js";
 import tileTypes from "../helpers/tileTypes.js";
@@ -62,6 +63,7 @@ export default class Region extends React.Component {
       tiles: {},
       entities: {},
       heroes: {},
+      targetedLocationID: null,
     };
   }
 
@@ -110,48 +112,35 @@ export default class Region extends React.Component {
     clearInterval(this.timer);
   }
 
+  setTargetedLocation = locationID => {
+    this.setState({ targetedLocationID: locationID });
+  };
+
   render() {
     const { coordinates } = { ...this.props };
-    const { tiles, entities, heroes } = { ...this.state };
+    const { tiles, entities, heroes, targetedLocationID } = { ...this.state };
 
-    // Bundle tiles into locations
-    let locations = locationList.reduce((locations, location) => {
-      const [x, y] = location;
-      const locationID = `${x},${y}`;
-      const tile = tiles[locationID] || {};
-
-      locations[locationID] = {
-        tile: {
-          ...tileTypes.tiles["water"],
-          ...tile,
-        },
-        entity: null,
-        heroes: {},
-      };
-
-      return locations;
-    }, {});
-
-    // Add entities
+    // Index entities by location
     const entityList = entities && Object.keys(entities);
-    if (entityList.length > 0) {
-      entityList.forEach(entityID => {
-        const locationID = entities[entityID].location;
-        locations[locationID].entity = {
-          key: entityID,
-          ...entities[entityID],
-        };
-      });
-    }
+    const entityIndex = entityList
+      ? entityList.reduce((result, entityID) => {
+          const locationID = entities[entityID].location;
+          result[locationID] = entities[entityID];
+          return result;
+        }, {})
+      : {};
 
-    // Add heroes
+    // Index heroes by location
     const heroList = heroes && Object.keys(heroes);
-    if (heroList.length > 0) {
-      heroList.forEach(heroID => {
-        const locationID = heroes[heroID].location;
-        locations[locationID].heroes[heroID] = heroes[heroID];
-      });
-    }
+    const heroIndex = heroList
+      ? heroList.reduce((result, heroID) => {
+          const locationID = heroes[heroID].location;
+          result[locationID] = result[locationID]
+            ? result[locationID].push(heroes[heroID])
+            : [heroes[heroID]];
+          return result;
+        }, {})
+      : {};
 
     // List terrain tiles
     const tileList = tiles && Object.keys(tiles);
@@ -202,9 +191,13 @@ export default class Region extends React.Component {
                       x={location[0]}
                       y={location[1]}
                       heightRatio={heightRatio}
-                      tile={locations[locationID].tile}
-                      entity={locations[locationID].entity}
-                      heroes={locations[locationID].heroes}
+                      tile={
+                        tiles[locationID]
+                          ? tiles[locationID]
+                          : tileTypes.tiles["water"]
+                      }
+                      entity={entityIndex[locationID]}
+                      setTargetedLocation={this.setTargetedLocation}
                     />
                   );
                 })}
@@ -224,6 +217,20 @@ export default class Region extends React.Component {
             );
           }}
         </Measure>
+
+        <LocationUI
+          target={
+            targetedLocationID
+              ? {
+                  tile: tiles[targetedLocationID]
+                    ? tiles[targetedLocationID]
+                    : tileTypes.tiles["water"],
+                  entity: entityIndex[targetedLocationID],
+                  heroes: heroIndex[targetedLocationID],
+                }
+              : null
+          }
+        />
       </div>
     );
   }

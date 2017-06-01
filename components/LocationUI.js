@@ -14,7 +14,7 @@ const LocationUI = ({ target }) => {
       <style jsx global>{`
         .regionUI {
           position: absolute;
-          left: 100%;
+          left: 0; top: 0;
           overflow: hidden;
           z-index: 100;
           font-size: 0.5rem;
