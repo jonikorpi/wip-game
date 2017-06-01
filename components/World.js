@@ -20,7 +20,10 @@ export default class World extends React.PureComponent {
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={1000}
         >
-          <Region coordinates={playerPosition} />
+          <Region
+            coordinates={playerPosition}
+            regionID={`${playerPosition[0]},${playerPosition[1]}`}
+          />
         </CSSTransitionGroup>
       </div>
     );

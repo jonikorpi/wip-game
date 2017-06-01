@@ -1,5 +1,6 @@
 import React from "react";
 import Measure from "react-measure";
+import database from "firebase/database";
 
 import Location from "../components/Location.js";
 import Hero from "../components/Hero.js";
@@ -12,39 +13,80 @@ import tileTypes from "../helpers/tileTypes.js";
 import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
+import rebase from "../helpers/rebase.js";
 
 const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
 
-const randomizeState = oldState => {
-  let state = { ...oldState };
+const buildRegion = props => {
+  const { coordinates, regionID } = { ...props };
+  let seed = maths.getSeed(coordinates);
 
-  // Randomize some tiles
-  Object.keys(state.tiles).forEach(locationID => {
-    if (Math.random() > 0.75) {
-      const tile = tileTypes.getRandomTile(Math.random());
-      const [x, y] = locationID.split(",");
+  const region = {
+    tiles: locationList.reduce((locations, location) => {
+      const tile = tileTypes.getRandomTile(seed++);
 
-      state.tiles[`${x},${y}`] = {
-        ...tile,
-      };
-    }
-  });
+      if (tile.type !== "water") {
+        locations[`${location[0]},${location[1]}`] = {
+          ...tile,
+        };
+      }
+      return locations;
+    }, {}),
 
-  // Randomize some entities
-  Object.keys(state.entities).forEach(entityID => {
-    if (Math.random() > 0.75) {
-      const entity = state.entities[entityID];
-      const [newX, newY] = locationList[
-        Math.floor(Math.random() * locationList.length)
-      ];
-      entity.location = `${newX},${newY}`;
-    }
-  });
+    entities: locationList.reduce((entities, location) => {
+      if (maths.random(1, seed++) > 0.8) {
+        entities["entity-" + Math.floor(maths.random(seed++))] = {
+          ...entities["mountain"],
+          location: `${location[0]},${location[1]}`,
+        };
+      }
+      return entities;
+    }, {}),
+
+    heroes: locationList.reduce((heroes, location) => {
+      if (maths.random(1, seed++) > 0.75) {
+        heroes["hero-" + Math.floor(maths.random(seed++))] = {
+          location: `${location[0]},${location[1]}`,
+        };
+      }
+      return heroes;
+    }, {}),
+  };
+
+  database().ref(`regions/${regionID}`).update(region);
+};
+
+const randomizeRegion = (props, region) => {
+  const { coordinates, regionID } = { ...props };
+  let newRegion = { ...region };
+
+  // // Randomize some tiles
+  // Object.keys(newRegion.tiles).forEach(locationID => {
+  //   if (Math.random() > 0.85) {
+  //     const tile = tileTypes.getRandomTile(Math.random());
+  //     const [x, y] = locationID.split(",");
+  //
+  //     newRegion.tiles[`${x},${y}`] = {
+  //       ...tile,
+  //     };
+  //   }
+  // });
+  //
+  // // Randomize some entities
+  // Object.keys(newRegion.entities).forEach(entityID => {
+  //   if (Math.random() > 0.85) {
+  //     const entity = newRegion.entities[entityID];
+  //     const [newX, newY] = locationList[
+  //       Math.floor(Math.random() * locationList.length)
+  //     ];
+  //     entity.location = `${newX},${newY}`;
+  //   }
+  // });
 
   // Randomize some heroes
-  Object.keys(state.heroes).forEach(heroID => {
-    if (Math.random() > 0.75) {
-      const hero = state.heroes[heroID];
+  Object.keys(newRegion.heroes).forEach(heroID => {
+    if (Math.random() > 0.5) {
+      const hero = newRegion.heroes[heroID];
       const [newX, newY] = locationList[
         Math.floor(Math.random() * locationList.length)
       ];
@@ -52,7 +94,7 @@ const randomizeState = oldState => {
     }
   });
 
-  return state;
+  database().ref(`regions/${regionID}`).update(region);
 };
 
 export default class Region extends React.Component {
@@ -60,51 +102,25 @@ export default class Region extends React.Component {
     super(props);
 
     this.state = {
-      tiles: {},
-      entities: {},
-      heroes: {},
+      region: null,
       targetedLocationID: null,
     };
   }
 
-  componentDidMount() {
-    const { coordinates } = { ...this.props };
-    let seed = maths.getSeed(coordinates);
+  componentWillMount() {
+    const { regionID } = { ...this.props };
 
-    this.setState({
-      tiles: locationList.reduce((locations, location) => {
-        const tile = tileTypes.getRandomTile(seed++);
-
-        if (tile.type !== "water") {
-          locations[`${location[0]},${location[1]}`] = {
-            ...tile,
-          };
-        }
-        return locations;
-      }, {}),
-
-      entities: locationList.reduce((entities, location) => {
-        if (maths.random(1, seed++) > 0.8) {
-          entities["entity-" + maths.random(seed++)] = {
-            ...entities["mountain"],
-            location: `${location[0]},${location[1]}`,
-          };
-        }
-        return entities;
-      }, {}),
-
-      heroes: locationList.reduce((heroes, location) => {
-        if (maths.random(1, seed++) > 0.75) {
-          heroes["hero-" + maths.random(seed++)] = {
-            location: `${location[0]},${location[1]}`,
-          };
-        }
-        return heroes;
-      }, {}),
+    rebase.bindToState(`regions/${regionID}`, {
+      context: this,
+      state: "region",
     });
+  }
+
+  componentDidMount() {
+    buildRegion(this.props);
 
     this.timer = setInterval(() => {
-      this.setState(randomizeState);
+      randomizeRegion(this.props, this.state.region);
     }, 5000);
   }
 
@@ -117,8 +133,9 @@ export default class Region extends React.Component {
   };
 
   render() {
-    const { coordinates } = { ...this.props };
-    const { tiles, entities, heroes, targetedLocationID } = { ...this.state };
+    const { coordinates, regionID } = { ...this.props };
+    const { region, targetedLocationID } = { ...this.state };
+    const { tiles, entities, heroes } = { ...region };
 
     // Index entities by location
     const entityList = entities && Object.keys(entities);
@@ -135,7 +152,7 @@ export default class Region extends React.Component {
     const heroIndex = heroList
       ? heroList.reduce((result, heroID) => {
           const locationID = heroes[heroID].location;
-          result[locationID] = result[locationID]
+          result[locationID] = typeof result[locationID] === "array"
             ? result[locationID].push(heroes[heroID])
             : [heroes[heroID]];
           return result;
@@ -192,7 +209,7 @@ export default class Region extends React.Component {
                       y={location[1]}
                       heightRatio={heightRatio}
                       tile={
-                        tiles[locationID]
+                        tiles && tiles[locationID]
                           ? tiles[locationID]
                           : tileTypes.tiles["water"]
                       }
