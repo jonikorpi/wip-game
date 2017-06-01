@@ -67,7 +67,7 @@ export default class Region extends React.Component {
       }, {}),
 
       heroes: locationList.reduce((heroes, location) => {
-        if (maths.random(1, seed++) > 0.5) {
+        if (maths.random(1, seed++) > 0.75) {
           heroes["hero-" + maths.random(seed++)] = {
             location: `${location[0]},${location[1]}`,
           };

@@ -8,24 +8,34 @@ import styles from "../helpers/styles.js";
 
 const Hero = ({ heightRatio, ...hero }) => {
   const [x, y] = hero.location.split(",");
-  const pixelCoordinates = hex.pixelCoordinates([x, y]);
+  const pixelCoordinates = hex.pixelCoordinates([+x, +y]);
   const viewBox = `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
+  const transform = `translate3d(
+    ${pixelCoordinates[0] / hex.width * 100 / 3}%,
+    ${pixelCoordinates[1] / hex.height * 100 / 3}%,
+    0
+  )`;
 
   return (
     <div
-      className="location"
+      className="hero"
       style={{
-        left: `${(styles.padding + pixelCoordinates[0] - hex.width) / styles.width * 100}%`,
-        top: `${(styles.padding + pixelCoordinates[1] - hex.height) / styles.height * 100}%`,
+        WebkitTransform: transform,
+        transform: transform,
       }}
     >
       <style jsx global>{`
-          .location {
-            position: absolute;
-            width: ${hex.width / styles.width * 300}%;
-            height: ${hex.height / styles.height * 300}%;
-          }
-        `}</style>
+        .hero {
+          position: absolute;
+          left: ${(styles.padding - hex.width) / styles.width * 100}%;
+          top: ${(styles.padding - hex.height) / styles.height * 100}%;
+          width: ${hex.width / styles.width * 300}%;
+          height: ${hex.height / styles.height * 300}%;
+          transition: transform 2s linear;
+          will-change: transform;
+          backface-visibility: hidden;
+        }
+      `}</style>
 
       <SVG viewBox={viewBox} style={{ zIndex: y + 10 }}>
         <Layer heightRatio={heightRatio}>
