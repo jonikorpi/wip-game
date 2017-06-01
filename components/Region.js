@@ -17,6 +17,15 @@ const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
 const randomizeState = oldState => {
   let state = { ...oldState };
 
+  Object.keys(state.tiles).forEach(locationID => {
+    const tile = tileTypes.getRandomTile(Math.random());
+    const [x, y] = locationID.split(",");
+
+    state.tiles[`${x},${y}`] = {
+      ...tile,
+    };
+  });
+
   Object.keys(state.heroes).forEach(heroID => {
     const hero = state.heroes[heroID];
     const [x, y] = hero.location.split(",");
