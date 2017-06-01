@@ -12,7 +12,7 @@ export default class Location extends React.PureComponent {
   };
 
   handleMouseLeave = () => {
-    this.props.setTargetedLocation(this.props.locationID);
+    this.props.setTargetedLocation(null);
   };
 
   render() {

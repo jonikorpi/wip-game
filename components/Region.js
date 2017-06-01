@@ -222,6 +222,7 @@ export default class Region extends React.Component {
           target={
             targetedLocationID
               ? {
+                  locationID: targetedLocationID,
                   tile: tiles[targetedLocationID]
                     ? tiles[targetedLocationID]
                     : tileTypes.tiles["water"],

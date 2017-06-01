@@ -6,7 +6,7 @@ import maths from "../helpers/maths.js";
 import styles from "../helpers/styles.js";
 
 const LocationUI = ({ target }) => {
-  const { left, top } = { ...target };
+  // const [x, y] = target && target.locationID.split(",");
   const fields = target && flatten(target);
 
   return (
