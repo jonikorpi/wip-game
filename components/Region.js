@@ -1,6 +1,7 @@
 import React from "react";
 import Measure from "react-measure";
-import database from "firebase/database";
+import firebase from "firebase";
+import rebase from "../helpers/rebase.js";
 
 import Location from "../components/Location.js";
 import Hero from "../components/Hero.js";
@@ -13,7 +14,6 @@ import tileTypes from "../helpers/tileTypes.js";
 import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
-import rebase from "../helpers/rebase.js";
 
 const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
 
@@ -53,7 +53,7 @@ const buildRegion = props => {
     }, {}),
   };
 
-  database().ref(`regions/${regionID}`).update(region);
+  firebase.database().ref(`regions/${regionID}`).update(region);
 };
 
 const randomizeRegion = (props, region) => {
@@ -94,7 +94,7 @@ const randomizeRegion = (props, region) => {
     }
   });
 
-  database().ref(`regions/${regionID}`).update(region);
+  firebase.database().ref(`regions/${regionID}`).update(region);
 };
 
 export default class Region extends React.Component {
@@ -117,11 +117,13 @@ export default class Region extends React.Component {
   }
 
   componentDidMount() {
+    const { region } = { ...this.state };
+
     buildRegion(this.props);
 
-    this.timer = setInterval(() => {
-      randomizeRegion(this.props, this.state.region);
-    }, 5000);
+    // this.timer = setInterval(() => {
+    //   randomizeRegion(this.props, this.state.region);
+    // }, 5000);
   }
 
   componentWillUnmount() {

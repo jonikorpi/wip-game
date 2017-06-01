@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import firebase from "firebase";
 
-import World from "../components/World.js";
+import Player from "../components/Player.js";
 
 import styles from "../helpers/styles.js";
 import hex from "../helpers/hex.js";
@@ -9,23 +10,30 @@ import hex from "../helpers/hex.js";
 const env = (process && process.env && process.env.NODE_ENV) || "development";
 const dev = env === "development";
 
-// const sortTiles = (a, b) => {
-//   if (a.y < b.y) return -1;
-//   if (a.y > b.y) return 1;
-//   return 0;
-// };
-
 export default class Game extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      playerPosition: [50000, 50000],
+      user: null,
     };
   }
 
+  componentDidMount() {
+    firebase.auth().signInAnonymously();
+
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({
+        user: user && {
+          uid: user.uid,
+          anonymous: user.isAnonymous,
+        },
+      });
+    });
+  }
+
   render() {
-    const { playerPosition } = { ...this.state };
+    const { user } = { ...this.state };
 
     return (
       <div id="game">
@@ -58,7 +66,7 @@ export default class Game extends Component {
           <Map playerPosition={playerPosition} />
         </CSSTransitionGroup> */}
 
-        <World playerPosition={playerPosition} />
+        {user && user.uid && <Player uid={user.uid} />}
       </div>
     );
   }

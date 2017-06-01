@@ -1,6 +1,5 @@
 import Rebase from "re-base";
-import firebase from "firebase/app";
-import database from "firebase/database";
+import firebase from "firebase";
 
 const app =
   firebase.apps[0] ||
@@ -11,7 +10,7 @@ const app =
     projectId: "valtameri-ed9b2",
   });
 
-const db = database(app);
+const db = firebase.database(app);
 const base = Rebase.createClass(db);
 
 export default base;
