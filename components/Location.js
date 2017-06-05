@@ -28,7 +28,7 @@ export default class Location extends React.PureComponent {
     const viewBox = landscape
       ? `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
       : `${-hex.height} ${-hex.width} ${hex.height * 3} ${hex.width * 3}`;
-    let seed = regionSeed + maths.getSeed(x, y);
+    let seed = regionSeed + maths.getSeed([x, y]);
 
     const points = hex.baseHexCoordinates.map(point => {
       return [
