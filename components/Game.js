@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import firebase from "firebase";
+import initializeFirebase from "../helpers/initializeFirebase";
 
-import Player from "../components/Player.js";
+import PlayerProvider from "../components/PlayerProvider.js";
 
 import styles from "../helpers/styles.js";
 import hex from "../helpers/hex.js";
 
+initializeFirebase();
 const env = (process && process.env && process.env.NODE_ENV) || "development";
 const dev = env === "development";
 
@@ -66,7 +68,7 @@ export default class Game extends Component {
           <Map playerPosition={playerPosition} />
         </CSSTransitionGroup> */}
 
-        {user && user.uid && <Player uid={user.uid} />}
+        {user && user.uid && <PlayerProvider uid={user.uid} />}
       </div>
     );
   }

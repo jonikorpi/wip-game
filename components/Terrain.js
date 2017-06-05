@@ -10,7 +10,7 @@ import maths from "../helpers/maths.js";
 
 export default class Terrain extends React.PureComponent {
   render() {
-    const { terrainList, regionCoordinates, heightRatio } = { ...this.props };
+    const { terrainList, regionSeed, heightRatio } = { ...this.props };
 
     if (!terrainList || terrainList.length === 0) {
       return null;
@@ -22,10 +22,7 @@ export default class Terrain extends React.PureComponent {
       const y = +location[1];
       const pixelCoordinates = hex.pixelCoordinates([x, y]);
 
-      let locationSeed = maths.getSeed([
-        x + regionCoordinates[0],
-        y + regionCoordinates[1],
-      ]);
+      let locationSeed = regionSeed + maths.getSeed([x, y]);
 
       return hex.baseHexCoordinates.map(point => {
         return [

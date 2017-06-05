@@ -1,7 +1,5 @@
 import React from "react";
 import Measure from "react-measure";
-import firebase from "firebase";
-import rebase from "../helpers/rebase.js";
 
 import Location from "../components/Location.js";
 import Hero from "../components/Hero.js";
@@ -17,117 +15,13 @@ import maths from "../helpers/maths.js";
 
 const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
 
-const buildRegion = props => {
-  const { coordinates, regionID } = { ...props };
-  let seed = maths.getSeed(coordinates);
-
-  const region = {
-    tiles: locationList.reduce((locations, location) => {
-      const tile = tileTypes.getRandomTile(seed++);
-
-      if (tile.type !== "water") {
-        locations[`${location[0]},${location[1]}`] = {
-          ...tile,
-        };
-      }
-      return locations;
-    }, {}),
-
-    entities: locationList.reduce((entities, location) => {
-      if (maths.random(1, seed++) > 0.8) {
-        entities["entity-" + Math.floor(maths.random(seed++))] = {
-          ...entities["mountain"],
-          location: `${location[0]},${location[1]}`,
-        };
-      }
-      return entities;
-    }, {}),
-
-    heroes: locationList.reduce((heroes, location) => {
-      if (maths.random(1, seed++) > 0.75) {
-        heroes["hero-" + Math.floor(maths.random(seed++))] = {
-          location: `${location[0]},${location[1]}`,
-        };
-      }
-      return heroes;
-    }, {}),
-  };
-
-  firebase.database().ref(`regions/${regionID}`).update(region);
-};
-
-const randomizeRegion = (props, region) => {
-  const { coordinates, regionID } = { ...props };
-  let newRegion = { ...region };
-
-  // // Randomize some tiles
-  // Object.keys(newRegion.tiles).forEach(locationID => {
-  //   if (Math.random() > 0.85) {
-  //     const tile = tileTypes.getRandomTile(Math.random());
-  //     const [x, y] = locationID.split(",");
-  //
-  //     newRegion.tiles[`${x},${y}`] = {
-  //       ...tile,
-  //     };
-  //   }
-  // });
-  //
-  // // Randomize some entities
-  // Object.keys(newRegion.entities).forEach(entityID => {
-  //   if (Math.random() > 0.85) {
-  //     const entity = newRegion.entities[entityID];
-  //     const [newX, newY] = locationList[
-  //       Math.floor(Math.random() * locationList.length)
-  //     ];
-  //     entity.location = `${newX},${newY}`;
-  //   }
-  // });
-
-  // Randomize some heroes
-  Object.keys(newRegion.heroes).forEach(heroID => {
-    if (Math.random() > 0.5) {
-      const hero = newRegion.heroes[heroID];
-      const [newX, newY] = locationList[
-        Math.floor(Math.random() * locationList.length)
-      ];
-      hero.location = `${newX},${newY}`;
-    }
-  });
-
-  firebase.database().ref(`regions/${regionID}`).update(region);
-};
-
 export default class Region extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      region: null,
       targetedLocationID: null,
     };
-  }
-
-  componentWillMount() {
-    const { regionID } = { ...this.props };
-
-    rebase.bindToState(`regions/${regionID}`, {
-      context: this,
-      state: "region",
-    });
-  }
-
-  componentDidMount() {
-    const { region } = { ...this.state };
-
-    buildRegion(this.props);
-
-    // this.timer = setInterval(() => {
-    //   randomizeRegion(this.props, this.state.region);
-    // }, 5000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
   }
 
   setTargetedLocation = locationID => {
@@ -135,9 +29,8 @@ export default class Region extends React.Component {
   };
 
   render() {
-    const { coordinates, regionID } = { ...this.props };
-    const { region, targetedLocationID } = { ...this.state };
-    const { tiles, entities, heroes } = { ...region };
+    const { tiles, entities, heroes, regionSeed } = { ...this.props };
+    const { targetedLocationID } = { ...this.state };
 
     // Index entities by location
     const entityList = entities && Object.keys(entities);
@@ -196,7 +89,7 @@ export default class Region extends React.Component {
                 >
                   <Terrain
                     terrainList={terrainList}
-                    regionCoordinates={coordinates}
+                    regionSeed={regionSeed}
                     heightRatio={heightRatio}
                   />
                 </SVG>

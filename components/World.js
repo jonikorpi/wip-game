@@ -2,7 +2,7 @@ import React from "react";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import firebase from "firebase";
 
-import Region from "../components/Region.js";
+import RegionProvider from "../components/RegionProvider.js";
 
 const setPlayerLocation = props => {
   const { player, uid } = { ...props };
@@ -44,7 +44,7 @@ export default class World extends React.Component {
         >
           {player &&
             player.location &&
-            <Region
+            <RegionProvider
               coordinates={player.location.split(",")}
               regionID={player.location}
             />}
