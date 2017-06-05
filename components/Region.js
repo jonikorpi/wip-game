@@ -70,7 +70,7 @@ export default class Region extends React.Component {
           {({ measureRef, contentRect }) => {
             const heightRatio =
               contentRect.bounds.height / contentRect.bounds.width || 1;
-            const landscape = heightRatio < 1;
+            const landscape = heightRatio < hex.perRegionY / hex.perRegionX;
             const actualHeightRatio = landscape
               ? heightRatio
               : heightRatio - 0.5;
