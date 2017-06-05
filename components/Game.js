@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+// import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import firebase from "firebase";
 import initializeFirebase from "../helpers/initializeFirebase";
 
 import PlayerProvider from "../components/PlayerProvider.js";
 
 import styles from "../helpers/styles.js";
-import hex from "../helpers/hex.js";
 
 initializeFirebase();
-const env = (process && process.env && process.env.NODE_ENV) || "development";
-const dev = env === "development";
+// const env = (process && process.env && process.env.NODE_ENV) || "development";
+// const dev = env === "development";
 
 export default class Game extends Component {
   constructor(props) {

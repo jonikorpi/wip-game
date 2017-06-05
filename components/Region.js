@@ -7,9 +7,6 @@ import LocationUI from "../components/LocationUI.js";
 
 import hex from "../helpers/hex.js";
 import tileTypes from "../helpers/tileTypes.js";
-import styles from "../helpers/styles.js";
-import entities from "../helpers/entities.js";
-import maths from "../helpers/maths.js";
 
 const locationList = hex.rectangleOfHexes(hex.perRegionX, hex.perRegionY);
 

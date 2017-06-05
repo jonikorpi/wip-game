@@ -20,7 +20,7 @@ export default class Location extends React.PureComponent {
   };
 
   render() {
-    const { locationID, x, y, heightRatio, tile, entity, regionSeed } = {
+    const { x, y, heightRatio, tile, entity, regionSeed } = {
       ...this.props,
     };
 
