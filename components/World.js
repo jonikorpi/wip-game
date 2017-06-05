@@ -11,7 +11,7 @@ const setPlayerLocation = props => {
     console.log("Player has no location. Setting it!");
 
     firebase.database().ref(`players/${uid}`).update({
-      location: "10,10",
+      location: `${Math.floor(Math.random() * 900000)},${Math.floor(Math.random() * 900000)}`,
       action: {},
     });
   }
