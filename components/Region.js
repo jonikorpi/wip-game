@@ -13,7 +13,7 @@ import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
-const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
+const locationList = hex.rectangleOfHexes(hex.perRegionX, hex.perRegionY);
 
 export default class Region extends React.Component {
   constructor(props) {
@@ -65,13 +65,12 @@ export default class Region extends React.Component {
           .region {
             position: absolute;
             left: 0; top: 0; right: 0; bottom: 0;
-            min-height: ${styles.minHeight * 100}vw;
           }
 
           .centerer {
             position: absolute;
             left: 0; top: 0; right: 0; bottom: 0;
-            max-height: ${styles.maxHeight * 100}vw;
+            max-height: ${hex.perRegionY / hex.perRegionX * 100}vw;
             margin: auto;
             overflow: hidden;
           }

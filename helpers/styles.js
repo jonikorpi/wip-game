@@ -21,9 +21,6 @@ const faded = Object.keys(base).reduce((faded, color) => {
 }, {});
 
 let styles = {
-  maxHeight: 1,
-  minHeight: 0.382,
-  // maxHeight: 1,
   perspective: 10,
 
   padding: 0.382 * hex.size,
@@ -34,8 +31,8 @@ let styles = {
   },
 };
 
-styles.width = 2 * styles.padding + hex.width * (hex.perRegionAxis + 0.5);
+styles.width = 2 * styles.padding + hex.width * (hex.perRegionX + 0.5);
 styles.height =
-  2 * styles.padding + hex.height * (hex.perRegionAxis * 3 / 4 + 1 / 4);
+  2 * styles.padding + hex.height * (hex.perRegionY * 3 / 4 + 1 / 4);
 
 export default styles;

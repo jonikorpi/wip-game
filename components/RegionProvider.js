@@ -11,7 +11,7 @@ import styles from "../helpers/styles.js";
 import entities from "../helpers/entities.js";
 import maths from "../helpers/maths.js";
 
-const locationList = hex.rectangleOfHexes(hex.perRegionAxis, hex.perRegionAxis);
+const locationList = hex.rectangleOfHexes(hex.perRegionX, hex.perRegionY);
 
 const buildRegion = props => {
   const { coordinates, regionID } = { ...props };
