@@ -20,7 +20,7 @@ export default class Location extends React.PureComponent {
   };
 
   render() {
-    const { x, y, heightRatio, landscape, tile, entity, regionSeed } = {
+    const { x, y, angle, landscape, tile, entity, regionSeed } = {
       ...this.props,
     };
     const [pixelX, pixelY] = hex.pixelCoordinates([x, y]);
@@ -80,25 +80,17 @@ export default class Location extends React.PureComponent {
         {tile.walkable &&
           <div className="terrain">
             <SVG viewBox={viewBox} style={{ zIndex: 1 }}>
-              <Layer
-                heightRatio={heightRatio}
-                rotate={!landscape && 90}
-                zOffset={3}
-              >
+              <Layer angle={angle} rotate={!landscape && 90} zOffset={5}>
                 <Reflection points={points} />
               </Layer>
             </SVG>
             <SVG viewBox={viewBox} style={{ zIndex: 2 }}>
-              <Layer
-                heightRatio={heightRatio}
-                rotate={!landscape && 90}
-                zOffset={1}
-              >
+              <Layer angle={angle} rotate={!landscape && 90} zOffset={1}>
                 <Beach points={points} />
               </Layer>
             </SVG>
             <SVG viewBox={viewBox} style={{ zIndex: 3 }}>
-              <Layer heightRatio={heightRatio} rotate={!landscape && 90}>
+              <Layer angle={angle} rotate={!landscape && 90}>
                 <Ground points={points} />
               </Layer>
             </SVG>
@@ -106,12 +98,12 @@ export default class Location extends React.PureComponent {
 
         {entity &&
           <SVG viewBox={viewBox} style={{ zIndex: 5 + y }}>
-            <Layer heightRatio={heightRatio}>
+            <Layer angle={angle}>
               <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
                 E
               </text>
             </Layer>
-            <Layer heightRatio={heightRatio} zOffset={-2}>
+            <Layer angle={angle} zOffset={-2}>
               <text fill={styles.white} x={hex.width / 2} y={hex.height / 2}>
                 E
               </text>

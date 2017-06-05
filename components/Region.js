@@ -71,9 +71,9 @@ export default class Region extends React.Component {
             const heightRatio =
               contentRect.bounds.height / contentRect.bounds.width || 1;
             const landscape = heightRatio < hex.perRegionY / hex.perRegionX;
-            const actualHeightRatio = landscape
-              ? heightRatio
-              : heightRatio - 0.5;
+            const angle = landscape
+              ? hex.perRegionY / hex.perRegionX / heightRatio
+              : hex.perRegionX / hex.perRegionY / heightRatio;
 
             return (
               <div className="centerer" ref={measureRef}>
@@ -93,7 +93,7 @@ export default class Region extends React.Component {
                       }
                       entity={entityIndex[locationID]}
                       setTargetedLocation={this.setTargetedLocation}
-                      heightRatio={actualHeightRatio}
+                      angle={angle}
                       landscape={landscape}
                     />
                   );

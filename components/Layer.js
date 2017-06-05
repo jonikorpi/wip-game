@@ -3,10 +3,10 @@ import React from "react";
 import styles from "../helpers/styles.js";
 import hex from "../helpers/hex.js";
 
-const Layer = ({ zOffset = 0, children, heightRatio = 1, rotate = 0 }) => {
+const Layer = ({ zOffset = 0, children, angle = 1, rotate = 0 }) => {
   const x = rotate === 90 ? hex.perRegionX / hex.perRegionY * hex.width : 0;
   const y = zOffset
-    ? `${(1 - heightRatio) * zOffset / styles.perspective * hex.size}`
+    ? `${(angle - 1) * zOffset / styles.perspective * hex.size}`
     : 0;
 
   return (
