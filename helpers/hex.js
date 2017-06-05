@@ -93,8 +93,8 @@ export default {
   height: height,
   width: width,
 
-  perRegionX: 9,
-  perRegionY: 7,
+  perRegionX: 11,
+  perRegionY: 8,
 
   direction: direction,
   toHex: toHex,
