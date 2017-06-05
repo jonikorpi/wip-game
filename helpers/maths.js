@@ -35,7 +35,9 @@ export default {
   },
 
   getSeed: coordinates => {
-    return Math.abs((coordinates[0] || 123) * (coordinates[1] || 456));
+    return Math.abs(
+      (coordinates[0] || 123) * 13 * ((coordinates[1] || 456) * 53)
+    );
   },
 
   // calculateTransform: calculateTransform,
