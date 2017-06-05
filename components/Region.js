@@ -3,8 +3,6 @@ import Measure from "react-measure";
 
 import Location from "../components/Location.js";
 import Hero from "../components/Hero.js";
-import Terrain from "../components/Terrain.js";
-import SVG from "../components/SVG.js";
 import LocationUI from "../components/LocationUI.js";
 
 import hex from "../helpers/hex.js";
@@ -47,17 +45,12 @@ export default class Region extends React.Component {
     const heroIndex = heroList
       ? heroList.reduce((result, heroID) => {
           const locationID = heroes[heroID].location;
-          result[locationID] = typeof result[locationID] === "array"
+          result[locationID] = result[locationID] && result[locationID].isArray
             ? result[locationID].push(heroes[heroID])
             : [heroes[heroID]];
           return result;
         }, {})
       : {};
-
-    // List terrain tiles
-    const tileList = tiles && Object.keys(tiles);
-    const terrainList =
-      tileList && tileList.filter(locationID => tiles[locationID].walkable);
 
     return (
       <div className="region">
@@ -83,25 +76,14 @@ export default class Region extends React.Component {
 
             return (
               <div className="centerer" ref={measureRef}>
-                <SVG
-                  viewBox={`${-styles.padding} ${-styles.padding} ${styles.width} ${styles.height}`}
-                >
-                  <Terrain
-                    terrainList={terrainList}
-                    regionSeed={regionSeed}
-                    heightRatio={heightRatio}
-                  />
-                </SVG>
-
                 {locationList.map(location => {
                   const locationID = `${location[0]},${location[1]}`;
                   return (
                     <Location
                       key={locationID}
                       locationID={locationID}
-                      x={location[0]}
-                      y={location[1]}
-                      heightRatio={heightRatio}
+                      x={+location[0]}
+                      y={+location[1]}
                       tile={
                         tiles && tiles[locationID]
                           ? tiles[locationID]
@@ -109,6 +91,8 @@ export default class Region extends React.Component {
                       }
                       entity={entityIndex[locationID]}
                       setTargetedLocation={this.setTargetedLocation}
+                      heightRatio={heightRatio}
+                      regionSeed={regionSeed}
                     />
                   );
                 })}

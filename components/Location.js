@@ -2,9 +2,13 @@ import React from "react";
 
 import Layer from "../components/Layer.js";
 import SVG from "../components/SVG.js";
+import Reflection from "../components/Reflection";
+import Beach from "../components/Beach";
+import Ground from "../components/Ground";
 
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
+import maths from "../helpers/maths.js";
 
 export default class Location extends React.PureComponent {
   handleMouseEnter = () => {
@@ -16,12 +20,24 @@ export default class Location extends React.PureComponent {
   };
 
   render() {
-    const { locationID, x, y, heightRatio, tile, entity } = {
+    const { locationID, x, y, heightRatio, tile, entity, regionSeed } = {
       ...this.props,
     };
 
     const pixelCoordinates = hex.pixelCoordinates([x, y]);
     const viewBox = `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
+    let seed = regionSeed + maths.getSeed(x, y);
+
+    const points = hex.baseHexCoordinates.map(point => {
+      return [
+        point[0] +
+          maths.random(hex.randomRange, seed++) *
+            (point[0] < hex.width / 2 ? -1 : 1),
+        point[1] +
+          maths.random(hex.randomRange, seed++) *
+            (point[1] < hex.height / 2 ? -0.5 : 0.5),
+      ];
+    });
 
     return (
       <div
@@ -51,8 +67,27 @@ export default class Location extends React.PureComponent {
           }
         `}</style>
 
+        {tile.walkable &&
+          <div className="terrain">
+            <SVG viewBox={viewBox} style={{ zIndex: 1 }}>
+              <Layer heightRatio={heightRatio} zOffset={5}>
+                <Reflection points={points} />
+              </Layer>
+            </SVG>
+            <SVG viewBox={viewBox} style={{ zIndex: 2 }}>
+              <Layer heightRatio={heightRatio} zOffset={1}>
+                <Beach points={points} />
+              </Layer>
+            </SVG>
+            <SVG viewBox={viewBox} style={{ zIndex: 3 }}>
+              <Layer heightRatio={heightRatio}>
+                <Ground points={points} />
+              </Layer>
+            </SVG>
+          </div>}
+
         {entity &&
-          <SVG viewBox={viewBox} style={{ zIndex: y + 10 }}>
+          <SVG viewBox={viewBox} style={{ zIndex: 5 + y }}>
             <Layer heightRatio={heightRatio}>
               <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
                 E
@@ -65,7 +100,7 @@ export default class Location extends React.PureComponent {
             </Layer>
           </SVG>}
 
-        <SVG viewBox={viewBox}>
+        <SVG viewBox={viewBox} style={{ zIndex: 6 + y }}>
           <polygon
             className="target"
             stroke={styles.white}
