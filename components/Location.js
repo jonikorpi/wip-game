@@ -20,12 +20,14 @@ export default class Location extends React.PureComponent {
   };
 
   render() {
-    const { x, y, heightRatio, tile, entity, regionSeed } = {
+    const { x, y, heightRatio, landscape, tile, entity, regionSeed } = {
       ...this.props,
     };
-
-    const pixelCoordinates = hex.pixelCoordinates([x, y]);
-    const viewBox = `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
+    const [pixelX, pixelY] = hex.pixelCoordinates([x, y]);
+    const pixelCoordinates = landscape ? [pixelX, pixelY] : [-pixelY, pixelX];
+    const viewBox = landscape
+      ? `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
+      : `${-hex.height} ${-hex.width} ${hex.height * 3} ${hex.width * 3}`;
     let seed = regionSeed + maths.getSeed(x, y);
 
     const points = hex.baseHexCoordinates.map(point => {
@@ -43,15 +45,23 @@ export default class Location extends React.PureComponent {
       <div
         className="location"
         style={{
-          left: `${(styles.padding + pixelCoordinates[0] - hex.width) / styles.width * 100}%`,
-          top: `${(styles.padding + pixelCoordinates[1] - hex.height) / styles.height * 100}%`,
+          left: landscape
+            ? `${(styles.padding + pixelCoordinates[0] - hex.width) / styles.width * 100}%`
+            : `${(styles.padding + pixelCoordinates[0] - hex.height) / styles.height * 100 + 75}%`,
+          top: landscape
+            ? `${(styles.padding + pixelCoordinates[1] - hex.height) / styles.height * 100}%`
+            : `${(styles.padding + pixelCoordinates[1] - hex.width) / styles.width * 100}%`,
+          width: landscape
+            ? `${hex.width / styles.width * 300}%`
+            : `${hex.height / styles.height * 300}%`,
+          height: landscape
+            ? `${hex.height / styles.height * 300}%`
+            : `${hex.width / styles.width * 300}%`,
         }}
       >
         <style jsx global>{`
           .location {
             position: absolute;
-            width: ${hex.width / styles.width * 300}%;
-            height: ${hex.height / styles.height * 300}%;
           }
 
           .target {
@@ -70,17 +80,25 @@ export default class Location extends React.PureComponent {
         {tile.walkable &&
           <div className="terrain">
             <SVG viewBox={viewBox} style={{ zIndex: 1 }}>
-              <Layer heightRatio={heightRatio} zOffset={5}>
+              <Layer
+                heightRatio={heightRatio}
+                rotate={!landscape && 90}
+                zOffset={5}
+              >
                 <Reflection points={points} />
               </Layer>
             </SVG>
             <SVG viewBox={viewBox} style={{ zIndex: 2 }}>
-              <Layer heightRatio={heightRatio} zOffset={1}>
+              <Layer
+                heightRatio={heightRatio}
+                rotate={!landscape && 90}
+                zOffset={1}
+              >
                 <Beach points={points} />
               </Layer>
             </SVG>
             <SVG viewBox={viewBox} style={{ zIndex: 3 }}>
-              <Layer heightRatio={heightRatio}>
+              <Layer heightRatio={heightRatio} rotate={!landscape && 90}>
                 <Ground points={points} />
               </Layer>
             </SVG>
@@ -101,15 +119,17 @@ export default class Location extends React.PureComponent {
           </SVG>}
 
         <SVG viewBox={viewBox} style={{ zIndex: 6 + y }}>
-          <polygon
-            className="target"
-            stroke={styles.white}
-            fill="none"
-            points={hex.baseHexCoordinates}
-            vectorEffect="non-scaling-stroke"
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseLeave}
-          />
+          <Layer rotate={!landscape && 90}>
+            <polygon
+              className="target"
+              stroke={styles.white}
+              fill="none"
+              points={hex.baseHexCoordinates}
+              vectorEffect="non-scaling-stroke"
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            />
+          </Layer>
         </SVG>
       </div>
     );

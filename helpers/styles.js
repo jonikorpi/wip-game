@@ -23,7 +23,7 @@ const faded = Object.keys(base).reduce((faded, color) => {
 let styles = {
   perspective: 10,
 
-  padding: 0.382 * hex.size,
+  padding: 0.5 * hex.size,
 
   ...base,
   faded: {

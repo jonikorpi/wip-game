@@ -60,7 +60,7 @@ export default class Region extends React.Component {
           .centerer {
             position: absolute;
             left: 0; top: 0; right: 0; bottom: 0;
-            max-height: ${hex.perRegionY / hex.perRegionX * 100}vw;
+            max-height: ${hex.perRegionX / hex.perRegionY * 100}vw;
             margin: auto;
             overflow: hidden;
           }
@@ -70,6 +70,10 @@ export default class Region extends React.Component {
           {({ measureRef, contentRect }) => {
             const heightRatio =
               contentRect.bounds.height / contentRect.bounds.width || 1;
+            const landscape = heightRatio < 1;
+            const actualHeightRatio = landscape
+              ? heightRatio
+              : heightRatio - 0.5;
 
             return (
               <div className="centerer" ref={measureRef}>
@@ -79,6 +83,7 @@ export default class Region extends React.Component {
                     <Location
                       key={locationID}
                       locationID={locationID}
+                      regionSeed={regionSeed}
                       x={+location[0]}
                       y={+location[1]}
                       tile={
@@ -88,13 +93,13 @@ export default class Region extends React.Component {
                       }
                       entity={entityIndex[locationID]}
                       setTargetedLocation={this.setTargetedLocation}
-                      heightRatio={heightRatio}
-                      regionSeed={regionSeed}
+                      heightRatio={actualHeightRatio}
+                      landscape={landscape}
                     />
                   );
                 })}
 
-                {heroList &&
+                {/* {heroList &&
                   heroList.length > 0 &&
                   heroList.map(heroID => {
                     return (
@@ -104,7 +109,7 @@ export default class Region extends React.Component {
                         heightRatio={heightRatio}
                       />
                     );
-                  })}
+                  })} */}
               </div>
             );
           }}
