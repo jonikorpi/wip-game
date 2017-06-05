@@ -83,7 +83,7 @@ export default class Location extends React.PureComponent {
               <Layer
                 heightRatio={heightRatio}
                 rotate={!landscape && 90}
-                zOffset={5}
+                zOffset={3}
               >
                 <Reflection points={points} />
               </Layer>
