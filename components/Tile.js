@@ -20,7 +20,7 @@ export default class Location extends React.PureComponent {
   };
 
   render() {
-    const { x, y, angle, landscape, tile, entity, regionSeed } = {
+    const { x, y, angle, landscape, tile, regionSeed } = {
       ...this.props,
     };
     const [pixelX, pixelY] = hex.pixelCoordinates([x, y]);
@@ -95,20 +95,6 @@ export default class Location extends React.PureComponent {
               </Layer>
             </SVG>
           </div>}
-
-        {entity &&
-          <SVG viewBox={viewBox} style={{ zIndex: 5 + y }}>
-            <Layer angle={angle}>
-              <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
-                E
-              </text>
-            </Layer>
-            <Layer angle={angle} zOffset={-2}>
-              <text fill={styles.white} x={hex.width / 2} y={hex.height / 2}>
-                E
-              </text>
-            </Layer>
-          </SVG>}
 
         <SVG viewBox={viewBox} style={{ zIndex: 6 + y }}>
           <Layer rotate={!landscape && 90}>

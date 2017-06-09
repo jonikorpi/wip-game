@@ -1,7 +1,7 @@
 import React from "react";
 import Measure from "react-measure";
 
-import Location from "../components/Location.js";
+import Tile from "../components/Tile.js";
 import Hero from "../components/Hero.js";
 import LocationUI from "../components/LocationUI.js";
 
@@ -80,7 +80,7 @@ export default class Region extends React.Component {
                 {locationList.map(location => {
                   const locationID = `${location[0]},${location[1]}`;
                   return (
-                    <Location
+                    <Tile
                       key={locationID}
                       locationID={locationID}
                       regionSeed={regionSeed}
@@ -91,13 +91,26 @@ export default class Region extends React.Component {
                           ? tiles[locationID]
                           : tileTypes.tiles["water"]
                       }
-                      entity={entityIndex[locationID]}
                       setTargetedLocation={this.setTargetedLocation}
                       angle={angle}
                       landscape={landscape}
                     />
                   );
                 })}
+
+                {/* {entity &&
+                  <SVG viewBox={viewBox} style={{ zIndex: 5 + y }}>
+                    <Layer angle={angle}>
+                      <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
+                        E
+                      </text>
+                    </Layer>
+                    <Layer angle={angle} zOffset={-2}>
+                      <text fill={styles.white} x={hex.width / 2} y={hex.height / 2}>
+                        E
+                      </text>
+                    </Layer>
+                  </SVG>} */}
 
                 {/* {heroList &&
                   heroList.length > 0 &&
