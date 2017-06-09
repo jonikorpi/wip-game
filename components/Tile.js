@@ -20,9 +20,7 @@ export default class Location extends React.PureComponent {
   };
 
   render() {
-    const { x, y, angle, landscape, tile, regionSeed } = {
-      ...this.props,
-    };
+    const { x, y, angle, landscape, regionSeed, walkable } = this.props;
 
     const position = maths.getPositionerStyle(landscape, [x, y]);
     const viewBox = maths.getViewBox(landscape);
@@ -55,7 +53,7 @@ export default class Location extends React.PureComponent {
           }
         `}</style>
 
-        {tile.walkable &&
+        {walkable &&
           <div className="terrain">
             <SVG viewBox={viewBox} style={{ zIndex: 1 }}>
               <Layer angle={angle} rotate={!landscape && 90} zOffset={5}>

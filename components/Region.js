@@ -2,6 +2,7 @@ import React from "react";
 import Measure from "react-measure";
 
 import Tile from "../components/Tile.js";
+import Entity from "../components/Entity.js";
 import Hero from "../components/Hero.js";
 import LocationUI from "../components/LocationUI.js";
 
@@ -77,42 +78,49 @@ export default class Region extends React.Component {
 
             return (
               <div className="centerer" ref={measureRef}>
-                {locationList.map(location => {
-                  const locationID = `${location[0]},${location[1]}`;
-                  return (
-                    <Tile
-                      key={locationID}
-                      locationID={locationID}
-                      regionSeed={regionSeed}
-                      x={+location[0]}
-                      y={+location[1]}
-                      tile={
-                        tiles && tiles[locationID]
-                          ? tiles[locationID]
-                          : tileTypes.tiles["water"]
-                      }
-                      setTargetedLocation={this.setTargetedLocation}
-                      angle={angle}
-                      landscape={landscape}
-                    />
-                  );
-                })}
+                <div className="locations">
+                  {locationList.map(location => {
+                    const locationID = `${location[0]},${location[1]}`;
+                    const tileProps = tiles && tiles[locationID]
+                      ? tiles[locationID]
+                      : tileTypes.tiles["water"];
+                    return (
+                      <Tile
+                        key={locationID}
+                        locationID={locationID}
+                        regionSeed={regionSeed}
+                        x={+location[0]}
+                        y={+location[1]}
+                        setTargetedLocation={this.setTargetedLocation}
+                        angle={angle}
+                        landscape={landscape}
+                        {...tileProps}
+                      />
+                    );
+                  })}
+                </div>
 
-                {/* {entity &&
-                  <SVG viewBox={viewBox} style={{ zIndex: 5 + y }}>
-                    <Layer angle={angle}>
-                      <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
-                        E
-                      </text>
-                    </Layer>
-                    <Layer angle={angle} zOffset={-2}>
-                      <text fill={styles.white} x={hex.width / 2} y={hex.height / 2}>
-                        E
-                      </text>
-                    </Layer>
-                  </SVG>} */}
+                <div className="entities">
+                  {entityList.map(entityID => {
+                    const entity = entities[entityID];
+                    const [x, y] = entity.location.split(",");
 
-                {/* {heroList &&
+                    return (
+                      <Entity
+                        key={entityID}
+                        regionSeed={regionSeed}
+                        x={+x}
+                        y={+y}
+                        angle={angle}
+                        landscape={landscape}
+                        {...entity}
+                      />
+                    );
+                  })}
+                </div>
+
+                <div className="heroes">
+                  {/* {heroList &&
                   heroList.length > 0 &&
                   heroList.map(heroID => {
                     return (
@@ -123,6 +131,7 @@ export default class Region extends React.Component {
                       />
                     );
                   })} */}
+                </div>
               </div>
             );
           }}

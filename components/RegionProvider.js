@@ -7,6 +7,7 @@ import Region from "../components/Region.js";
 
 import hex from "../helpers/hex.js";
 import tileTypes from "../helpers/tileTypes.js";
+import entityTypes from "../helpers/entityTypes.js";
 import maths from "../helpers/maths.js";
 
 const locationList = hex.rectangleOfHexes(hex.perRegionX, hex.perRegionY);
@@ -30,7 +31,7 @@ const buildRegion = props => {
     entities: locationList.reduce((entities, location) => {
       if (maths.random(1, seed++) > 0.8) {
         entities["entity-" + Math.floor(maths.random(seed++))] = {
-          ...entities["mountain"],
+          ...entityTypes["monument"],
           location: `${location[0]},${location[1]}`,
         };
       }
