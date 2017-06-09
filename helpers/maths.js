@@ -1,24 +1,5 @@
 import hex from "../helpers/hex.js";
-
-const calculateTransform = (offset, variableName) => {
-  return `calc(((${offset} - var(--${variableName})) * ${hex.renderingSize}) * 1${hex.unit})`;
-};
-
-const getTransform = (x, y) => {
-  return `translate3d(${calculateTransform(x, "playerX")}, ${calculateTransform(-y, "playerY")}, 0)`;
-};
-
-// const getTransform = (x, y, z) => {
-//   const transform = `
-//     translate(${calculateTransform(x, "playerX")}, ${calculateTransform(y, "playerY")})
-//     scale(var(--zoom))
-//   `;
-//   return {
-//     WebkitTransform: transform,
-//     transform: transform,
-//     zIndex: z,
-//   };
-// };
+import styles from "../helpers/styles.js";
 
 export default {
   random: (number = 1, seed = 1) => {
@@ -40,6 +21,30 @@ export default {
     );
   },
 
-  // calculateTransform: calculateTransform,
-  getTransform: getTransform,
+  getViewBox: landscape => {
+    return landscape
+      ? `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
+      : `${-hex.height} ${-hex.width} ${hex.height * 3} ${hex.width * 3}`;
+  },
+
+  getPositionerStyle: (landscape, coordinates) => {
+    const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
+    const pixelCoordinates = landscape ? [pixelX, pixelY] : [-pixelY, pixelX];
+
+    return {
+      position: "absolute",
+      left: landscape
+        ? `${(styles.padding + pixelCoordinates[0] - hex.width) / styles.width * 100}%`
+        : `${(styles.padding + pixelCoordinates[0] - hex.height) / styles.height * 100 + 75}%`,
+      top: landscape
+        ? `${(styles.padding + pixelCoordinates[1] - hex.height) / styles.height * 100}%`
+        : `${(styles.padding + pixelCoordinates[1] - hex.width) / styles.width * 100}%`,
+      width: landscape
+        ? `${hex.width / styles.width * 300}%`
+        : `${hex.height / styles.height * 300}%`,
+      height: landscape
+        ? `${hex.height / styles.height * 300}%`
+        : `${hex.width / styles.width * 300}%`,
+    };
+  },
 };

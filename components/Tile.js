@@ -23,11 +23,9 @@ export default class Location extends React.PureComponent {
     const { x, y, angle, landscape, tile, regionSeed } = {
       ...this.props,
     };
-    const [pixelX, pixelY] = hex.pixelCoordinates([x, y]);
-    const pixelCoordinates = landscape ? [pixelX, pixelY] : [-pixelY, pixelX];
-    const viewBox = landscape
-      ? `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
-      : `${-hex.height} ${-hex.width} ${hex.height * 3} ${hex.width * 3}`;
+
+    const position = maths.getPositionerStyle(landscape, [x, y]);
+    const viewBox = maths.getViewBox(landscape);
     let seed = regionSeed + maths.getSeed([x, y]);
 
     const points = hex.baseHexCoordinates.map(point => {
@@ -42,28 +40,8 @@ export default class Location extends React.PureComponent {
     });
 
     return (
-      <div
-        className="location"
-        style={{
-          left: landscape
-            ? `${(styles.padding + pixelCoordinates[0] - hex.width) / styles.width * 100}%`
-            : `${(styles.padding + pixelCoordinates[0] - hex.height) / styles.height * 100 + 75}%`,
-          top: landscape
-            ? `${(styles.padding + pixelCoordinates[1] - hex.height) / styles.height * 100}%`
-            : `${(styles.padding + pixelCoordinates[1] - hex.width) / styles.width * 100}%`,
-          width: landscape
-            ? `${hex.width / styles.width * 300}%`
-            : `${hex.height / styles.height * 300}%`,
-          height: landscape
-            ? `${hex.height / styles.height * 300}%`
-            : `${hex.width / styles.width * 300}%`,
-        }}
-      >
+      <div className="tile" style={position}>
         <style jsx global>{`
-          .location {
-            position: absolute;
-          }
-
           .target {
             pointer-events: all;
             touch-action: manipulation;
