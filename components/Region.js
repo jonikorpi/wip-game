@@ -43,9 +43,12 @@ export default class Region extends React.Component {
     const heroIndex = heroList
       ? heroList.reduce((result, heroID) => {
           const locationID = heroes[heroID].location;
-          result[locationID] = result[locationID] && result[locationID].isArray
-            ? result[locationID].push(heroes[heroID])
-            : [heroes[heroID]];
+
+          if (typeof result[locationID] === "undefined") {
+            result[locationID] = [];
+          }
+
+          result[locationID].push(heroes[heroID]);
           return result;
         }, {})
       : {};
