@@ -33,38 +33,4 @@ export default {
     onTick: null,
     // buffs: [{}],
   },
-
-  hero: {
-    name: "Hero",
-    rarity: 3,
-    walkRange: 3,
-    sailRange: 2,
-    skillRange: 1,
-    range: 3,
-    strengthMax: 10,
-    strength: 10,
-    strengthMin: 5,
-    healthMax: 40,
-    health: 30,
-    healthMin: 0,
-    healthDowngrade: "destroyHero",
-    onDeath: "spawnMonument",
-  },
-
-  monument: {
-    name: "monument",
-    rarity: 3,
-    strength: {
-      max: 10,
-      default: 10,
-      min: 5,
-    },
-    maxHealth: 40,
-    health: 30,
-    minHealth: 0,
-    healthUpgrade: "upgradeMonument",
-    skill: "reclaimMonument",
-    skillRange: 1,
-    onDeath: "destroyMonument",
-  },
 };

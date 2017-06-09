@@ -31,7 +31,7 @@ const buildRegion = props => {
     entities: locationList.reduce((entities, location) => {
       if (maths.random(1, seed++) > 0.8) {
         entities["entity-" + Math.floor(maths.random(seed++))] = {
-          ...entityTypes["monument"],
+          ...entityTypes["default"],
           location: `${location[0]},${location[1]}`,
         };
       }
@@ -110,9 +110,9 @@ export default class RegionProvider extends React.Component {
 
     buildRegion(this.props);
 
-    // this.timer = setInterval(() => {
-    //   randomizeRegion(this.props, this.state.region);
-    // }, 10000);
+    this.timer = setInterval(() => {
+      randomizeRegion(this.props, this.state.region);
+    }, 10000);
   }
 
   componentWillReceiveProps(nextProps) {
