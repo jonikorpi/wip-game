@@ -47,4 +47,34 @@ export default {
         : `${hex.width / styles.width * 300}%`,
     };
   },
+
+  getTransformStyle: (landscape, coordinates) => {
+    const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
+    const pixelCoordinates = landscape ? [pixelX, pixelY] : [-pixelY, pixelX];
+    const transform = landscape
+      ? `translate3d(
+        ${pixelCoordinates[0] / hex.width * 100 / 3 - 25}%,
+        ${pixelCoordinates[1] / hex.height * 100 / 3 - 25}%,
+        0
+      )`
+      : `translate3d(
+        ${pixelCoordinates[0] / hex.height * 100 / 3 - 25 + 1.75 * 100}%,
+        ${pixelCoordinates[1] / hex.width * 100 / 3 - 25}%,
+        0
+      )`;
+
+    return {
+      position: "absolute",
+      left: "0%",
+      top: "0%",
+      width: landscape
+        ? `${hex.width / styles.width * 300}%`
+        : `${hex.height / styles.height * 300}%`,
+      height: landscape
+        ? `${hex.height / styles.height * 300}%`
+        : `${hex.width / styles.width * 300}%`,
+      WebkitTransform: transform,
+      transform: transform,
+    };
+  },
 };

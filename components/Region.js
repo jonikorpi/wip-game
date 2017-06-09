@@ -120,17 +120,18 @@ export default class Region extends React.Component {
                 </div>
 
                 <div className="heroes">
-                  {/* {heroList &&
-                  heroList.length > 0 &&
-                  heroList.map(heroID => {
-                    return (
-                      <Hero
-                        key={heroID}
-                        {...heroes[heroID]}
-                        heightRatio={heightRatio}
-                      />
-                    );
-                  })} */}
+                  {heroList &&
+                    heroList.length > 0 &&
+                    heroList.map(heroID => {
+                      return (
+                        <Hero
+                          key={heroID}
+                          angle={angle}
+                          landscape={landscape}
+                          {...heroes[heroID]}
+                        />
+                      );
+                    })}
                 </div>
               </div>
             );
