@@ -10,7 +10,7 @@ import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 import maths from "../helpers/maths.js";
 
-export default class Location extends React.PureComponent {
+export default class Tile extends React.PureComponent {
   handleMouseEnter = () => {
     this.props.setTargetedLocation(this.props.locationID);
   };
