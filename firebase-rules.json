@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "players": {
+      "$playerID": {
+      	".read": "auth != null && auth.uid === $playerID",
+        ".write": "auth != null && auth.uid === $playerID"
+      }
+    },
+
+    "regions": {
+      "$regionID": {
+        ".read": "auth != null && root.child('players/' + auth.uid + '/location').val() === $regionID",
+        ".write": "true",
+        ".validate": "true"
+      }
+    }
+  }
+}

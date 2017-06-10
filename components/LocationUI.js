@@ -5,39 +5,40 @@ import hex from "../helpers/hex.js";
 import maths from "../helpers/maths.js";
 import styles from "../helpers/styles.js";
 
-const WorldUI = ({ targetedTile }) => {
-  const { left, top } = { ...targetedTile };
-  const fields = targetedTile && flatten(targetedTile);
+const LocationUI = ({ target }) => {
+  // const [x, y] = target && target.locationID.split(",");
+  const fields = target && flatten(target);
 
   return (
-    <div id="worldUI">
+    <div className="regionUI">
       <style jsx global>{`
-        #worldUI {
+        .regionUI {
           position: absolute;
           left: 0; top: 0;
+          overflow: hidden;
           z-index: 100;
           font-size: 0.5rem;
           line-height: 0.75rem;
           padding: 0.25rem;
         }
 
-        #worldUI b {
+        .regionUI b {
           font-weight: bold;
         }
 
-        #worldUI p {
+        .regionUI p {
           white-space: nowrap;
         }
       `}</style>
 
-      <div id="worldUI">
-        {fields &&
-          Object.keys(fields).map((field, key) => {
-            return <p key={key}>{field}: <b>{fields[field] || "null"}</b></p>;
-          })}
-      </div>
+      {fields &&
+        Object.keys(fields).map((field, key) => {
+          return (
+            <p key={key}>{field}: <b>{"" + fields[field] || "null"}</b></p>
+          );
+        })}
     </div>
   );
 };
 
-export default WorldUI;
+export default LocationUI;

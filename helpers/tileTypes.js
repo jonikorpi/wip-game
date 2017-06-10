@@ -1,6 +1,6 @@
 import maths from "../helpers/maths.js";
 
-const tiles = {
+let tiles = {
   water: {
     name: "Water",
     rarity: 1,
@@ -8,20 +8,17 @@ const tiles = {
     walkable: null,
     sailable: true,
     difficult: null,
-    axes: {
-      water: {
-        max: 10,
-        min: 10,
-        upgrade: null,
-        downgrade: "shoal",
-      },
-      heat: {
-        max: 10,
-        min: 10,
-        upgrade: "shoal",
-        downgrade: "ice",
-      },
-    },
+    axis1type: "water",
+    axis1max: 10,
+    axis1min: 10,
+    axis1upgrade: null,
+    axis1downgrade: "shoal",
+
+    axis2type: "heat",
+    axis2max: 10,
+    axis2min: 10,
+    axis2upgrade: "shoal",
+    axis2downgrade: "ice",
     onChange: null,
     onSpawn: null,
     onDeath: null,
@@ -34,20 +31,17 @@ const tiles = {
     walkable: null,
     sailable: true,
     difficult: true,
-    axes: {
-      water: {
-        max: 10,
-        min: 10,
-        upgrade: "water",
-        downgrade: "plains",
-      },
-      heat: {
-        max: 10,
-        min: 10,
-        upgrade: "plains",
-        downgrade: "ice",
-      },
-    },
+    axis1type: "water",
+    axis1max: 10,
+    axis1min: 10,
+    axis1upgrade: "water",
+    axis1downgrade: "plains",
+
+    axis2type: "heat",
+    axis2max: 10,
+    axis2min: 10,
+    axis2upgrade: "plains",
+    axis2downgrade: "ice",
     onChange: null,
     onSpawn: null,
     onDeath: null,
@@ -60,25 +54,26 @@ const tiles = {
     walkable: true,
     sailable: null,
     difficult: null,
-    axes: {
-      water: {
-        max: 10,
-        min: 10,
-        upgrade: "wetland",
-        downgrade: "shoal",
-      },
-      heat: {
-        max: 10,
-        min: 10,
-        upgrade: "plains",
-        downgrade: "tundra",
-      },
-    },
+    axis1type: "water",
+    axis1max: 10,
+    axis1min: 10,
+    axis1upgrade: "wetland",
+    axis1downgrade: "shoal",
+
+    axis2type: "heat",
+    axis2max: 10,
+    axis2min: 10,
+    axis2upgrade: "plains",
+    axis2downgrade: "tundra",
     onChange: null,
     onSpawn: null,
     onDeath: null,
   },
 };
+
+Object.keys(tiles).forEach(tileType => {
+  tiles[tileType].type = tileType;
+});
 
 export default {
   tiles: tiles,
@@ -87,8 +82,6 @@ export default {
     const tileKeys = Object.keys(tiles);
     const tileKey =
       tileKeys[Math.floor(maths.random(1, seed) * tileKeys.length)];
-    let tile = tiles[tileKey];
-    tile.type = tileKey;
-    return tile;
+    return tiles[tileKey];
   },
 };

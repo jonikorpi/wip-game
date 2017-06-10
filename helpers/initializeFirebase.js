@@ -1,11 +1,12 @@
 import firebase from "firebase";
 
-export default () => {
+const initializeFirebase = () => {
   try {
     firebase.initializeApp({
-      authDomain: "TODO",
-      apiKey: "TODO",
-      databaseURL: "TODO",
+      apiKey: "AIzaSyDAt3ItGVatyngNLyrio3uohdmton3TN9k",
+      authDomain: "valtameri-ed9b2.firebaseapp.com",
+      databaseURL: "https://valtameri-ed9b2.firebaseio.com",
+      projectId: "valtameri-ed9b2",
     });
   } catch (err) {
     if (!/already exists/.test(err.message)) {
@@ -13,3 +14,5 @@ export default () => {
     }
   }
 };
+
+export default initializeFirebase;

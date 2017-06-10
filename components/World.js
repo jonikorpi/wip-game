@@ -1,62 +1,54 @@
-import React, { PureComponent } from "react";
-import CustomProperties from "react-custom-properties";
+import React from "react";
+import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import firebase from "firebase";
 
-import Camera from "../components/Camera.js";
-import WorldUI from "../components/WorldUI.js";
-import Location from "../components/Location.js";
+import RegionProvider from "../components/RegionProvider.js";
 
-import hex from "../helpers/hex.js";
+const setPlayerLocation = props => {
+  const { player, uid } = { ...props };
 
-export default class World extends PureComponent {
-  constructor(props) {
-    super(props);
+  if (!player.location) {
+    console.log("Player has no location. Setting it!");
 
-    this.state = {
-      targetedTile: null,
-    };
+    firebase.database().ref(`players/${uid}`).update({
+      location: `${Math.floor(Math.random() * 900000)},${Math.floor(Math.random() * 900000)}`,
+      action: {},
+    });
+  }
+};
+
+export default class World extends React.Component {
+  componentWillMount() {
+    setPlayerLocation(this.props);
   }
 
-  targetTile = tile => {
-    this.setState({ targetedTile: tile });
-  };
+  componentWillReceiveProps(nextProps) {
+    setPlayerLocation(nextProps);
+  }
 
   render() {
-    const { tiles, visionRange, playerPosition, playerPixelCoordinates } = {
-      ...this.props,
-    };
-    const { targetedTile } = { ...this.state };
+    const { player } = { ...this.props };
 
     return (
       <div id="world">
         <style jsx global>{`
           #world {
-            --playerX: 0;
-            --playerY: 1;
+
           }
         `}</style>
 
-        <WorldUI targetedTile={targetedTile} />
-
-        <Camera playerPixelCoordinates={playerPixelCoordinates}>
-          <CustomProperties
-            properties={{
-              "--playerX": playerPixelCoordinates[0],
-              "--playerY": playerPixelCoordinates[1],
-            }}
-          >
-            {tiles.map(tile => {
-              return (
-                <Location
-                  key={`${tile[0]},${tile[1]}`}
-                  x={tile[0]}
-                  y={tile[1]}
-                  targetTile={this.targetTile}
-                  //visible={hex.distanceBetween(playerPosition, tile) <= visionRange}
-                />
-              );
-            })}
-          </CustomProperties>
-        </Camera>
+        <CSSTransitionGroup
+          transitionName="region"
+          transitionEnterTimeout={1000}
+          transitionLeaveTimeout={1000}
+        >
+          {player &&
+            player.location &&
+            <RegionProvider
+              coordinates={player.location.split(",")}
+              regionID={player.location}
+            />}
+        </CSSTransitionGroup>
       </div>
     );
   }

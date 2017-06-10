@@ -3,44 +3,21 @@ import React from "react";
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
-const xModifiers = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1];
-const yModifiers = [
-  -0.75,
-  -0.75,
-  -0.75,
-  -0.75,
-  -0.75,
-  -0.75,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  -0.75,
-  -0.75,
-  -0.75,
-];
-
-const Beach = ({ points, visible }) => {
-  const colors = visible ? styles : styles;
+const Beach = ({ points }) => {
   const path =
-    points.reduce((result, point, index) => {
+    points.reduce((path, point, index) => {
       const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] + hex.beachWidth * xModifiers[index];
-      const yPoint = point[1] + hex.beachWidth * yModifiers[index];
-      return `${result}${command}${xPoint},${yPoint}`;
+      const xPoint = point[0];
+      const yPoint = point[1];
+      return `${path}${command}${xPoint},${yPoint}`;
     }, "") + "Z";
 
   return (
     <path
       d={path}
-      fill={colors.rock}
-      stroke={colors.rock}
-      strokeWidth={hex.beachWidth * 0.25}
+      fill={styles.rock}
+      stroke={styles.rock}
+      strokeWidth={hex.roundingWidth}
       strokeLinejoin="round"
     />
   );

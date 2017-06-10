@@ -1,11 +1,6 @@
 const size = 64;
-const renderingSize = 0.18;
-const unit = "vmin";
-const height = size;
+const height = size * 2;
 const width = Math.sqrt(3) / 2 * size * 2;
-
-const perRow = 10;
-const perColumn = 10;
 
 const axialDirections = [
   [+1, 0],
@@ -72,25 +67,34 @@ const hexesWithin = (hex, N) => {
   return results;
 };
 
+const rectangleOfHexes = (width, height) => {
+  let results = [];
+  const originOffset = -Math.floor(height) + 1;
+
+  for (let r = originOffset; r < height + originOffset; r++) {
+    const offset = Math.floor(-r / 2);
+    for (let q = -offset; q < width - offset; q++) {
+      results.push(toHex([q, -q - r, -r]));
+    }
+  }
+
+  return results;
+};
+
 const pixelCoordinates = hex => {
   const x = size * Math.sqrt(3) * (hex[0] + hex[1] / 2);
   const y = height / 2 * 3 / 2 * hex[1];
 
-  return [x, -y];
+  return [x, y];
 };
 
 export default {
   size: size,
-  renderingSize: renderingSize,
-  unit: unit,
   height: height,
   width: width,
-  perRow: perRow,
-  perColumn: perColumn,
-  perCell: perRow * perColumn,
 
-  cellWidth: perRow * width * renderingSize,
-  cellHeight: perColumn * height * 0.75 * renderingSize,
+  perRegionX: 11,
+  perRegionY: 8,
 
   direction: direction,
   toHex: toHex,
@@ -99,19 +103,12 @@ export default {
   distanceBetweenCubes: distanceBetweenCubes,
   distanceBetween: distanceBetween,
   hexesWithin: hexesWithin,
+  rectangleOfHexes: rectangleOfHexes,
   pixelCoordinates: pixelCoordinates,
 
-  roundingWidth: size / 7,
-  randomRange: size / 16,
-
-  waterRadius: size / 4,
-  reflectionHeight: size / 11,
-  beachWidth: size / 8,
-
-  waterLineWidth: size / 100,
-  waterLineOffset: size / 40,
-  waveLength: size / 2,
-  waveGap: size,
+  roundingWidth: size / 5,
+  randomRange: size / 8,
+  beachWidth: size / 20,
 
   baseHexCoordinates: [
     [width / 3, height / 13],
@@ -124,13 +121,13 @@ export default {
 
     [width, height / 8 * 5],
     [width, height * 0.75],
-    [width / 8 * 7, height / 5 * 4],
+    [width * 6.25 / 8, height * 6 / 7],
 
-    [width / 8 * 5, height / 13 * 12],
+    [width / 8 * 5, height * 15 / 16],
     [width / 2, height],
-    [width / 8 * 3, height / 13 * 12],
+    [width * 3 / 8, height * 15 / 16],
 
-    [width / 9 * 2, height / 6 * 5.1],
+    [width / 9 * 2, height * 6 / 7],
     [0, height * 0.75],
     [0, height / 8 * 5],
 
