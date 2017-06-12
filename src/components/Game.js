@@ -38,25 +38,6 @@ export default class Game extends Component {
 
     return (
       <div id="game">
-        <style jsx global>{`
-          html {
-            font-size: 133%; /* Fallback: used if browser doesn't support calc() */
-            font-size: calc(1em + 0.5vw + 0.5vh + 0.25vmin);
-            background-color: ${styles.water};
-            color: white;
-          }
-
-          body {
-            line-height: 1rem;
-            font-size: 0.8rem; /* = line-height of 1.25 */
-          }
-
-          #game {
-            pointer-events: none;
-            user-select: none;
-          }
-        `}</style>
-
         {/* <GameUI/> */}
 
         {/* <CSSTransitionGroup
