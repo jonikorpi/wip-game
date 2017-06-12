@@ -3,15 +3,15 @@ import chroma from "chroma-js";
 import hex from "../helpers/hex";
 
 const waterHue = 205;
-const groundHue = waterHue - 360 * Math.sqrt(2);
+const groundHue = 360 % Math.floor(waterHue - 360 * Math.sqrt(2));
 
 const base = {
   map: `hsl(${groundHue}, 0%, 50%)`,
-  water: `hsl(${waterHue}, 0%, 38.2%)`,
+  water: `hsl(${waterHue}, 0%, 38%)`,
   black: `hsl(${groundHue}, 0%, 0%)`,
   white: `white`,
   rock: `hsl(${groundHue}, 0%, 50%)`,
-  wave: `hsl(${waterHue}, 0%, 85.4%)`,
+  wave: `hsl(${waterHue}, 0%, 85%)`,
   reflection: `hsl(${waterHue}, 0%, 30%)`,
 };
 

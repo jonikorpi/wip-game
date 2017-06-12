@@ -1,4 +1,4 @@
-const size = 64;
+const size = 1;
 const height = size * 2;
 const width = Math.sqrt(3) / 2 * size * 2;
 
@@ -106,8 +106,8 @@ export default {
   rectangleOfHexes: rectangleOfHexes,
   pixelCoordinates: pixelCoordinates,
 
-  roundingWidth: size / 5,
-  randomRange: size / 8,
+  roundingWidth: size / 10,
+  randomRange: size / 5,
   beachWidth: size / 20,
 
   baseHexCoordinates: [

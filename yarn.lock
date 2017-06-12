@@ -58,6 +58,10 @@ address@1.0.1, address@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/address/-/address-1.0.1.tgz#363f5d3f2be26d0655d8afd5a9562e4fc2194537"
 
+aframe-faceset-component@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/aframe-faceset-component/-/aframe-faceset-component-0.3.1.tgz#e09d0738017bc3d5f4a9ff0de4854ce91fba049f"
+
 aframe-react@^4.2.4:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/aframe-react/-/aframe-react-4.2.4.tgz#3a69cb2dda6f0c517478a37884d71990053fd28f"

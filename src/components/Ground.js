@@ -1,4 +1,5 @@
 import React from "react";
+import { Entity } from "aframe-react";
 
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
@@ -27,26 +28,34 @@ const yModifiers = [
 ];
 
 const Ground = ({ points }) => {
-  const path =
-    points.reduce((path, point, index) => {
-      // const locationSeed = maths.getSeed([point[0], point[1]]);
-      // const beachRNG = maths.random(hex.beachWidth, locationSeed);
-      // const beachWidth = beachRNG > hex.beachWidth * 0 ? beachRNG : 0;
+  const path = points.map((point, index) => {
+    // const locationSeed = maths.getSeed([point[0], point[1]]);
+    // const beachRNG = maths.random(hex.beachWidth, locationSeed);
+    // const beachWidth = beachRNG > hex.beachWidth * 0 ? beachRNG : 0;
 
-      const command = index === 0 ? "M" : "L";
-      const xPoint = point[0] - hex.beachWidth * xModifiers[index];
-      const yPoint = point[1] - hex.beachWidth * yModifiers[index];
+    const x =
+      point[0] + (hex.roundingWidth - hex.beachWidth) * xModifiers[index];
+    const z =
+      point[1] + (hex.roundingWidth - hex.beachWidth) * yModifiers[index];
+    const y = 0.02;
 
-      return `${path}${command}${xPoint},${yPoint}`;
-    }, "") + "Z";
+    return { x: x, y: y, z: z };
+  });
 
   return (
-    <path
-      d={path}
-      fill={styles.black}
-      stroke={styles.black}
-      strokeWidth={hex.roundingWidth}
-      strokeLinejoin="round"
+    <Entity
+      class="target"
+      faceset={{ vertices: path }}
+      // geometry={{
+      //   primitive: "box",
+      //   buffer: false,
+      //   skipCache: true,
+      // }}
+      material={{
+        color: styles.black,
+        shader: "flat",
+        // wireframe: true,
+      }}
     />
   );
 };

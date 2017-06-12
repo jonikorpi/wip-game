@@ -10,7 +10,7 @@ body {
   font-size: 0.8rem; /* = line-height of 1.25 */
 }
 
-#game {
+.rs-base {
   pointer-events: none;
   user-select: none;
 }

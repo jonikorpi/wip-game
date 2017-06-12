@@ -1,24 +1,55 @@
 import React from "react";
+import { Entity } from "aframe-react";
 
 import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 
+const xModifiers = [0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1];
+const yModifiers = [
+  -1,
+  -1,
+  -1,
+  -1,
+  -1,
+  -1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  -1,
+  -1,
+  -1,
+];
+
 const Beach = ({ points }) => {
-  const path =
-    points.reduce((path, point, index) => {
-      const command = index === 0 ? "M" : "L";
-      const xPoint = point[0];
-      const yPoint = point[1];
-      return `${path}${command}${xPoint},${yPoint}`;
-    }, "") + "Z";
+  const path = points.map((point, index) => {
+    const command = index === 0 ? "M" : "L";
+    const x = point[0] + hex.roundingWidth * xModifiers[index];
+    const z = point[1] + hex.roundingWidth * xModifiers[index];
+    const y = 0;
+
+    return { x: x, y: y, z: z };
+  });
 
   return (
-    <path
-      d={path}
-      fill={styles.rock}
-      stroke={styles.rock}
-      strokeWidth={hex.roundingWidth}
-      strokeLinejoin="round"
+    <Entity
+      class="target"
+      faceset={{ vertices: path }}
+      // geometry={{
+      //   primitive: "box",
+      //   buffer: false,
+      //   skipCache: true,
+      // }}
+      material={{
+        color: styles.rock,
+        shader: "flat",
+        // wireframe: true,
+      }}
     />
   );
 };

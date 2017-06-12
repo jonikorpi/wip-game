@@ -7,7 +7,7 @@ import hex from "../helpers/hex.js";
 import styles from "../helpers/styles.js";
 import maths from "../helpers/maths.js";
 
-export default class Entity extends React.PureComponent {
+export default class Structure extends React.PureComponent {
   render() {
     const { x, y, angle, landscape, regionSeed, name } = {
       ...this.props,

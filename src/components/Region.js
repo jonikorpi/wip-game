@@ -1,7 +1,8 @@
 import React from "react";
+import { Entity } from "aframe-react";
 
 import Tile from "../components/Tile.js";
-import Entity from "../components/Entity.js";
+import Structure from "../components/Structure.js";
 import Hero from "../components/Hero.js";
 import LocationUI from "../components/LocationUI.js";
 
@@ -55,8 +56,8 @@ export default class Region extends React.Component {
       : {};
 
     return (
-      <div className="region">
-        <div className="locations">
+      <Entity class="region">
+        <Entity class="locations">
           {locationList.map(location => {
             const locationID = `${location[0]},${location[1]}`;
             const tileProps = tiles && tiles[locationID]
@@ -76,15 +77,15 @@ export default class Region extends React.Component {
               />
             );
           })}
-        </div>
+        </Entity>
 
-        <div className="entities">
+        {/* <div className="entities">
           {entityList.map(entityID => {
             const entity = entities[entityID];
             const [x, y] = entity.location.split(",");
 
             return (
-              <Entity
+              <Structure
                 key={entityID}
                 regionSeed={regionSeed}
                 x={+x}
@@ -125,8 +126,8 @@ export default class Region extends React.Component {
                 }
               : null
           }
-        />
-      </div>
+        /> */}
+      </Entity>
     );
   }
 }

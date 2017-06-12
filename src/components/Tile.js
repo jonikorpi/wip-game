@@ -1,8 +1,8 @@
 import React from "react";
+import { Entity } from "aframe-react";
 
 import Layer from "../components/Layer.js";
 import SVG from "../components/SVG.js";
-import Reflection from "../components/Reflection";
 import Beach from "../components/Beach";
 import Ground from "../components/Ground";
 
@@ -22,7 +22,9 @@ export default class Tile extends React.PureComponent {
   render() {
     const { x, y, angle, landscape, regionSeed, walkable } = this.props;
 
-    const position = maths.getPositionerStyle(landscape, [x, y]);
+    // const position = maths.getPositionerStyle(landscape, [x, y]);
+    const [pixelX, pixelY] = hex.pixelCoordinates([x, y]);
+    const position = { x: pixelX, z: pixelY, y: 0 };
     const viewBox = maths.getViewBox(landscape);
     let seed = regionSeed + maths.getSeed([x, y]);
 
@@ -34,44 +36,39 @@ export default class Tile extends React.PureComponent {
         point[1] +
           maths.random(hex.randomRange, seed++) *
             (point[1] < hex.height / 2 ? -0.5 : 0.5),
+        0,
       ];
     });
 
-    return (
-      <div className="tile" style={position}>
-        {walkable &&
-          <div className="terrain">
-            <SVG viewBox={viewBox} style={{ zIndex: 1 }}>
-              <Layer angle={angle} rotate={!landscape && 90} zOffset={5}>
-                <Reflection points={points} />
-              </Layer>
-            </SVG>
-            <SVG viewBox={viewBox} style={{ zIndex: 2 }}>
-              <Layer angle={angle} rotate={!landscape && 90} zOffset={1}>
-                <Beach points={points} />
-              </Layer>
-            </SVG>
-            <SVG viewBox={viewBox} style={{ zIndex: 3 }}>
-              <Layer angle={angle} rotate={!landscape && 90}>
-                <Ground points={points} />
-              </Layer>
-            </SVG>
-          </div>}
+    const targetPoints = hex.baseHexCoordinates.map(point => {
+      return {
+        x: point[0],
+        z: point[1],
+        y: 0,
+      };
+    });
 
-        <SVG viewBox={viewBox} style={{ zIndex: 6 + y }}>
-          <Layer rotate={!landscape && 90}>
-            <polygon
-              className="target"
-              stroke={styles.white}
-              fill="none"
-              points={hex.baseHexCoordinates}
-              vectorEffect="non-scaling-stroke"
-              onMouseEnter={this.handleMouseEnter}
-              onMouseLeave={this.handleMouseLeave}
-            />
-          </Layer>
-        </SVG>
-      </div>
+    return (
+      <Entity class="tile" position={position} rotation={{ x: 0, y: 0, z: 0 }}>
+        {walkable &&
+          <Entity>
+            <Beach points={points} />
+            <Ground points={points} />
+          </Entity>}
+
+        <Entity
+          class="target"
+          position={{ x: 0, y: 0.05, z: 0 }}
+          faceset={{ vertices: targetPoints }}
+          material={{
+            color: styles.white,
+            shader: "flat",
+            wireframe: true,
+          }}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+        />
+      </Entity>
     );
   }
 }

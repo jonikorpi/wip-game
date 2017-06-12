@@ -1,6 +1,7 @@
+import "aframe";
+import "aframe-faceset-component";
+import { Scene } from "aframe-react";
 import React from "react";
-// import "aframe";
-// import { Scene } from "aframe-react";
 import firebase from "firebase";
 import Measure from "react-measure";
 
@@ -47,16 +48,19 @@ export default class World extends React.Component {
 
           return (
             <div id="world" ref={measureRef}>
-              {/* <Scene stats embedded> */}
-              {player &&
-                player.location &&
-                <RegionProvider
-                  coordinates={player.location.split(",")}
-                  regionID={player.location}
-                  angle={angle}
-                  landscape={landscape}
-                />}
-              {/* </Scene> */}
+              <Scene stats embedded>
+                <a-entity light="type: ambient; color: #000" />
+                <a-camera />
+
+                {player &&
+                  player.location &&
+                  <RegionProvider
+                    coordinates={player.location.split(",")}
+                    regionID={player.location}
+                    angle={angle}
+                    landscape={landscape}
+                  />}
+              </Scene>
             </div>
           );
         }}
