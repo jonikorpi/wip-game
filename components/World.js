@@ -1,5 +1,6 @@
 import React from "react";
-import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+// import "aframe";
+// import { Scene } from "aframe-react";
 import firebase from "firebase";
 import Measure from "react-measure";
 
@@ -48,26 +49,20 @@ export default class World extends React.Component {
                 #world {
                   position: absolute;
                   left: 0; top: 0; right: 0; bottom: 0;
-                  max-height: ${hex.perRegionX / hex.perRegionY * 100}vw;
-                  margin: auto;
                   overflow: hidden;
                 }
               `}</style>
 
-              <CSSTransitionGroup
-                transitionName="region"
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}
-              >
-                {player &&
-                  player.location &&
-                  <RegionProvider
-                    coordinates={player.location.split(",")}
-                    regionID={player.location}
-                    angle={angle}
-                    landscape={landscape}
-                  />}
-              </CSSTransitionGroup>
+              {/* <Scene stats embedded> */}
+              {player &&
+                player.location &&
+                <RegionProvider
+                  coordinates={player.location.split(",")}
+                  regionID={player.location}
+                  angle={angle}
+                  landscape={landscape}
+                />}
+              {/* </Scene> */}
             </div>
           );
         }}
