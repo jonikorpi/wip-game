@@ -110,9 +110,9 @@ export default class RegionProvider extends React.Component {
 
     buildRegion(this.props);
 
-    this.timer = setInterval(() => {
-      randomizeRegion(this.props, this.state.region);
-    }, 10000);
+    // this.timer = setInterval(() => {
+    //   randomizeRegion(this.props, this.state.region);
+    // }, 10000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -144,7 +144,7 @@ export default class RegionProvider extends React.Component {
   }
 
   render() {
-    const { coordinates } = { ...this.props };
+    const { coordinates, angle, landscape } = { ...this.props };
     const { region } = { ...this.state };
 
     if (!region) {
@@ -154,6 +154,8 @@ export default class RegionProvider extends React.Component {
     return (
       <Region
         {...region}
+        angle={angle}
+        landscape={landscape}
         regionSeed={maths.getSeed([coordinates[0], coordinates[1]])}
       />
     );

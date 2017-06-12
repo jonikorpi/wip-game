@@ -1,6 +1,9 @@
 import React from "react";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import firebase from "firebase";
+import Measure from "react-measure";
+
+import hex from "../helpers/hex";
 
 import RegionProvider from "../components/RegionProvider.js";
 
@@ -30,26 +33,45 @@ export default class World extends React.Component {
     const { player } = { ...this.props };
 
     return (
-      <div id="world">
-        <style jsx global>{`
-          #world {
+      <Measure bounds>
+        {({ measureRef, contentRect }) => {
+          const heightRatio =
+            contentRect.bounds.height / contentRect.bounds.width || 1;
+          const landscape = heightRatio < hex.perRegionY / hex.perRegionX;
+          const angle = landscape
+            ? hex.perRegionY / hex.perRegionX / heightRatio
+            : hex.perRegionX / hex.perRegionY / heightRatio;
 
-          }
-        `}</style>
+          return (
+            <div id="world" ref={measureRef}>
+              <style jsx global>{`
+                #world {
+                  position: absolute;
+                  left: 0; top: 0; right: 0; bottom: 0;
+                  max-height: ${hex.perRegionX / hex.perRegionY * 100}vw;
+                  margin: auto;
+                  overflow: hidden;
+                }
+              `}</style>
 
-        <CSSTransitionGroup
-          transitionName="region"
-          transitionEnterTimeout={1000}
-          transitionLeaveTimeout={1000}
-        >
-          {player &&
-            player.location &&
-            <RegionProvider
-              coordinates={player.location.split(",")}
-              regionID={player.location}
-            />}
-        </CSSTransitionGroup>
-      </div>
+              <CSSTransitionGroup
+                transitionName="region"
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1000}
+              >
+                {player &&
+                  player.location &&
+                  <RegionProvider
+                    coordinates={player.location.split(",")}
+                    regionID={player.location}
+                    angle={angle}
+                    landscape={landscape}
+                  />}
+              </CSSTransitionGroup>
+            </div>
+          );
+        }}
+      </Measure>
     );
   }
 }
