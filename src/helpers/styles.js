@@ -1,5 +1,3 @@
-import chroma from "chroma-js";
-
 import hex from "../helpers/hex";
 
 const waterHue = 205;
@@ -15,10 +13,10 @@ const base = {
   reflection: `hsl(${waterHue}, 0%, 30%)`,
 };
 
-const faded = Object.keys(base).reduce((faded, color) => {
-  faded[color] = chroma.mix(base[color], base.water, 0.5);
-  return faded;
-}, {});
+// const faded = Object.keys(base).reduce((faded, color) => {
+//   faded[color] = chroma.mix(base[color], base.water, 0.5);
+//   return faded;
+// }, {});
 
 let styles = {
   perspective: 12,
@@ -26,9 +24,6 @@ let styles = {
   padding: 0.5 * hex.size,
 
   ...base,
-  faded: {
-    ...faded,
-  },
 };
 
 styles.width = 2 * styles.padding + hex.width * (hex.perRegionX + 0.5);
