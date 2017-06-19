@@ -1,6 +1,7 @@
 const size = 64;
 const height = size * 2;
 const width = Math.sqrt(3) / 2 * size * 2;
+const regionRadius = 5;
 
 const axialDirections = [
   [+1, 0],
@@ -82,8 +83,8 @@ const rectangleOfHexes = (width, height) => {
 };
 
 const pixelCoordinates = hex => {
-  const x = size * Math.sqrt(3) * (hex[0] + hex[1] / 2);
-  const y = height / 2 * 3 / 2 * hex[1];
+  const x = size * Math.sqrt(3) * (hex[0] + regionRadius + hex[1] / 2);
+  const y = height / 2 * 3 / 2 * (hex[1] + regionRadius);
 
   return [x, y];
 };
@@ -93,8 +94,7 @@ export default {
   height: height,
   width: width,
 
-  perRegionX: 11,
-  perRegionY: 8,
+  regionRadius: regionRadius,
 
   direction: direction,
   toHex: toHex,

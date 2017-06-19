@@ -31,8 +31,9 @@ let styles = {
   },
 };
 
-styles.width = 2 * styles.padding + hex.width * (hex.perRegionX + 0.5);
+styles.width = 2 * styles.padding + hex.width * (hex.regionRadius * 2 + 1);
 styles.height =
-  2 * styles.padding + hex.height * (hex.perRegionY * 3 / 4 + 1 / 4);
+  2 * styles.padding +
+  hex.height * ((hex.regionRadius * 2 + 1) * 3 / 4 + 1 / 4);
 
 export default styles;

@@ -10,7 +10,7 @@ import tileTypes from "../helpers/tileTypes.js";
 import entityTypes from "../helpers/entityTypes.js";
 import maths from "../helpers/maths.js";
 
-const locationList = hex.rectangleOfHexes(hex.perRegionX, hex.perRegionY);
+const locationList = hex.hexesWithin([0, 0], hex.regionRadius);
 
 const buildRegion = props => {
   const { coordinates, regionID } = { ...props };
@@ -156,6 +156,7 @@ export default class RegionProvider extends React.Component {
         {...region}
         angle={angle}
         landscape={landscape}
+        locationList={locationList}
         regionSeed={maths.getSeed([coordinates[0], coordinates[1]])}
       />
     );

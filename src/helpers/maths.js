@@ -27,16 +27,11 @@ export default {
 
   getPositionStyle: coordinates => {
     const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
-    const pixelCoordinates = [pixelX, pixelY];
 
     return {
       position: "absolute",
-      left: `${(styles.padding + pixelCoordinates[0] - hex.width) /
-        styles.width *
-        100}%`,
-      top: `${(styles.padding + pixelCoordinates[1] - hex.height) /
-        styles.height *
-        100}%`,
+      left: `${(styles.padding + pixelX - hex.width) / styles.width * 100}%`,
+      top: `${(styles.padding + pixelY - hex.height) / styles.height * 100}%`,
       width: `${hex.width / styles.width * 300}%`,
       height: `${hex.height / styles.height * 300}%`,
     };
@@ -44,10 +39,10 @@ export default {
 
   getTransformStyle: coordinates => {
     const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
-    const pixelCoordinates = [pixelX, pixelY];
+
     const transform = `translate3d(
-      ${pixelCoordinates[0] / hex.width * 100 / 3 - 25}%,
-      ${pixelCoordinates[1] / hex.height * 100 / 3 - 25}%,
+      ${pixelX / hex.width * 100 / 3 - 25}%,
+      ${pixelY / hex.height * 100 / 3 - 25}%,
       0
     )`;
 

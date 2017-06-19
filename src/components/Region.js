@@ -8,8 +8,6 @@ import LocationUI from "../components/LocationUI.js";
 import hex from "../helpers/hex.js";
 import tileTypes from "../helpers/tileTypes.js";
 
-const locationList = hex.rectangleOfHexes(hex.perRegionX, hex.perRegionY);
-
 export default class Region extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +22,15 @@ export default class Region extends React.Component {
   };
 
   render() {
-    const { tiles, entities, heroes, regionSeed, landscape, angle } = {
+    const {
+      tiles,
+      entities,
+      heroes,
+      regionSeed,
+      landscape,
+      angle,
+      locationList,
+    } = {
       ...this.props,
     };
     const { targetedLocationID } = { ...this.state };
@@ -56,7 +62,7 @@ export default class Region extends React.Component {
 
     return (
       <div className="region">
-        <div className="locations">
+        <div className="tiles">
           {locationList.map(location => {
             const locationID = `${location[0]},${location[1]}`;
             const tileProps = tiles && tiles[locationID]
