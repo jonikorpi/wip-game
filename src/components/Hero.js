@@ -9,11 +9,11 @@ import maths from "../helpers/maths.js";
 
 export default class Hero extends React.PureComponent {
   render() {
-    const { landscape, angle, ...hero } = this.props;
+    const { angle, ...hero } = this.props;
     const [x, y] = hero.location.split(",");
 
-    const position = maths.getTransformStyle(landscape, [+x, +y]);
-    const viewBox = maths.getViewBox(landscape);
+    const position = maths.getTransformStyle([+x, +y]);
+    const viewBox = maths.getViewBox();
 
     return (
       <div className="hero" style={{ ...position, zIndex: y + 10 }}>

@@ -9,12 +9,12 @@ import maths from "../helpers/maths.js";
 
 export default class Entity extends React.PureComponent {
   render() {
-    const { x, y, angle, landscape, regionSeed, name } = {
+    const { x, y, angle, regionSeed, name } = {
       ...this.props,
     };
 
-    const position = maths.getPositionerStyle(landscape, [x, y]);
-    const viewBox = maths.getViewBox(landscape);
+    const position = maths.getPositionerStyle([x, y]);
+    const viewBox = maths.getViewBox();
     // let seed = regionSeed + maths.getSeed([x, y]);
 
     return (

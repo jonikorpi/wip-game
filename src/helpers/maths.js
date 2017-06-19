@@ -21,58 +21,42 @@ export default {
     );
   },
 
-  getViewBox: landscape => {
-    return landscape
-      ? `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`
-      : `${-hex.height} ${-hex.width} ${hex.height * 3} ${hex.width * 3}`;
+  getViewBox: () => {
+    return `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
   },
 
-  getPositionerStyle: (landscape, coordinates) => {
+  getPositionerStyle: coordinates => {
     const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
-    const pixelCoordinates = landscape ? [pixelX, pixelY] : [-pixelY, pixelX];
+    const pixelCoordinates = [pixelX, pixelY];
 
     return {
       position: "absolute",
-      left: landscape
-        ? `${(styles.padding + pixelCoordinates[0] - hex.width) / styles.width * 100}%`
-        : `${(styles.padding + pixelCoordinates[0] - hex.height) / styles.height * 100 + 75}%`,
-      top: landscape
-        ? `${(styles.padding + pixelCoordinates[1] - hex.height) / styles.height * 100}%`
-        : `${(styles.padding + pixelCoordinates[1] - hex.width) / styles.width * 100}%`,
-      width: landscape
-        ? `${hex.width / styles.width * 300}%`
-        : `${hex.height / styles.height * 300}%`,
-      height: landscape
-        ? `${hex.height / styles.height * 300}%`
-        : `${hex.width / styles.width * 300}%`,
+      left: `${(styles.padding + pixelCoordinates[0] - hex.width) /
+        styles.width *
+        100}%`,
+      top: `${(styles.padding + pixelCoordinates[1] - hex.height) /
+        styles.height *
+        100}%`,
+      width: `${hex.width / styles.width * 300}%`,
+      height: `${hex.height / styles.height * 300}%`,
     };
   },
 
-  getTransformStyle: (landscape, coordinates) => {
+  getTransformStyle: coordinates => {
     const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
-    const pixelCoordinates = landscape ? [pixelX, pixelY] : [-pixelY, pixelX];
-    const transform = landscape
-      ? `translate3d(
-        ${pixelCoordinates[0] / hex.width * 100 / 3 - 25}%,
-        ${pixelCoordinates[1] / hex.height * 100 / 3 - 25}%,
-        0
-      )`
-      : `translate3d(
-        ${pixelCoordinates[0] / hex.height * 100 / 3 - 25 + 1.75 * 100}%,
-        ${pixelCoordinates[1] / hex.width * 100 / 3 - 25}%,
-        0
-      )`;
+    const pixelCoordinates = [pixelX, pixelY];
+    const transform = `translate3d(
+      ${pixelCoordinates[0] / hex.width * 100 / 3 - 25}%,
+      ${pixelCoordinates[1] / hex.height * 100 / 3 - 25}%,
+      0
+    )`;
 
     return {
       position: "absolute",
       left: "0%",
       top: "0%",
-      width: landscape
-        ? `${hex.width / styles.width * 300}%`
-        : `${hex.height / styles.height * 300}%`,
-      height: landscape
-        ? `${hex.height / styles.height * 300}%`
-        : `${hex.width / styles.width * 300}%`,
+      width: `${hex.width / styles.width * 300}%`,
+      height: `${hex.height / styles.height * 300}%`,
       WebkitTransform: transform,
       transform: transform,
     };
