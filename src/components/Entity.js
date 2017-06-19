@@ -14,12 +14,11 @@ export default class Entity extends React.PureComponent {
     };
 
     const position = maths.getPositionStyle([x, y]);
-    const viewBox = maths.getViewBox();
     // let seed = regionSeed + maths.getSeed([x, y]);
 
     return (
       <div className="entity" style={position}>
-        <SVG viewBox={viewBox} style={{ zIndex: 5 + y }}>
+        <SVG style={{ zIndex: 5 + y }}>
           <Layer angle={angle}>
             <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
               {name}

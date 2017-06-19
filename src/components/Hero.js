@@ -13,11 +13,10 @@ export default class Hero extends React.PureComponent {
     const [x, y] = hero.location.split(",");
 
     const position = maths.getTransformStyle([+x, +y]);
-    const viewBox = maths.getViewBox();
 
     return (
       <div className="hero" style={{ ...position, zIndex: y + 10 }}>
-        <SVG viewBox={viewBox}>
+        <SVG>
           <Layer angle={angle}>
             <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
               H

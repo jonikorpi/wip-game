@@ -21,10 +21,6 @@ export default {
     );
   },
 
-  getViewBox: () => {
-    return `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
-  },
-
   getPositionStyle: coordinates => {
     const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
 

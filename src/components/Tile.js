@@ -23,7 +23,6 @@ export default class Tile extends React.PureComponent {
     const { x, y, angle, regionSeed, walkable } = this.props;
 
     const position = maths.getPositionStyle([x, y]);
-    const viewBox = maths.getViewBox();
     let seed = regionSeed + maths.getSeed([x, y]);
 
     const points = hex.baseHexCoordinates.map(point => {
@@ -41,24 +40,24 @@ export default class Tile extends React.PureComponent {
       <div className="tile" style={position}>
         {walkable &&
           <div className="terrain">
-            <SVG viewBox={viewBox} style={{ zIndex: 1 }}>
+            <SVG style={{ zIndex: 1 }}>
               <Layer angle={angle} zOffset={5}>
                 <Reflection points={points} />
               </Layer>
             </SVG>
-            <SVG viewBox={viewBox} style={{ zIndex: 2 }}>
+            <SVG style={{ zIndex: 2 }}>
               <Layer angle={angle} zOffset={1}>
                 <Beach points={points} />
               </Layer>
             </SVG>
-            <SVG viewBox={viewBox} style={{ zIndex: 3 }}>
+            <SVG style={{ zIndex: 3 }}>
               <Layer angle={angle}>
                 <Ground points={points} />
               </Layer>
             </SVG>
           </div>}
 
-        <SVG viewBox={viewBox} style={{ zIndex: 6 + y }}>
+        <SVG style={{ zIndex: 6 + y }}>
           <Layer>
             <polygon
               className="target"

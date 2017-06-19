@@ -1,6 +1,8 @@
 import React from "react";
 
-const SVG = ({ viewBox, style, children }) => {
+import hex from "../helpers/hex.js";
+
+const SVG = ({ style, children }) => {
   return (
     <svg
       className="svg"
@@ -8,7 +10,8 @@ const SVG = ({ viewBox, style, children }) => {
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       preserveAspectRatio="none"
-      viewBox={viewBox}
+      viewBox={`${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height *
+        3}`}
       style={style}
     >
       {children}
