@@ -22,7 +22,7 @@ export default class Tile extends React.PureComponent {
   render() {
     const { x, y, angle, regionSeed, walkable } = this.props;
 
-    const position = maths.getPositionerStyle([x, y]);
+    const position = maths.getPositionStyle([x, y]);
     const viewBox = maths.getViewBox();
     let seed = regionSeed + maths.getSeed([x, y]);
 

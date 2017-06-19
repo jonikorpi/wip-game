@@ -25,7 +25,7 @@ export default {
     return `${-hex.width} ${-hex.height} ${hex.width * 3} ${hex.height * 3}`;
   },
 
-  getPositionerStyle: coordinates => {
+  getPositionStyle: coordinates => {
     const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
     const pixelCoordinates = [pixelX, pixelY];
 
