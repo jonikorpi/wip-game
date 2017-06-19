@@ -30,10 +30,16 @@ export default class Region extends React.Component {
       landscape,
       angle,
       locationList,
+      visible,
+      position,
     } = {
       ...this.props,
     };
     const { targetedLocationID } = { ...this.state };
+
+    if (!visible) {
+      return null;
+    }
 
     // Index entities by location
     const entityList = entities && Object.keys(entities);

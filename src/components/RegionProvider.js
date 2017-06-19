@@ -48,7 +48,12 @@ const buildRegion = props => {
     }, {}),
   };
 
-  firebase.database().ref(`regions/${regionID}`).update(region);
+  firebase.database().ref().update({
+    [`map/regions/${regionID}`]: {
+      type: "default",
+    },
+    [`regions/${regionID}`]: region,
+  });
 };
 
 const randomizeRegion = (props, region) => {
@@ -99,12 +104,14 @@ export default class RegionProvider extends React.Component {
 
     this.state = {
       region: null,
+      mapEntry: null,
     };
   }
 
   componentDidMount() {
-    const { regionID } = { ...this.props };
-    if (regionID) {
+    const { regionID, visible } = { ...this.props };
+
+    if (regionID && visible) {
       this.bindFirebase(regionID);
     }
 
@@ -116,12 +123,13 @@ export default class RegionProvider extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { regionID } = { ...this.props };
+    const { regionID, visible } = { ...this.props };
+
     if (nextProps.regionID !== regionID) {
       if (this.firebaseRefs.player) {
         this.unbind("region");
       }
-      if (nextProps.regionID) {
+      if (nextProps.regionID && nextProps.visible) {
         this.bindFirebase(nextProps.regionID);
       }
     }
@@ -137,6 +145,16 @@ export default class RegionProvider extends React.Component {
         this.setState({ region: null });
       }.bind(this)
     );
+
+    this.bindAsObject(
+      firebase.database().ref(`map/regions/${regionID}`),
+      "mapEntry",
+      function(error) {
+        console.log("Region map entry subscription cancelled:");
+        console.log(error);
+        this.setState({ mapEntry: null });
+      }.bind(this)
+    );
   };
 
   componentWillUnmount() {
@@ -144,18 +162,16 @@ export default class RegionProvider extends React.Component {
   }
 
   render() {
-    const { coordinates, angle, landscape } = { ...this.props };
-    const { region } = { ...this.state };
-
-    if (!region) {
-      return null;
-    }
+    const { coordinates, angle, position, visible } = { ...this.props };
+    const { region, mapEntry } = { ...this.state };
 
     return (
       <Region
         {...region}
+        {...mapEntry}
+        visible={region && mapEntry && visible}
+        position={position}
         angle={angle}
-        landscape={landscape}
         locationList={locationList}
         regionSeed={maths.getSeed([coordinates[0], coordinates[1]])}
       />

@@ -1,5 +1,15 @@
 {
   "rules": {
+    "map": {
+      "regions": {
+        "$regionID": {
+          ".read": "auth != null && root.child('players/' + auth.uid + '/regionID').val() === $regionID",
+          ".write": "true",
+          ".validate": "true"
+        }
+      }
+    },
+
     "players": {
       "$playerID": {
       	".read": "auth != null && auth.uid === $playerID",
@@ -9,7 +19,7 @@
 
     "regions": {
       "$regionID": {
-        ".read": "auth != null && root.child('players/' + auth.uid + '/location').val() === $regionID",
+        ".read": "auth != null && root.child('players/' + auth.uid + '/regionID').val() === $regionID",
         ".write": "true",
         ".validate": "true"
       }
