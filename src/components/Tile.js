@@ -39,20 +39,6 @@ export default class Tile extends React.PureComponent {
 
     return (
       <div className="tile" style={position}>
-        <style jsx global>{`
-          .target {
-            pointer-events: all;
-            touch-action: manipulation;
-            opacity: 0;
-            cursor: pointer;
-          }
-
-          .target:hover, .target:focus {
-            stroke: ${styles.white};
-            opacity: 1;
-          }
-        `}</style>
-
         {walkable &&
           <div className="terrain">
             <SVG viewBox={viewBox} style={{ zIndex: 1 }}>

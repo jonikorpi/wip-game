@@ -17,14 +17,6 @@ export default class Hero extends React.PureComponent {
 
     return (
       <div className="hero" style={{ ...position, zIndex: y + 10 }}>
-        <style jsx global>{`
-          .hero {
-            transition: transform 2s ease-in-out;
-            will-change: transform;
-            backface-visibility: hidden;
-          }
-        `}</style>
-
         <SVG viewBox={viewBox}>
           <Layer angle={angle}>
             <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>

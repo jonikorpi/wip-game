@@ -14,7 +14,9 @@ const setPlayerLocation = props => {
     console.log("Player has no location. Setting it!");
 
     firebase.database().ref(`players/${uid}`).update({
-      location: `${Math.floor(Math.random() * 900000)},${Math.floor(Math.random() * 900000)}`,
+      location: `${Math.floor(Math.random() * 900000)},${Math.floor(
+        Math.random() * 900000
+      )}`,
       action: {},
     });
   }
@@ -44,30 +46,14 @@ export default class World extends React.Component {
 
           return (
             <div id="world" ref={measureRef}>
-              <style jsx global>{`
-                #world {
-                  position: absolute;
-                  left: 0; top: 0; right: 0; bottom: 0;
-                  max-height: ${hex.perRegionX / hex.perRegionY * 100}vw;
-                  margin: auto;
-                  overflow: hidden;
-                }
-              `}</style>
-
-              <CSSTransitionGroup
-                transitionName="region"
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}
-              >
-                {player &&
-                  player.location &&
-                  <RegionProvider
-                    coordinates={player.location.split(",")}
-                    regionID={player.location}
-                    angle={angle}
-                    landscape={landscape}
-                  />}
-              </CSSTransitionGroup>
+              {player &&
+                player.location &&
+                <RegionProvider
+                  coordinates={player.location.split(",")}
+                  regionID={player.location}
+                  angle={angle}
+                  landscape={landscape}
+                />}
             </div>
           );
         }}

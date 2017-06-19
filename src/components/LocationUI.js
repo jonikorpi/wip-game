@@ -10,27 +10,7 @@ const LocationUI = ({ target }) => {
   const fields = target && flatten(target);
 
   return (
-    <div className="regionUI">
-      <style jsx global>{`
-        .regionUI {
-          position: absolute;
-          left: 0; top: 0;
-          overflow: hidden;
-          z-index: 100;
-          font-size: 0.5rem;
-          line-height: 0.75rem;
-          padding: 0.25rem;
-        }
-
-        .regionUI b {
-          font-weight: bold;
-        }
-
-        .regionUI p {
-          white-space: nowrap;
-        }
-      `}</style>
-
+    <div className="locationUI">
       {fields &&
         Object.keys(fields).map((field, key) => {
           return (

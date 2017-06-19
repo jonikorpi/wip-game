@@ -56,13 +56,6 @@ export default class Region extends React.Component {
 
     return (
       <div className="region">
-        <style jsx global>{`
-          .region {
-            position: absolute;
-            left: 0; top: 0; right: 0; bottom: 0;
-          }
-        `}</style>
-
         <div className="locations">
           {locationList.map(location => {
             const locationID = `${location[0]},${location[1]}`;
