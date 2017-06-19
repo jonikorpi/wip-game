@@ -39,10 +39,7 @@ export default class World extends React.Component {
         {({ measureRef, contentRect }) => {
           const heightRatio =
             contentRect.bounds.height / contentRect.bounds.width || 1;
-          const landscape = heightRatio < hex.perRegionY / hex.perRegionX;
-          const angle = landscape
-            ? hex.perRegionY / hex.perRegionX / heightRatio
-            : hex.perRegionX / hex.perRegionY / heightRatio;
+          const angle = 1 / heightRatio;
 
           return (
             <div id="world" ref={measureRef}>
@@ -52,7 +49,6 @@ export default class World extends React.Component {
                   coordinates={player.location.split(",")}
                   regionID={player.location}
                   angle={angle}
-                  landscape={landscape}
                 />}
             </div>
           );
