@@ -40,17 +40,17 @@ export default class Tile extends React.PureComponent {
       <div className="tile" style={position}>
         {walkable &&
           <div className="terrain">
-            <SVG style={{ zIndex: 1 }}>
+            <SVG style={{ zIndex: 2 }}>
               <Layer angle={angle} zOffset={5}>
                 <Reflection points={points} />
               </Layer>
             </SVG>
-            <SVG style={{ zIndex: 2 }}>
+            <SVG style={{ zIndex: 3 }}>
               <Layer angle={angle} zOffset={1}>
                 <Beach points={points} />
               </Layer>
             </SVG>
-            <SVG style={{ zIndex: 3 }}>
+            <SVG style={{ zIndex: 4 }}>
               <Layer angle={angle}>
                 <Ground points={points} />
               </Layer>
@@ -58,17 +58,15 @@ export default class Tile extends React.PureComponent {
           </div>}
 
         <SVG style={{ zIndex: 6 + y + hex.regionRadius }}>
-          <Layer>
-            <polygon
-              className="target"
-              stroke={styles.white}
-              fill="none"
-              points={hex.baseHexCoordinates}
-              vectorEffect="non-scaling-stroke"
-              onMouseEnter={this.handleMouseEnter}
-              onMouseLeave={this.handleMouseLeave}
-            />
-          </Layer>
+          <polygon
+            className="target"
+            stroke={styles.white}
+            fill="none"
+            points={hex.baseHexCoordinates}
+            vectorEffect="non-scaling-stroke"
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
+          />
         </SVG>
       </div>
     );

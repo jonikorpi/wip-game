@@ -26,8 +26,8 @@ export default {
 
     return {
       position: "absolute",
-      left: `${(styles.padding + pixelX - hex.width) / styles.width * 100}%`,
-      top: `${(styles.padding + pixelY - hex.height) / styles.height * 100}%`,
+      left: `${(pixelX - hex.width * 1.5) / styles.width * 100}%`,
+      top: `${(pixelY - hex.height * 1.5) / styles.height * 100}%`,
       width: `${hex.width / styles.width * 300}%`,
       height: `${hex.height / styles.height * 300}%`,
     };
@@ -37,8 +37,8 @@ export default {
     const [pixelX, pixelY] = hex.pixelCoordinates(coordinates);
 
     const transform = `translate3d(
-      ${pixelX / hex.width * 100 / 3 - 25}%,
-      ${pixelY / hex.height * 100 / 3 - 25}%,
+      ${(pixelX - hex.width * 0.75) / hex.width * 100 / 3 - 25}%,
+      ${(pixelY - hex.height * 0.75) / hex.height * 100 / 3 - 25}%,
       0
     )`;
 

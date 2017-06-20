@@ -31,7 +31,6 @@ export default class Region extends React.Component {
       angle,
       locationList,
       visible,
-      position,
     } = {
       ...this.props,
     };

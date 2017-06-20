@@ -13,19 +13,24 @@ body {
 #game {
   pointer-events: none;
   user-select: none;
+  overflow: hidden;
+  height: 300vh;
 }
 
 #world {
-  position: absolute;
-  left: 0; top: 0; right: 0; bottom: 0;
-  overflow: hidden;
+  position: fixed;
+  left: 3.4%;
+  top: 3.4%;
+  right: 3.4%;
+  bottom: 3.4%;
   max-height: 100vw;
   margin: auto;
 }
 
 .locationUI {
-  position: absolute;
-  left: 0; top: 0;
+  position: fixed;
+  left: -50vw;
+  top: -50vh;
   overflow: hidden;
   z-index: 100;
   font-size: 0.5rem;
@@ -41,16 +46,30 @@ body {
   white-space: nowrap;
 }
 
-.region {
+.regionContainer {
   position: absolute;
-  left: 0; top: 0; right: 0; bottom: 0;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
 }
 
 .svg {
   width: 100%;
   height: 100%;
   position: absolute;
-  left: 0; top: 0; right: 0; bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.regionOutline {
+  left: -50%;
+  top: -50%;
+  right: auto;
+  bottom: auto;
+  z-index: 0;
 }
 
 .target {

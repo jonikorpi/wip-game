@@ -3,6 +3,7 @@ import firebase from "firebase";
 import reactMixin from "react-mixin";
 import reactFire from "reactfire";
 
+import RegionContainer from "../components/RegionContainer.js";
 import Region from "../components/Region.js";
 
 import hex from "../helpers/hex.js";
@@ -166,15 +167,16 @@ export default class RegionProvider extends React.Component {
     const { region, mapEntry } = { ...this.state };
 
     return (
-      <Region
-        {...region}
-        {...mapEntry}
-        visible={region && mapEntry && visible}
-        position={position}
-        angle={angle}
-        locationList={locationList}
-        regionSeed={maths.getSeed([coordinates[0], coordinates[1]])}
-      />
+      <RegionContainer position={position}>
+        <Region
+          {...region}
+          {...mapEntry}
+          visible={region && mapEntry && visible}
+          angle={angle}
+          locationList={locationList}
+          regionSeed={maths.getSeed([coordinates[0], coordinates[1]])}
+        />
+      </RegionContainer>
     );
   }
 }

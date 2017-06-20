@@ -83,8 +83,8 @@ const rectangleOfHexes = (width, height) => {
 };
 
 const pixelCoordinates = hex => {
-  const x = size * Math.sqrt(3) * (hex[0] + regionRadius + hex[1] / 2);
-  const y = height / 2 * 3 / 2 * (hex[1] + regionRadius);
+  const x = size * Math.sqrt(3) * (hex[0] + hex[1] / 2);
+  const y = height / 2 * 3 / 2 * hex[1];
 
   return [x, y];
 };
