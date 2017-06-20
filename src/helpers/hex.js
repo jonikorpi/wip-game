@@ -1,7 +1,7 @@
 const size = 64;
 const height = size * 2;
 const width = Math.sqrt(3) / 2 * size * 2;
-const regionRadius = 5;
+const regionRadius = 4;
 
 const axialDirections = [
   [+1, 0],
