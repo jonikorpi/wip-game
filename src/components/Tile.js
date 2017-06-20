@@ -40,17 +40,17 @@ export default class Tile extends React.PureComponent {
       <div className="tile" style={position}>
         {walkable &&
           <div className="terrain">
-            <SVG style={{ zIndex: 2 }}>
+            <SVG style={{ zIndex: 1 }}>
               <Layer angle={angle} zOffset={5}>
                 <Reflection points={points} />
               </Layer>
             </SVG>
-            <SVG style={{ zIndex: 3 }}>
+            <SVG style={{ zIndex: 2 }}>
               <Layer angle={angle} zOffset={1}>
                 <Beach points={points} />
               </Layer>
             </SVG>
-            <SVG style={{ zIndex: 4 }}>
+            <SVG style={{ zIndex: 3 }}>
               <Layer angle={angle}>
                 <Ground points={points} />
               </Layer>

@@ -15,7 +15,10 @@ export default class Hero extends React.PureComponent {
     const position = maths.getTransformStyle([+x, +y]);
 
     return (
-      <div className="hero" style={{ ...position, zIndex: y + 10 }}>
+      <div
+        className="hero"
+        style={{ ...position, zIndex: 10 + y + hex.regionRadius }}
+      >
         <SVG>
           <Layer angle={angle}>
             <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>

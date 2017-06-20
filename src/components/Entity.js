@@ -18,7 +18,7 @@ export default class Entity extends React.PureComponent {
 
     return (
       <div className="entity" style={position}>
-        <SVG style={{ zIndex: 5 + y }}>
+        <SVG style={{ zIndex: 5 + y + hex.regionRadius }}>
           <Layer angle={angle}>
             <text fill={styles.rock} x={hex.width / 2} y={hex.height / 2}>
               {name}
