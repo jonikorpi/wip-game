@@ -57,7 +57,7 @@ export default class Tile extends React.PureComponent {
             </SVG>
           </div>}
 
-        <SVG style={{ zIndex: 6 + y }}>
+        <SVG style={{ zIndex: 6 + y + hex.regionRadius }}>
           <Layer>
             <polygon
               className="target"
